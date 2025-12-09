@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Tektur:wght@400..900&display=swap");
+@import url("/styles/css/header.css");
+@import url("/styles/css/footer.css");
+@import url("/styles/css/form-style.css");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: calc(1vw / 19.2);
+  scroll-behavior: smooth;
+}
+
+h2 {
+  text-transform: uppercase;
+}
+
+#calendar,
+#footer,
+#entry {
+  scroll-margin-top: 150rem;
+}
+
+// Переменные
+$accent-color: #f2b705;
+$text-color: #1d1d1d;
+$background-color: #eff1f4;
+$blue: #0066d2;
+$green: #1ca697;
+$font: "Golos Text";
+
+// Стили для body
+body {
+  font-family: $font;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  background-color: $background-color;
+  line-height: 1.6;
+}
+
+hr {
+  width: 100%;
+  height: 6rem;
+  margin: 60rem 0;
+  border: none;
+  border-radius: 5px;
+  background-color: $text-color;
+}
+
+span {
+  color: $accent-color;
+}
+
+main {
+  margin-left: 20rem;
+  margin-right: 20rem;
+}
+
+.startlife {
+  width: 100%;
+  height: 60dvh;
+  margin-top: 20rem;
+  display: flex;
+  flex-direction: column;
+  img {
+    width: 100%;
+    height: 65%;
+    border-radius: 50px;
+    object-fit: cover;
+  }
+  .startlife__text {
+    width: 100%;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h2 {
+      font-size: 70rem;
+      line-height: 1;
+    }
+  }
+}
+
+.calendar {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15rem;
+  .btns {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15rem;
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 5rem solid white;
+      padding: 2%;
+      border-radius: 25px;
+      cursor: pointer;
+      h3 {
+        font-size: 40rem;
+        text-transform: uppercase;
+        color: $background-color;
+      }
+    }
+    #savelong {
+      background-color: $blue;
+    }
+    #savesmall {
+      background-color: $green;
+    }
+  }
+  .trips {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15rem;
+    .trip__item {
+      cursor: pointer;
+      width: 100%;
+      height: auto;
+      border-radius: 25px;
+      display: flex;
+      align-items: center;
+      .trip__item-date {
+        width: 45%;
+        color: $background-color;
+        font-size: 50rem;
+        font-weight: 500;
+        text-align: center;
+      }
+      .trip__item-description {
+        width: 55%;
+        color: $background-color;
+        font-size: 40rem;
+        font-weight: 400;
+      }
+    }
+    .long-trip {
+      background-color: $blue;
+    }
+    .small-trip {
+      background-color: $green;
+    }
+  }
+}

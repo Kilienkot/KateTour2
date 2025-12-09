@@ -1,0 +1,56 @@
+// Переменные
+$accent-color: #f2b705;
+$text-color: #1d1d1d;
+$background-color: #eff1f4;
+$blue: #0066d2;
+$green: #1ca697;
+$font: "Golos Text";
+
+header {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+  nav {
+    width: 50%;
+    border-radius: 50px;
+    background-color: $background-color;
+  }
+  ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    gap: 15rem;
+    list-style: none;
+    width: 100%;
+    li {
+      display: flex;
+      min-height: 50rem;
+      align-items: center;
+      justify-content: center;
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5rem 0;
+        text-decoration: none;
+        text-align: center;
+        color: $text-color;
+        font-size: 25rem;
+        font-weight: 200;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+      }
+      &.header_accent {
+        width: 100%;
+        background-color: $blue;
+        border-radius: 50px;
+        a {
+          color: $background-color;
+        }
+      }
+    }
+  }
+}

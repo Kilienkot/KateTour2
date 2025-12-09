@@ -1,0 +1,285 @@
+@import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Tektur:wght@400..900&display=swap");
+@import url("/styles/css/header.css");
+@import url("/styles/css/footer.css");
+
+$accent-color: #f2b705;
+$text-color: #1d1d1d;
+$background-color: #eff1f4;
+$blue: #0066d2;
+$green: #1ca697;
+$font: "Golos Text";
+
+.form-container {
+  max-width: 800rem;
+  margin: 0 auto 60rem auto;
+  background: white;
+  padding: 20rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10rem rgba(0, 0, 0, 0.1);
+  h1 {
+    color: $text-color;
+    margin-bottom: 20rem;
+    font-size: 35rem;
+  }
+  h2 {
+    color: $text-color;
+    margin-bottom: 15rem;
+    font-size: 28rem;
+  }
+  p {
+    color: $text-color;
+    font-size: 18rem;
+  }
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 20rem;
+  color: $blue;
+  text-decoration: none;
+  font-size: 16rem;
+  font-weight: bold;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.form-group {
+  margin-bottom: 15rem;
+  label {
+    display: block;
+    margin-bottom: 5rem;
+    font-weight: bold;
+    color: $text-color;
+    font-size: 18rem;
+  }
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 8rem;
+    border: 1rem solid #ddd;
+    border-radius: 4px;
+    font-family: $font;
+  }
+}
+
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rem;
+  .photo-input {
+    flex: 1;
+    min-width: 150rem;
+    label {
+      font-size: 14rem;
+    }
+    input {
+      font-size: 12rem;
+    }
+  }
+}
+
+.program-day {
+  border: 1rem solid #ddd;
+  padding: 10rem;
+  margin-bottom: 10rem;
+  border-radius: 4px;
+  background: $background-color;
+  label {
+    font-weight: bold;
+  }
+  input,
+  textarea {
+    margin-top: 5rem;
+  }
+}
+
+.add-day,
+.remove-day {
+  background: $blue;
+  color: white;
+  border: none;
+  padding: 5rem 10rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: $font;
+  margin-top: 5rem;
+  &:hover {
+    background: darken($blue, 10%);
+  }
+}
+
+.remove-day {
+  background: #d20000;
+  &:hover {
+    background: darken(#d20000, 10%);
+  }
+}
+
+.submit-btn {
+  background: $green;
+  color: white;
+  border: none;
+  padding: 15rem 20rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 20rem;
+  font-family: $font;
+  margin-top: 20rem;
+  width: 100%;
+  &:hover {
+    background: darken($green, 10%);
+  }
+}
+
+.message {
+  color: $green;
+  font-weight: bold;
+  margin-bottom: 20rem;
+}
+
+.tours-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rem;
+}
+
+.tour-item {
+  background: white;
+  padding: 15rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10rem rgba(0, 0, 0, 0.1);
+  border-left: 5rem solid $green;
+  &.inactive {
+    border-left-color: #ccc;
+    opacity: 0.7;
+  }
+  h3 {
+    margin: 0 0 10rem 0;
+    color: $text-color;
+    font-size: 24rem;
+  }
+  p {
+    margin: 5rem 0;
+    color: $text-color;
+    font-size: 16rem;
+  }
+  .tour-actions {
+    display: flex;
+    gap: 10rem;
+    align-items: center;
+    form {
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+      label {
+        font-size: 16rem;
+        font-weight: bold;
+      }
+    }
+    .edit-btn {
+      background: $blue;
+      color: white;
+      padding: 5rem 10rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16rem;
+      font-family: $font;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      &:hover {
+        background: darken($blue, 10%);
+      }
+    }
+    .delete-btn {
+      background: #d20000;
+      color: white;
+      border: none;
+      padding: 5rem 10rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: $font;
+      font-size: 16rem;
+      &:hover {
+        background: darken(#d20000, 10%);
+      }
+    }
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: $font;
+}
+
+html {
+  font-size: calc(1vw / 19.2);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  background-color: $background-color;
+  line-height: 1.6;
+}
+
+main {
+  margin-left: 20rem;
+  margin-right: 20rem;
+  padding-top: 120rem; // Для fixed хэдера
+}
+
+.admin-welcome {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  h1 {
+    font-size: 70rem;
+    margin-bottom: 50rem;
+    color: $text-color;
+  }
+  .admin-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30rem;
+    .admin-btn {
+      display: inline-block;
+      padding: 20rem 40rem;
+      background-color: $blue;
+      color: $background-color;
+      text-decoration: none;
+      font-size: 25rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      border-radius: 25px;
+      border: 5rem solid $blue;
+      transition: 0.5s;
+      &:hover {
+        background-color: $background-color;
+        color: $blue;
+      }
+      &:active {
+        transform: scale(0.97);
+      }
+      &:first-child {
+        background-color: $green;
+        border-color: $green;
+        &:hover {
+          background-color: $background-color;
+          color: $green;
+        }
+      }
+    }
+  }
+}

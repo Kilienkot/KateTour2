@@ -1,0 +1,83 @@
+// Переменные
+$accent-color: #f2b705;
+$text-color: #1d1d1d;
+$background-color: #eff1f4;
+$blue: #0066d2;
+$green: #1ca697;
+$font: "Golos Text";
+
+.form {
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: space-between;
+  .form__text {
+    width: 50%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    h2 {
+      width: 70%;
+      font-size: 70rem;
+      line-height: 1;
+    }
+    p {
+      font-size: 25rem;
+      width: 60%;
+      text-transform: uppercase;
+      display: flex;
+      height: 100%;
+      align-items: center;
+      font-weight: 400;
+    }
+  }
+  form {
+    width: 50%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 60rem;
+    gap: 15rem;
+    div {
+      width: 100%;
+      height: auto;
+    }
+    label {
+      font-size: 25rem;
+      padding-left: 5%;
+    }
+    input,
+    select {
+      width: 100%;
+      font-size: 25rem;
+      padding: 3% 5% 3 % 5%;
+      box-sizing: border-box;
+      background-color: transparent;
+      color: $text-color;
+      border-radius: 25px;
+      border: 5rem solid $text-color;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+    button {
+      cursor: pointer;
+      background-color: $text-color;
+      color: $background-color;
+      border-radius: 25px;
+      padding: 3%;
+      font-size: 25rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      border: 5rem solid $text-color;
+      transition: 1s;
+      &:hover {
+        background-color: $background-color;
+        color: $text-color;
+      }
+      &:active {
+        transform: scale(0.97);
+      }
+    }
+  }
+}
