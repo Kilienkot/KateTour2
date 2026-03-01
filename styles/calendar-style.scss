@@ -104,10 +104,20 @@ main {
       padding: 2%;
       border-radius: 25px;
       cursor: pointer;
+      transition: all 0.3s ease;
       h3 {
         font-size: 40rem;
         text-transform: uppercase;
         color: $background-color;
+      }
+      &:hover {
+        transform: scale(1.02);
+      }
+      &:active {
+        transform: scale(0.98);
+      }
+      &.active {
+        box-shadow: 0 0 20rem rgba(0, 0, 0, 0.3);
       }
     }
     #savelong {
@@ -126,10 +136,12 @@ main {
     .trip__item {
       cursor: pointer;
       width: 100%;
+      min-height: 120rem;
       height: auto;
       border-radius: 25px;
       display: flex;
       align-items: center;
+      text-decoration: none;
       .trip__item-date {
         width: 45%;
         color: $background-color;

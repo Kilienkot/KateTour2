@@ -84,6 +84,12 @@ main {
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
 }
+.photo-large img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: fill;
+     object-fit: fill;
+}
 .photo-large:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
@@ -101,6 +107,12 @@ main {
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+}
+.photo-small img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: fill;
+     object-fit: fill;
 }
 .photo-small:hover {
   transform: translateY(-2px);

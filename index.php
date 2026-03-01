@@ -1,3 +1,24 @@
+<?php
+include "lib/db.php";
+
+// Получение ближайших 5 активных туров
+$stmt = $pdo->prepare("SELECT id, short_title, full_title, start_date, end_date FROM tours WHERE is_active = 1 AND start_date >= CURDATE() ORDER BY start_date LIMIT 5");
+$stmt->execute();
+$nearest_tours = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Функция для форматирования даты
+function formatDate($date) {
+    $months = [
+        1 => 'янв', 2 => 'фев', 3 => 'мар', 4 => 'апр', 5 => 'май', 6 => 'июн',
+        7 => 'июл', 8 => 'авг', 9 => 'сен', 10 => 'окт', 11 => 'ноя', 12 => 'дек'
+    ];
+    $timestamp = strtotime($date);
+    $day = date('j', $timestamp);
+    $month = $months[(int)date('n', $timestamp)];
+    return $day . ' ' . $month;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -63,12 +84,12 @@
           <p>возможность увидеть скрытое другим</p>
         </div>
         <div class="why__mini-block">
-          <img src="sources/img/miniblock1.png" alt="Семья" /><a href=""
+          <img src="sources/img/miniblock1.png" alt="Семья" /><a href="#"
             >подробнее о&nbsp;<span>нашей&nbsp;команде</span></a
           >
         </div>
         <div class="why__mini-block">
-          <img src="sources/img/miniblock2.png" alt="Дети" /><a href=""
+          <img src="sources/img/miniblock2.png" alt="Дети" loading="lazy"><a href="https://o-len.ru" target="_blank"
             >сделано на основе <span>клуба&nbsp;о'лень</span></a
           >
         </div>
@@ -77,36 +98,14 @@
       <section class="calendar" id="calendar">
         <h2>ближайшие <span>выезды</span></h2>
         <div class="calendar__main">
-          <a href="#" class="calendar__main-item">
-            <p class="calendar__main-item_date">12 сен - 21 сен</p>
-            <p class="calendar__main-item_description">
-              Незабываемое путишествие по просторам Камчатки
-            </p>
-          </a>
-          <a href="#" class="calendar__main-item">
-            <p class="calendar__main-item_date">12 сен - 21 сен</p>
-            <p class="calendar__main-item_description">
-              Незабываемое путишествие по просторам Камчатки
-            </p>
-          </a>
-          <a href="#" class="calendar__main-item">
-            <p class="calendar__main-item_date">12 сен - 21 сен</p>
-            <p class="calendar__main-item_description">
-              Незабываемое путишествие по просторам Камчатки
-            </p>
-          </a>
-          <a href="#" class="calendar__main-item">
-            <p class="calendar__main-item_date">12 сен - 21 сен</p>
-            <p class="calendar__main-item_description">
-              Незабываемое путишествие по просторам Камчатки
-            </p>
-          </a>
-          <a href="#" class="calendar__main-item">
-            <p class="calendar__main-item_date">12 сен - 21 сен</p>
-            <p class="calendar__main-item_description">
-              Незабываемое путишествие по просторам Камчатки
-            </p>
-          </a>
+          <?php foreach ($nearest_tours as $tour): ?>
+            <a href="trip.php?id=<?php echo $tour['id']; ?>" class="calendar__main-item">
+              <p class="calendar__main-item_date"><?php echo formatDate($tour['start_date']); ?> - <?php echo formatDate($tour['end_date']); ?></p>
+              <p class="calendar__main-item_description">
+                <?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?>
+              </p>
+              <?php endforeach; ?>
+            </a>
           <a href="calendar.php" class="calendar__main-more"
             >Посмотреть <span>все</span> выезды</a
           >

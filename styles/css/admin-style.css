@@ -275,4 +275,12 @@ main {
 .admin-welcome .admin-buttons .admin-btn:first-child:hover {
   background-color: #eff1f4;
   color: #1ca697;
+}
+.admin-welcome .admin-buttons .admin-btn.logout-btn {
+  background-color: #d20000;
+  border-color: #d20000;
+}
+.admin-welcome .admin-buttons .admin-btn.logout-btn:hover {
+  background-color: #eff1f4;
+  color: #d20000;
 }/*# sourceMappingURL=admin-style.css.map */

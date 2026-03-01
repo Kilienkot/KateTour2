@@ -97,11 +97,21 @@ main {
   padding: 2%;
   border-radius: 25px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 .calendar .btns div h3 {
   font-size: 40rem;
   text-transform: uppercase;
   color: #eff1f4;
+}
+.calendar .btns div:hover {
+  transform: scale(1.02);
+}
+.calendar .btns div:active {
+  transform: scale(0.98);
+}
+.calendar .btns div.active {
+  box-shadow: 0 0 20rem rgba(0, 0, 0, 0.3);
 }
 .calendar .btns #savelong {
   background-color: #0066d2;
@@ -119,10 +129,12 @@ main {
 .calendar .trips .trip__item {
   cursor: pointer;
   width: 100%;
+  min-height: 120rem;
   height: auto;
   border-radius: 25px;
   display: flex;
   align-items: center;
+  text-decoration: none;
 }
 .calendar .trips .trip__item .trip__item-date {
   width: 45%;

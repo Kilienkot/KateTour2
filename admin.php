@@ -23,6 +23,7 @@ if (!isset($_COOKIE['id'])) {
         <div class="admin-buttons">
           <a href="add-trip.php" class="admin-btn">Добавить выезд</a>
           <a href="edit-trips.php" class="admin-btn">Редактировать выезды</a>
+          <a href="lib/logout.php" class="admin-btn logout-btn">Выход</a>
         </div>
       </section>
     </main>

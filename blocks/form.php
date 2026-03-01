@@ -1,3 +1,12 @@
+<?php
+include "lib/db.php";
+
+// Получение активных туров для селекта
+$stmt = $pdo->prepare("SELECT id, short_title FROM tours WHERE is_active = 1 ORDER BY short_title");
+$stmt->execute();
+$active_tours = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <section class="form" id="entry">
     <div class="form__text">
         <h2>записаться на&nbsp;<span>выезд</span></h2>
@@ -8,9 +17,9 @@
     </div>
     <form action="" method="POST">
         <select id="tour-select" name="tour" required>
-        <option value="kamchatka">Камчатка</option>
-        <option value="new-year">Новогодний</option>
-        <option value="family">Семейный</option>
+            <?php foreach ($active_tours as $tour): ?>
+                <option value="<?php echo htmlspecialchars($tour['short_title']); ?>"><?php echo htmlspecialchars($tour['short_title']); ?></option>
+            <?php endforeach; ?>
         </select>
         <input
         type="text"

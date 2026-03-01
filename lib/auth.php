@@ -1,9 +1,17 @@
 <?php
+    session_start();
+
+    // Проверяем блокировку
+    if (isset($_SESSION['block_until'][$ip]) && time() < $_SESSION['block_until'][$ip]) {
+        header('Location: /login.php?blocked=1');
+        exit();
+    }
+
     $login = trim($_POST['login']);
     $password = trim($_POST['password']);
 
     // password
-    $salt = 'adminpassword';
+    $salt = '8';
     $password = md5($salt.$password);
 
     //DB
@@ -14,10 +22,25 @@
     $query = $pdo->prepare($sql);
     $query->execute([$login, $password]);
 
+    $ip = $_SERVER['REMOTE_ADDR'];
+
     if ($query->rowCount() == 0) {
-        header('Location: /login.php?error=1');
+        // Увеличиваем счетчик попыток
+        $_SESSION['attempts'][$ip] = ($_SESSION['attempts'][$ip] ?? 0) + 1;
+
+        if ($_SESSION['attempts'][$ip] >= 3) {
+            // Блокируем на 1 минуту
+            $_SESSION['block_until'][$ip] = time() + 60;
+            header('Location: /login.php?blocked=1');
+        } else {
+            header('Location: /login.php?error=1');
+        }
         exit();
     } else {
+        // Сброс счетчика при успешном логине
+        unset($_SESSION['attempts'][$ip]);
+        unset($_SESSION['block_until'][$ip]);
+        
         // Получаем данные пользователя
         $user = $query->fetch(PDO::FETCH_ASSOC);
         

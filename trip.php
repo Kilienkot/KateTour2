@@ -36,7 +36,7 @@ $program = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <main>
         <section class="title">
-            <h2 class="name__tour"><?php echo htmlspecialchars($tour['short_title']); ?></h2>
+            <h2 class="name__tour"><?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?></h2>
             <p class="date__tour">с <?php echo date('d.m.Y', strtotime($tour['start_date'])); ?> по <?php echo date('d.m.Y', strtotime($tour['end_date'])); ?></p>
         </section>
         <section class="photo-gallery">
@@ -45,12 +45,23 @@ $program = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <img src="<?php echo htmlspecialchars($photos[0]['filepath']); ?>" alt="Основное фото" class="img-cover">
                     <div class="photo-caption">Главное фото</div>
                 </div>
+            <?php else: ?>
+                <div class="photo-large">
+                    <img src="sources/img/placeholder.jpg" alt="Фото отсутствует" class="img-cover">
+                    <div class="photo-caption">Фото отсутствует</div>
+                </div>
             <?php endif; ?>
 
-            <?php for ($i = 1; $i < min(5, count($photos)); $i++): ?>
-                <div class="photo-small">
-                    <img src="<?php echo htmlspecialchars($photos[$i]['filepath']); ?>" alt="Фото <?php echo $i + 1; ?>" class="img-cover">
-                </div>
+            <?php for ($i = 1; $i < 5; $i++): ?>
+                <?php if (isset($photos[$i])): ?>
+                    <div class="photo-small">
+                        <img src="<?php echo htmlspecialchars($photos[$i]['filepath']); ?>" alt="Фото <?php echo $i + 1; ?>" class="img-cover">
+                    </div>
+                <?php else: ?>
+                    <div class="photo-small">
+                        <img src="sources/img/placeholder.jpg" alt="Фото отсутствует" class="img-cover">
+                    </div>
+                <?php endif; ?>
             <?php endfor; ?>
         </section>
         <section class="blocks">

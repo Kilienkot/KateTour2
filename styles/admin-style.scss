@@ -280,6 +280,14 @@ main {
           color: $green;
         }
       }
+      &.logout-btn {
+        background-color: #d20000;
+        border-color: #d20000;
+        &:hover {
+          background-color: $background-color;
+          color: #d20000;
+        }
+      }
     }
   }
 }

@@ -27,6 +27,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty]);
     $tour_id = $pdo->lastInsertId();
 
+    // Функция для сжатия изображения
+    function resizeImage($source, $destination, $maxWidth = 800, $maxHeight = 600, $quality = 80) {
+        $imageInfo = getimagesize($source);
+        if (!$imageInfo) return false;
+
+        $width = $imageInfo[0];
+        $height = $imageInfo[1];
+        $mime = $imageInfo['mime'];
+
+        // Рассчитать новые размеры
+        $ratio = min($maxWidth / $width, $maxHeight / $height);
+        if ($ratio > 1) $ratio = 1; // Не увеличивать
+        $newWidth = $width * $ratio;
+        $newHeight = $height * $ratio;
+
+        // Создать изображение
+        switch ($mime) {
+            case 'image/jpeg':
+                $src = imagecreatefromjpeg($source);
+                break;
+            case 'image/png':
+                $src = imagecreatefrompng($source);
+                break;
+            case 'image/gif':
+                $src = imagecreatefromgif($source);
+                break;
+            default:
+                return false;
+        }
+
+        $dst = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+        // Сохранить
+        switch ($mime) {
+            case 'image/jpeg':
+                imagejpeg($dst, $destination, $quality);
+                break;
+            case 'image/png':
+                imagepng($dst, $destination, 9); // Максимальное сжатие для PNG
+                break;
+            case 'image/gif':
+                imagegif($dst, $destination);
+                break;
+        }
+
+        imagedestroy($src);
+        imagedestroy($dst);
+        return true;
+    }
+
     // Обработка фото
     $upload_dir = 'sources/img/tours/';
     if (!is_dir($upload_dir)) {
@@ -39,9 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $filename = uniqid() . '_' . basename($file['name']);
             $filepath = $upload_dir . $filename;
 
-            if (move_uploaded_file($file['tmp_name'], $filepath)) {
+            // Сжать и сохранить
+            if (resizeImage($file['tmp_name'], $filepath)) {
+                $new_size = filesize($filepath);
                 $stmt = $pdo->prepare("INSERT INTO tour_photos (tour_id, filename, original_filename, filepath, file_size, mime_type, is_primary, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$tour_id, $filename, $file['name'], $filepath, $file['size'], $file['type'], $i == 1 ? 1 : 0, $i]);
+                $stmt->execute([$tour_id, $filename, $file['name'], $filepath, $new_size, $file['type'], $i == 1 ? 1 : 0, $i]);
             }
         }
     }

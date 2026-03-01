@@ -15,6 +15,12 @@
       </div>
     <?php endif; ?>
 
+    <?php if (isset($_GET['blocked'])): ?>
+      <script>
+        alert('Вы неправильно ввели пароль 3 раза. Попробуйте снова через минуту');
+      </script>
+    <?php endif; ?>
+
     <main>
       <div class="form">
         <form method="post" action="lib/auth.php">

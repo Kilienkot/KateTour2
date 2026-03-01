@@ -32,29 +32,86 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         $stmt = $pdo->prepare("UPDATE tours SET short_title = ?, full_title = ?, full_description = ?, age = ?, price = ?, start_date = ?, end_date = ?, instructor_name = ?, difficulty = ?, is_active = ? WHERE id = ?");
         $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty, $is_active, $tour_id]);
 
-        // Обработка фото (если загружены новые)
-        $upload_dir = 'sources/img/tours/';
-        for ($i = 1; $i <= 5; $i++) {
-            if (isset($_FILES["photo_$i"]) && $_FILES["photo_$i"]['error'] == 0) {
-                $file = $_FILES["photo_$i"];
-                $filename = uniqid() . '_' . basename($file['name']);
-                $filepath = $upload_dir . $filename;
+    // Функция для сжатия изображения
+    function resizeImage($source, $destination, $maxWidth = 800, $maxHeight = 600, $quality = 80) {
+        $imageInfo = getimagesize($source);
+        if (!$imageInfo) return false;
 
-                if (move_uploaded_file($file['tmp_name'], $filepath)) {
-                    // Удалить старое фото
-                    $stmt = $pdo->prepare("SELECT filepath FROM tour_photos WHERE tour_id = ? AND sort_order = ?");
-                    $stmt->execute([$tour_id, $i]);
-                    $old_photo = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($old_photo && file_exists($old_photo['filepath'])) {
-                        unlink($old_photo['filepath']);
-                    }
+        $width = $imageInfo[0];
+        $height = $imageInfo[1];
+        $mime = $imageInfo['mime'];
 
-                    // Обновить фото
-                    $stmt = $pdo->prepare("UPDATE tour_photos SET filename = ?, original_filename = ?, filepath = ?, file_size = ?, mime_type = ? WHERE tour_id = ? AND sort_order = ?");
-                    $stmt->execute([$filename, $file['name'], $filepath, $file['size'], $file['type'], $tour_id, $i]);
+        // Рассчитать новые размеры
+        $ratio = min($maxWidth / $width, $maxHeight / $height);
+        if ($ratio > 1) $ratio = 1; // Не увеличивать
+        $newWidth = $width * $ratio;
+        $newHeight = $height * $ratio;
+
+        // Создать изображение
+        switch ($mime) {
+            case 'image/jpeg':
+                $src = imagecreatefromjpeg($source);
+                break;
+            case 'image/png':
+                $src = imagecreatefrompng($source);
+                break;
+            case 'image/gif':
+                $src = imagecreatefromgif($source);
+                break;
+            default:
+                return false;
+        }
+
+        $dst = imagecreatetruecolor($newWidth, $newHeight);
+        imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+        // Сохранить
+        switch ($mime) {
+            case 'image/jpeg':
+                imagejpeg($dst, $destination, $quality);
+                break;
+            case 'image/png':
+                imagepng($dst, $destination, 9); // Максимальное сжатие для PNG
+                break;
+            case 'image/gif':
+                imagegif($dst, $destination);
+                break;
+        }
+
+        imagedestroy($src);
+        imagedestroy($dst);
+        return true;
+    }
+
+    // Обработка фото (если загружены новые)
+    $upload_dir = 'sources/img/tours/';
+    if (!is_dir($upload_dir)) {
+        mkdir($upload_dir, 0777, true);
+    }
+
+    for ($i = 1; $i <= 5; $i++) {
+        if (isset($_FILES["photo_$i"]) && $_FILES["photo_$i"]['error'] == 0) {
+            $file = $_FILES["photo_$i"];
+            $filename = uniqid() . '_' . basename($file['name']);
+            $filepath = $upload_dir . $filename;
+
+            // Сжать и сохранить
+            if (resizeImage($file['tmp_name'], $filepath)) {
+                // Удалить старое фото
+                $stmt = $pdo->prepare("SELECT filepath FROM tour_photos WHERE tour_id = ? AND sort_order = ?");
+                $stmt->execute([$tour_id, $i]);
+                $old_photo = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($old_photo && file_exists($old_photo['filepath'])) {
+                    unlink($old_photo['filepath']);
                 }
+
+                // Обновить фото
+                $new_size = filesize($filepath);
+                $stmt = $pdo->prepare("UPDATE tour_photos SET filename = ?, original_filename = ?, filepath = ?, file_size = ?, mime_type = ? WHERE tour_id = ? AND sort_order = ?");
+                $stmt->execute([$filename, $file['name'], $filepath, $new_size, $file['type'], $tour_id, $i]);
             }
         }
+    }
 
         // Обработка программы
         if (isset($_POST['days'])) {
@@ -75,6 +132,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         }
 
         $message = "Тур обновлен!";
+
+        // Отладка загрузки фото
+        for ($i = 1; $i <= 5; $i++) {
+            if (isset($_FILES["photo_$i"])) {
+                $error = $_FILES["photo_$i"]['error'];
+                if ($error == 0) {
+                    $message .= " Фото $i загружено.";
+                } elseif ($error == 4) {
+                    $message .= " Фото $i не выбрано.";
+                } else {
+                    $message .= " Ошибка загрузки фото $i: $error.";
+                }
+            } else {
+                $message .= " Фото $i не установлено.";
+            }
+        }
     } elseif ($action == 'toggle') {
         $tour_id = intval($_POST['tour_id']);
         $is_active = isset($_POST['is_active']) ? 1 : 0;
