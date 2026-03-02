@@ -45,8 +45,8 @@ span {
 }
 
 main {
-  margin-left: 20rem;
-  margin-right: 20rem;
+  margin-left: 90rem;
+  margin-right: 90rem;
 }
 
 .startlife {
@@ -77,10 +77,13 @@ main {
 
 .calendar {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15rem;
+  gap: 30rem;
+}
+.calendar a {
+  text-decoration: none;
 }
 .calendar .btns {
   width: 100%;
@@ -93,65 +96,92 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 5rem solid white;
+  border: 3rem solid #1d1d1d;
+  color: #1d1d1d;
   padding: 2%;
-  border-radius: 25px;
+  border-radius: 15px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 .calendar .btns div h3 {
   font-size: 40rem;
   text-transform: uppercase;
-  color: #eff1f4;
 }
 .calendar .btns div:hover {
   transform: scale(1.02);
+  background-color: #1d1d1d;
+  color: #eff1f4;
 }
 .calendar .btns div:active {
   transform: scale(0.98);
 }
 .calendar .btns div.active {
   box-shadow: 0 0 20rem rgba(0, 0, 0, 0.3);
+  background-color: #1d1d1d;
+  color: #eff1f4;
 }
-.calendar .btns #savelong {
-  background-color: #0066d2;
-}
-.calendar .btns #savesmall {
-  background-color: #1ca697;
-}
-.calendar .trips {
+.calendar .calendar__grid {
   width: 100%;
+  height: 80%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 500px;
+  gap: 12rem;
+}
+.calendar .calendar__card {
+  grid-column: span 3;
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 20rem;
   height: auto;
   display: flex;
   flex-direction: column;
-  gap: 15rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: 0.3s;
 }
-.calendar .trips .trip__item {
-  cursor: pointer;
+.calendar .calendar__card:hover {
+  transform: scale(1.01);
+}
+.calendar .calendar__card .calendar__card-img {
   width: 100%;
-  min-height: 120rem;
+  min-height: 70%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 10px;
+}
+.calendar .calendar__card .calendar__divider {
+  width: 33%;
+  height: 1rem;
+  background-color: #1d1d1d;
+  margin: 10rem auto;
+}
+.calendar .calendar__card .calendar__card-title {
+  width: 100%;
+  font-weight: 600;
+  font-size: 20rem;
+  color: #1d1d1d;
+  text-align: left;
+}
+.calendar .calendar__card .calendar__card-dates {
+  width: 100%;
+  font-weight: 600;
+  font-size: 20rem;
+  color: rgba(29, 29, 29, 0.6);
+  text-align: left;
+}
+.calendar .calendar__card .calendar__card-price {
+  width: 100%;
+  font-weight: 600;
+  font-size: 25rem;
+  color: #1d1d1d;
+  text-align: left;
+}
+.calendar .calendar__card .calendar__card-more {
+  width: 100%;
   height: auto;
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-.calendar .trips .trip__item .trip__item-date {
-  width: 45%;
-  color: #eff1f4;
-  font-size: 50rem;
-  font-weight: 500;
-  text-align: center;
-}
-.calendar .trips .trip__item .trip__item-description {
-  width: 55%;
-  color: #eff1f4;
-  font-size: 40rem;
   font-weight: 400;
-}
-.calendar .trips .long-trip {
-  background-color: #0066d2;
-}
-.calendar .trips .small-trip {
-  background-color: #1ca697;
+  font-size: 16rem;
+  color: #1d1d1d;
+  text-align: center;
 }/*# sourceMappingURL=calendar-style.css.map */

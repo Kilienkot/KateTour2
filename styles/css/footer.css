@@ -14,7 +14,6 @@ footer .footer__block {
   flex-direction: column;
   justify-content: space-between;
   gap: 15rem;
-  margin-top: 60rem;
 }
 footer .footer__block h5 {
   font-size: 35rem;
@@ -24,6 +23,9 @@ footer .footer__block a {
   text-decoration: none;
   color: #eff1f4;
   font-size: 25rem;
+}
+footer .footer__block {
+  margin-top: 60rem;
 }
 footer .footer__block:nth-child(1) {
   grid-column: 2/4;

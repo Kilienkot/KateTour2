@@ -44,7 +44,7 @@ body {
 hr {
   width: 100%;
   height: 6rem;
-  margin: 50rem 0;
+  margin: 100rem 0;
   border: none;
   border-radius: 5px;
   background-color: $text-color;
@@ -56,18 +56,15 @@ span {
 
 // Стили для main
 main {
-  margin-left: 20rem;
-  margin-right: 20rem;
+  margin-left: 90rem;
+  margin-right: 90rem;
 }
 
 // Стили для main
 .main_img {
-  position: relative;
-  width: 100%;
-  height: calc(100dvh - 15rem);
-  margin-top: 15rem;
-  border-radius: 50px;
-  background-image: url("/sources/img/main-img.png");
+  margin-left: -90rem; // Сдвигаем влево на величину основного левого маржина
+  margin-right: -90rem; // Сдвигаем вправо на величину основного правого маржина
+  background-image: url("/sources/img/main_big.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -77,6 +74,8 @@ main {
   gap: 15rem;
   align-items: end;
   padding: 2rem;
+  z-index: 1; // Устанавливаем z-index для правильного позиционирования
+  border-radius: 15rem;
   .text-block {
     grid-column: 2 / 12;
     display: flex;
@@ -110,11 +109,13 @@ main {
   grid-template-rows: repeat(3, 1fr);
   gap: 15rem;
   border-radius: 15px;
+  z-index: 2;
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 15px;
+    box-shadow: 2px 3px 10px #00000025;
   }
   .block_text {
     display: flex;
@@ -127,6 +128,7 @@ main {
     font-size: 30rem;
     font-weight: 200;
     color: $text-color;
+    opacity: 0.6;
     margin: 0;
   }
   .block-1 {
@@ -150,11 +152,11 @@ main {
     border-radius: 15px;
   }
   .block-4 {
-    grid-column: span 7;
+    grid-column: span 6;
     border-radius: 15px;
   }
   .block-5 {
-    grid-column: span 5;
+    grid-column: span 6;
     display: flex;
     flex-direction: column;
     border-radius: 15px;
@@ -178,6 +180,7 @@ main {
       font-size: 40rem;
       font-weight: 600;
       color: $text-color;
+      opacity: 1;
       margin: 0;
     }
     img {
@@ -199,197 +202,230 @@ main {
 
 .why {
   width: 100%;
-  height: auto;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 15rem;
+  height: calc(95dvh - 80rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   h2 {
-    grid-column: 1 / 13;
-    margin-bottom: 15rem;
+    grid-column: span 12;
+    height: 10%;
     font-size: 70rem;
     line-height: 1;
+    // padding: 0 0 50rem 0;
   }
-  .why__big-block {
-    border-radius: 25px;
-    grid-column: 1 / 13;
-    height: auto;
-    background-color: $blue;
-    img {
-      width: 100%;
-      height: 70%;
-      border-radius: 25px;
-      object-fit: cover;
-    }
-    p {
-      color: $background-color;
-      font-size: 60rem;
-      font-weight: 500;
-      width: 100%;
-      height: 30%;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-transform: uppercase;
-    }
-  }
-  .why__mini-block {
-    border-radius: 25px;
-    background-color: $green;
-    height: auto;
+}
+
+.why__item_grid {
+  width: 100%;
+  height: 90%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(2, calc(50% - 12rem));
+  gap: 12rem;
+
+  .why__item {
+    cursor: pointer;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    img {
-      width: 100%;
-      height: 70%;
-      border-radius: 25px;
-      object-fit: cover;
+    padding: 30rem;
+    border-radius: 15px;
+    background-color: $text-color;
+    color: $background-color;
+    overflow: hidden;
+    transition: all 0.3s ease; // Добавляем плавный переход для всех изменений
+
+    &:hover {
+      transform: scale(1.03); // Небольшое увеличение при наведении
+      box-shadow: 0 10rem 20rem rgba(0, 0, 0, 0.2); // Добавляем тень
+      background-color: lighten(
+        $text-color,
+        5%
+      ); // Немного осветляем фон при наведении
+      z-index: 3; // Поднимаем элемент при наведении, чтобы тень была видна поверх других элементов
     }
-    a {
-      line-height: 1;
-      align-content: center;
-      text-decoration: none;
-      color: $background-color;
-      font-size: 60rem;
-      font-weight: 500;
-      width: 100%;
-      height: 30%;
-      text-align: center;
-      text-transform: uppercase;
-      // display: flex;
-      // align-items: center;
-      // justify-content: center;
+
+    // Занимает половину ширины (6/12) и половину высоты (1/2)
+    &:nth-child(1) {
+      grid-column: span 6;
+      background-color: #fff;
+      color: $text-color;
+      border: 2px solid $text-color;
     }
+
+    &:nth-child(2) {
+      grid-column: span 6;
+    }
+
     &:nth-child(3) {
-      grid-column: 1 / 7;
+      grid-column: span 6;
     }
+
     &:nth-child(4) {
-      grid-column: 7 / 13;
+      grid-column: span 6;
+      background-color: #fff;
+      color: $text-color;
+      border: 2px solid $text-color;
+    }
+
+    h3 {
+      font-weight: 700;
+      font-size: 35rem;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-weight: 400;
+      font-size: 20rem;
+      margin: 0 0 20rem 0;
+      line-height: 1;
+    }
+
+    img {
+      width: auto;
+      height: 60%;
+      margin-top: auto;
+      object-fit: cover;
+      border-radius: 15px;
+      margin: 0;
     }
   }
 }
+
+// .calendar {
+//   width: 100%;
+//   height: auto;
+//   h2 {
+//     margin-bottom: 15rem;
+//     font-size: 70rem;
+//     line-height: 1;
+//   }
+//   .calendar__main {
+//     width: 100%;
+//     height: auto;
+//     background-color: $blue;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     border-radius: 25px;
+//     overflow: hidden;
+//   }
+//   .calendar__main-item {
+//     width: 100%;
+//     height: auto;
+//     border-bottom: 6rem solid $background-color;
+//     display: flex;
+//     align-items: center;
+//     cursor: pointer;
+//     text-decoration: none;
+//     .calendar__main-item_date {
+//       width: 45%;
+//       color: $background-color;
+//       font-size: 50rem;
+//       font-weight: 500;
+//       text-align: center;
+//     }
+//     .calendar__main-item_description {
+//       width: 55%;
+//       color: $background-color;
+//       font-size: 40rem;
+//       font-weight: 400;
+//     }
+//   }
+//   .calendar__main-more {
+//     font-size: 70rem;
+//     text-decoration: none;
+//     color: $background-color;
+//     font-weight: 500;
+//   }
+// }
 
 .calendar {
   width: 100%;
-  height: auto;
+  height: calc(95dvh - 80rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  a {
+    text-decoration: none;
+  }
   h2 {
     margin-bottom: 15rem;
     font-size: 70rem;
     line-height: 1;
   }
-  .calendar__main {
+  .calendar__grid {
     width: 100%;
-    height: auto;
-    background-color: $blue;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 25px;
-    overflow: hidden;
+    height: 80%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 12rem;
   }
-  .calendar__main-item {
-    width: 100%;
-    height: auto;
-    border-bottom: 6rem solid $background-color;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    text-decoration: none;
-    .calendar__main-item_date {
-      width: 45%;
-      color: $background-color;
-      font-size: 50rem;
-      font-weight: 500;
-      text-align: center;
-    }
-    .calendar__main-item_description {
-      width: 55%;
-      color: $background-color;
-      font-size: 40rem;
-      font-weight: 400;
-    }
-  }
-  .calendar__main-more {
-    font-size: 70rem;
-    text-decoration: none;
-    color: $background-color;
-    font-weight: 500;
-  }
-}
-
-.form {
-  display: flex;
-  width: 100%;
-  height: auto;
-  justify-content: space-between;
-  .form__text {
-    width: 50%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    h2 {
-      width: 70%;
-      font-size: 70rem;
-      line-height: 1;
-    }
-    p {
-      font-size: 25rem;
-      width: 60%;
-      text-transform: uppercase;
-      display: flex;
-      height: 100%;
-      align-items: center;
-      font-weight: 400;
-    }
-  }
-  form {
-    width: 50%;
+  .calendar__card {
+    grid-column: span 3; // Каждая карточка занимает половину ширины
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20rem;
     height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-bottom: 60rem;
-    gap: 15rem;
-    div {
+    align-items: flex-start; // Все элементы по левому краю
+
+    .calendar__card-img {
+      width: 100%;
+      min-height: 70%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .calendar__divider {
+      width: 33%;
+      height: 1rem;
+      background-color: $text-color;
+      margin: 10rem auto; // Центрируем элемент
+    }
+
+    .calendar__card-title {
+      width: 100%;
+      font-weight: 600;
+      font-size: 20rem;
+      color: $text-color;
+      text-align: left;
+    }
+
+    .calendar__card-dates {
+      width: 100%;
+      font-weight: 600;
+      font-size: 20rem;
+      color: rgba($text-color, 0.6); // Опacity 0.6
+      text-align: left;
+    }
+
+    .calendar__card-price {
+      width: 100%;
+      font-weight: 600;
+      font-size: 25rem;
+      color: $text-color;
+      text-align: left;
+    }
+
+    .calendar__card-more {
       width: 100%;
       height: auto;
-    }
-    label {
-      font-size: 25rem;
-      padding-left: 5%;
-    }
-    input,
-    select {
-      width: 100%;
-      font-size: 25rem;
-      padding: 3% 5% 3 % 5%;
-      box-sizing: border-box;
-      background-color: transparent;
-      color: $text-color;
-      border-radius: 25px;
-      border: 5rem solid $text-color;
       font-weight: 400;
-      text-transform: uppercase;
+      font-size: 16rem;
+      color: $text-color;
+      text-align: center; // Центрируем текст
     }
-    button {
-      cursor: pointer;
-      background-color: $text-color;
-      color: $background-color;
-      border-radius: 25px;
-      padding: 3%;
-      font-size: 25rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      border: 5rem solid $text-color;
-      transition: 1s;
-      &:hover {
-        background-color: $background-color;
-        color: $text-color;
-      }
-      &:active {
-        transform: scale(0.97);
-      }
-    }
+  }
+  .calendar__all {
+    display: flex;
+    align-items: center;
+    width: auto;
+    font-weight: 600;
+    font-size: 30rem;
+    color: $text-color;
   }
 }

@@ -1,10 +1,10 @@
 <?php
 include "lib/db.php";
 
-// Получение активных туров
-$stmt = $pdo->prepare("SELECT id, short_title, full_title, start_date, end_date FROM tours WHERE is_active = 1 ORDER BY start_date");
+// Получение ближайших 4 активных туров с информацией о цене
+$stmt = $pdo->prepare("SELECT id, short_title, full_title, start_date, end_date, price FROM tours WHERE is_active = 1 ORDER BY start_date LIMIT 4");
 $stmt->execute();
-$tours = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$nearest_tours = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Функция для форматирования даты
 function formatDate($date) {
@@ -54,13 +54,15 @@ function getTripClass($start_date, $end_date) {
                     <h3>Оставить <span>короткие поездки</span></h3>
                 </div>
             </div>
-            <div class="trips">
-                <?php foreach ($tours as $tour): ?>
-                    <a href="trip.php?id=<?php echo $tour['id']; ?>" class="trip__item <?php echo getTripClass($tour['start_date'], $tour['end_date']); ?>">
-                        <p class="trip__item-date"><?php echo formatDate($tour['start_date']); ?> - <?php echo formatDate($tour['end_date']); ?></p>
-                        <p class="trip__item-description">
-                            <?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?>
-                        </p>
+            <div class="calendar__grid">
+                <?php foreach ($nearest_tours as $tour): ?>
+                    <a href="trip.php?id=<?php echo $tour['id']; ?>" class="calendar__card">
+                    <img src="sources/img/tour_example.jpg" alt="Тур" class="calendar__card-img">
+                    <div class="calendar__divider"></div>
+                    <h3 class="calendar__card-title"><?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?></h3>
+                    <p class="calendar__card-dates"><?php echo formatDate($tour['start_date']); ?> - <?php echo formatDate($tour['end_date']); ?></p>
+                    <p class="calendar__card-price"><?php echo number_format($tour['price'], 0, '', ' '); ?> ₽</p>
+                    <p class="calendar__card-more">Нажми, чтоб узнать больше</p>
                     </a>
                 <?php endforeach; ?>
             </div>

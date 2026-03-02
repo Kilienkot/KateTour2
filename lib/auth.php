@@ -11,8 +11,8 @@
     $password = trim($_POST['password']);
 
     // password
-    $salt = '8';
-    $password = md5($salt.$password);
+    // $salt = '8';
+    // $password = md5($salt.$password);
 
     //DB
         require "db.php";
@@ -30,7 +30,7 @@
 
         if ($_SESSION['attempts'][$ip] >= 3) {
             // Блокируем на 1 минуту
-            $_SESSION['block_until'][$ip] = time() + 60;
+            $_SESSION['block_until'][$ip] = time() + 1;
             header('Location: /login.php?blocked=1');
         } else {
             header('Location: /login.php?error=1');

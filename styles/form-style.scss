@@ -44,36 +44,39 @@ $font: "Golos Text";
       height: auto;
     }
     label {
-      font-size: 25rem;
+      font-size: 20rem;
       padding-left: 5%;
+      line-height: 1;
+      text-transform: uppercase;
+      opacity: 0.6;
     }
     input,
     select {
       width: 100%;
       font-size: 25rem;
-      padding: 3% 5% 3 % 5%;
+      padding: 3% 5% 3% 5%;
       box-sizing: border-box;
       background-color: transparent;
       color: $text-color;
-      border-radius: 25px;
-      border: 5rem solid $text-color;
+      border-radius: 10px;
+      border: 3rem solid $text-color;
       font-weight: 400;
       text-transform: uppercase;
     }
     button {
       cursor: pointer;
-      background-color: $text-color;
-      color: $background-color;
-      border-radius: 25px;
+      background-color: $background-color;
+      color: $text-color;
+      border-radius: 10px;
       padding: 3%;
       font-size: 25rem;
       font-weight: 600;
       text-transform: uppercase;
-      border: 5rem solid $text-color;
-      transition: 1s;
+      border: 3rem solid $accent-color;
+      transition: 0.5s;
       &:hover {
-        background-color: $background-color;
-        color: $text-color;
+        background-color: $accent-color;
+        color: $background-color;
       }
       &:active {
         transform: scale(0.97);

@@ -38,37 +38,40 @@
   height: auto;
 }
 .form form label {
-  font-size: 25rem;
+  font-size: 20rem;
   padding-left: 5%;
+  line-height: 1;
+  text-transform: uppercase;
+  opacity: 0.6;
 }
 .form form input,
 .form form select {
   width: 100%;
   font-size: 25rem;
-  padding: 3% 5% 3%;
+  padding: 3% 5% 3% 5%;
   box-sizing: border-box;
   background-color: transparent;
   color: #1d1d1d;
-  border-radius: 25px;
-  border: 5rem solid #1d1d1d;
+  border-radius: 10px;
+  border: 3rem solid #1d1d1d;
   font-weight: 400;
   text-transform: uppercase;
 }
 .form form button {
   cursor: pointer;
-  background-color: #1d1d1d;
-  color: #eff1f4;
-  border-radius: 25px;
+  background-color: #eff1f4;
+  color: #1d1d1d;
+  border-radius: 10px;
   padding: 3%;
   font-size: 25rem;
   font-weight: 600;
   text-transform: uppercase;
-  border: 5rem solid #1d1d1d;
-  transition: 1s;
+  border: 3rem solid #f2b705;
+  transition: 0.5s;
 }
 .form form button:hover {
-  background-color: #eff1f4;
-  color: #1d1d1d;
+  background-color: #f2b705;
+  color: #eff1f4;
 }
 .form form button:active {
   transform: scale(0.97);

@@ -55,8 +55,8 @@ span {
 }
 
 main {
-  margin-left: 20rem;
-  margin-right: 20rem;
+  margin-left: 90rem;
+  margin-right: 90rem;
 }
 
 .startlife {
@@ -86,10 +86,14 @@ main {
 
 .calendar {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15rem;
+  gap: 30rem;
+
+  a {
+    text-decoration: none;
+  }
   .btns {
     width: 100%;
     height: auto;
@@ -100,67 +104,99 @@ main {
       display: flex;
       justify-content: center;
       align-items: center;
-      border: 5rem solid white;
+      border: 3rem solid $text-color;
+      color: $text-color;
       padding: 2%;
-      border-radius: 25px;
+      border-radius: 15px;
       cursor: pointer;
       transition: all 0.3s ease;
       h3 {
         font-size: 40rem;
         text-transform: uppercase;
-        color: $background-color;
       }
       &:hover {
         transform: scale(1.02);
+        background-color: $text-color;
+        color: $background-color;
       }
       &:active {
         transform: scale(0.98);
       }
       &.active {
         box-shadow: 0 0 20rem rgba(0, 0, 0, 0.3);
+        background-color: $text-color;
+        color: $background-color;
       }
     }
-    #savelong {
-      background-color: $blue;
-    }
-    #savesmall {
-      background-color: $green;
-    }
   }
-  .trips {
+  .calendar__grid {
     width: 100%;
+    height: 80%;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 500px;
+    gap: 12rem;
+  }
+  .calendar__card {
+    grid-column: span 3; // Каждая карточка занимает половину ширины
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20rem;
     height: auto;
     display: flex;
     flex-direction: column;
-    gap: 15rem;
-    .trip__item {
-      cursor: pointer;
+    justify-content: space-between;
+    align-items: flex-start; // Все элементы по левому краю
+    transition: 0.3s;
+    &:hover {
+      transform: scale(1.01);
+    }
+
+    .calendar__card-img {
       width: 100%;
-      min-height: 120rem;
+      min-height: 70%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .calendar__divider {
+      width: 33%;
+      height: 1rem;
+      background-color: $text-color;
+      margin: 10rem auto; // Центрируем элемент
+    }
+
+    .calendar__card-title {
+      width: 100%;
+      font-weight: 600;
+      font-size: 20rem;
+      color: $text-color;
+      text-align: left;
+    }
+
+    .calendar__card-dates {
+      width: 100%;
+      font-weight: 600;
+      font-size: 20rem;
+      color: rgba($text-color, 0.6); // Опacity 0.6
+      text-align: left;
+    }
+
+    .calendar__card-price {
+      width: 100%;
+      font-weight: 600;
+      font-size: 25rem;
+      color: $text-color;
+      text-align: left;
+    }
+
+    .calendar__card-more {
+      width: 100%;
       height: auto;
-      border-radius: 25px;
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      .trip__item-date {
-        width: 45%;
-        color: $background-color;
-        font-size: 50rem;
-        font-weight: 500;
-        text-align: center;
-      }
-      .trip__item-description {
-        width: 55%;
-        color: $background-color;
-        font-size: 40rem;
-        font-weight: 400;
-      }
-    }
-    .long-trip {
-      background-color: $blue;
-    }
-    .small-trip {
-      background-color: $green;
+      font-weight: 400;
+      font-size: 16rem;
+      color: $text-color;
+      text-align: center; // Центрируем текст
     }
   }
 }
