@@ -116,7 +116,7 @@ function formatDate($date) {
         <h2>ближайшие <span>выезды</span></h2>
         <div class="calendar__grid">
           <?php foreach ($nearest_tours as $tour): ?>
-            <a href="trip.php?id=<?php echo $tour['id']; ?>" class="calendar__card">
+            <a href="trip-new.php?id=<?php echo $tour['id']; ?>" class="calendar__card">
               <img src="sources/img/tour_example.jpg" alt="Тур" class="calendar__card-img">
               <div class="calendar__divider"></div>
               <h3 class="calendar__card-title"><?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?></h3>
