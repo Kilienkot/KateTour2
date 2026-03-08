@@ -17,11 +17,42 @@
     //DB
         require "db.php";
 
-    //Auth
-    $sql = 'SELECT * FROM users WHERE login = ? AND password_hash = ?';
-    $query = $pdo->prepare($sql);
-    $query->execute([$login, $password]);
+//Auth
+$sql = 'SELECT * FROM users WHERE login = ?';
+$query = $pdo->prepare($sql);
+$query->execute([$login]);
+$user = $query->fetch(PDO::FETCH_ASSOC);
 
+if ($user && password_verify($password, $user['password_hash'])) {
+    // Сброс счетчика при успешном логине
+    unset($_SESSION['attempts'][$ip]);
+    unset($_SESSION['block_until'][$ip]);
+
+    // Получаем данные пользователя
+    $name = $user['username'] ?? '';
+    $id = $user['id'];
+
+// Устанавливаем куки (логин, имя и роль раздельно)
+setcookie('login', $login, time() + 3600 * 24 * 7, "/");
+setcookie('name', $name, time() + 3600 * 24 * 7, "/");
+setcookie('id', $id, time() + 3600 * 24 * 7, "/");
+setcookie('role', $user['role'], time() + 3600 * 24 * 7, "/");
+
+header('Location: /admin.php');
+    exit(); // Обязательно завершаем выполнение скрипта
+} else {
+    // Увеличиваем счетчик попыток
+    $_SESSION['attempts'][$ip] = ($_SESSION['attempts'][$ip] ?? 0) + 1;
+
+    if ($_SESSION['attempts'][$ip] >= 3) {
+        // Блокируем на 1 минуту
+        $_SESSION['block_until'][$ip] = time() + 1;
+        header('Location: /login.php?blocked=1');
+    } else {
+        header('Location: /login.php?error=1');
+    }
+    exit();
+}
     $ip = $_SERVER['REMOTE_ADDR'];
 
     if ($query->rowCount() == 0) {
@@ -52,15 +83,20 @@
         // Создаем переменную name с именем пользователя
         $name = $user['username'];
 
-        // Создаём переменную с id
-        $id = $user['id'];
+// Создаём переменную с id
+$id = $user['id'];
 
-        // Устанавливаем куки (логин и имя раздельно)
-        setcookie('login', $login, time() + 3600 * 24 * 7, "/");
-        setcookie('name', $name, time() + 3600 * 24 * 7, "/");
-        setcookie('id', $id, time() + 3600 * 24 * 7, "/");
-        
-        header('Location: /admin.php');
+// Устанавливаем куки (логин и имя раздельно)
+setcookie('login', $login, time() + 3600 * 24 * 7, "/");
+setcookie('name', $name, time() + 3600 * 24 * 7, "/");
+setcookie('id', $id, time() + 3600 * 24 * 7, "/");
+
+// Проверяем роль пользователя
+if ($user['role'] == 1) {
+    header('Location: /user-panel.php');
+} else {
+    header('Location: /admin.php');
+}
         exit(); // Обязательно завершаем выполнение скрипта
     }
 

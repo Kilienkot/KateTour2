@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Tektur:wght@400..900&display=swap");
 @import url("/styles/css/header.css");
 @import url("/styles/css/footer.css");
+@import url("/styles/css/form-style.css");
 
 // Переменные
 $accent-color: #f2b705;
@@ -17,16 +18,16 @@ $font: "Golos Text";
 }
 
 html {
-  font-size: calc(1vw / 19.2);
+  font-size: 0.0520833333vw;
   scroll-behavior: smooth;
-}
-
-body {
-  background-color: $background-color;
 }
 
 span {
   color: $accent-color;
+}
+
+body {
+  background-color: #eff1f4;
 }
 
 .error-message {
@@ -52,34 +53,57 @@ span {
   transform: translateX(-50%) translateY(0);
 }
 
+.success-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background-color: #4caf50;
+  color: white;
+  padding: 20px 40px;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border: 2px solid #45a049;
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.success-message.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 main {
   width: 100%;
-  height: 100dvh;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   padding-top: 100rem;
-  padding-bottom: 60rem;
 }
 
 .form {
   box-sizing: border-box;
-  width: 30%;
+  width: 100%;
   height: auto;
+  padding: 100rem $ls-padd;
   display: flex;
   justify-content: center;
   form {
-    width: 100%;
+    width: 40%;
     height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30rem;
+    gap: 60rem;
     h1 {
       font-weight: 600;
       font-size: 40rem;
-      color: $text-color;
+      color: #000;
       width: 100%;
       text-align: center;
     }
@@ -87,16 +111,16 @@ main {
       cursor: pointer;
       width: 50%;
       height: 60rem;
-      background-color: $text-color;
+      background-color: #000;
       color: #fff;
       border-radius: 12rem;
-      border: 1px solid $text-color;
+      border: 1px solid #000;
       font-weight: 500;
       font-size: 24rem;
       transition: 0.5s;
       &:hover {
         background-color: transparent;
-        color: $text-color;
+        color: #000;
       }
     }
     p {
@@ -107,7 +131,7 @@ main {
       font-size: 24rem;
     }
     a {
-      color: $text-color;
+      color: #000;
       text-decoration: none;
       font-weight: 500;
       font-size: 24rem;
@@ -132,15 +156,15 @@ main {
   width: 100%;
   height: auto;
   gap: 15rem;
-  border-bottom: 1px solid $text-color;
+  border-bottom: 1px solid #000;
   background: none;
   label {
-    color: $text-color;
+    color: #000;
     font-weight: 500;
     font-size: 24rem;
   }
   input {
-    color: $text-color;
+    color: #000;
     font-weight: 500;
     font-size: 24rem;
     background-color: transparent;
@@ -150,7 +174,6 @@ main {
     }
   }
 }
-
 .form-footer {
   width: 100%;
   text-align: center;

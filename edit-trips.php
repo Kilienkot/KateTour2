@@ -32,86 +32,86 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         $stmt = $pdo->prepare("UPDATE tours SET short_title = ?, full_title = ?, full_description = ?, age = ?, price = ?, start_date = ?, end_date = ?, instructor_name = ?, difficulty = ?, is_active = ? WHERE id = ?");
         $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty, $is_active, $tour_id]);
 
-    // Функция для сжатия изображения
-    function resizeImage($source, $destination, $maxWidth = 800, $maxHeight = 600, $quality = 80) {
-        $imageInfo = getimagesize($source);
-        if (!$imageInfo) return false;
+        // Функция для сжатия изображения
+        function resizeImage($source, $destination, $maxWidth = 800, $maxHeight = 600, $quality = 80) {
+            $imageInfo = getimagesize($source);
+            if (!$imageInfo) return false;
 
-        $width = $imageInfo[0];
-        $height = $imageInfo[1];
-        $mime = $imageInfo['mime'];
+            $width = $imageInfo[0];
+            $height = $imageInfo[1];
+            $mime = $imageInfo['mime'];
 
-        // Рассчитать новые размеры
-        $ratio = min($maxWidth / $width, $maxHeight / $height);
-        if ($ratio > 1) $ratio = 1; // Не увеличивать
-        $newWidth = $width * $ratio;
-        $newHeight = $height * $ratio;
+            // Рассчитать новые размеры
+            $ratio = min($maxWidth / $width, $maxHeight / $height);
+            if ($ratio > 1) $ratio = 1; // Не увеличивать
+            $newWidth = $width * $ratio;
+            $newHeight = $height * $ratio;
 
-        // Создать изображение
-        switch ($mime) {
-            case 'image/jpeg':
-                $src = imagecreatefromjpeg($source);
-                break;
-            case 'image/png':
-                $src = imagecreatefrompng($source);
-                break;
-            case 'image/gif':
-                $src = imagecreatefromgif($source);
-                break;
-            default:
-                return false;
+            // Создать изображение
+            switch ($mime) {
+                case 'image/jpeg':
+                    $src = imagecreatefromjpeg($source);
+                    break;
+                case 'image/png':
+                    $src = imagecreatefrompng($source);
+                    break;
+                case 'image/gif':
+                    $src = imagecreatefromgif($source);
+                    break;
+                default:
+                    return false;
+            }
+
+            $dst = imagecreatetruecolor($newWidth, $newHeight);
+            imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+            // Сохранить
+            switch ($mime) {
+                case 'image/jpeg':
+                    imagejpeg($dst, $destination, $quality);
+                    break;
+                case 'image/png':
+                    imagepng($dst, $destination, 9); // Максимальное сжатие для PNG
+                    break;
+                case 'image/gif':
+                    imagegif($dst, $destination);
+                    break;
+            }
+
+            imagedestroy($src);
+            imagedestroy($dst);
+            return true;
         }
 
-        $dst = imagecreatetruecolor($newWidth, $newHeight);
-        imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-
-        // Сохранить
-        switch ($mime) {
-            case 'image/jpeg':
-                imagejpeg($dst, $destination, $quality);
-                break;
-            case 'image/png':
-                imagepng($dst, $destination, 9); // Максимальное сжатие для PNG
-                break;
-            case 'image/gif':
-                imagegif($dst, $destination);
-                break;
+        // Обработка фото (если загружены новые)
+        $upload_dir = 'sources/img/tours/';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
         }
 
-        imagedestroy($src);
-        imagedestroy($dst);
-        return true;
-    }
+        for ($i = 1; $i <= 5; $i++) {
+            if (isset($_FILES["photo_$i"]) && $_FILES["photo_$i"]['error'] == 0) {
+                $file = $_FILES["photo_$i"];
+                $filename = uniqid() . '_' . basename($file['name']);
+                $filepath = $upload_dir . $filename;
 
-    // Обработка фото (если загружены новые)
-    $upload_dir = 'sources/img/tours/';
-    if (!is_dir($upload_dir)) {
-        mkdir($upload_dir, 0777, true);
-    }
+                // Сжать и сохранить
+                if (resizeImage($file['tmp_name'], $filepath)) {
+                    // Удалить старое фото
+                    $stmt = $pdo->prepare("SELECT filepath FROM tour_photos WHERE tour_id = ? AND sort_order = ?");
+                    $stmt->execute([$tour_id, $i]);
+                    $old_photo = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($old_photo && file_exists($old_photo['filepath'])) {
+                        unlink($old_photo['filepath']);
+                    }
 
-    for ($i = 1; $i <= 5; $i++) {
-        if (isset($_FILES["photo_$i"]) && $_FILES["photo_$i"]['error'] == 0) {
-            $file = $_FILES["photo_$i"];
-            $filename = uniqid() . '_' . basename($file['name']);
-            $filepath = $upload_dir . $filename;
-
-            // Сжать и сохранить
-            if (resizeImage($file['tmp_name'], $filepath)) {
-                // Удалить старое фото
-                $stmt = $pdo->prepare("SELECT filepath FROM tour_photos WHERE tour_id = ? AND sort_order = ?");
-                $stmt->execute([$tour_id, $i]);
-                $old_photo = $stmt->fetch(PDO::FETCH_ASSOC);
-                if ($old_photo && file_exists($old_photo['filepath'])) {
-                    unlink($old_photo['filepath']);
+                    // Обновить фото
+                    $new_size = filesize($filepath);
+                    $stmt = $pdo->prepare("UPDATE tour_photos SET filename = ?, original_filename = ?, filepath = ?, file_size = ?, mime_type = ? WHERE tour_id = ? AND sort_order = ?");
+                    $stmt->execute([$filename, $file['name'], $filepath, $new_size, $file['type'], $tour_id, $i]);
                 }
-
-                // Обновить фото
-                $new_size = filesize($filepath);
-                $stmt = $pdo->prepare("UPDATE tour_photos SET filename = ?, original_filename = ?, filepath = ?, file_size = ?, mime_type = ? WHERE tour_id = ? AND sort_order = ?");
-                $stmt->execute([$filename, $file['name'], $filepath, $new_size, $file['type'], $tour_id, $i]);
             }
         }
-    }
 
         // Обработка программы
         if (isset($_POST['days'])) {
@@ -128,6 +128,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
 
                 $stmt = $pdo->prepare("INSERT INTO tour_program (tour_id, day_number, short_title, full_description, sort_order) VALUES (?, ?, ?, ?, ?)");
                 $stmt->execute([$tour_id, $day_number, $short_title, $full_description, $day_number]);
+            }
+        }
+
+        // Обработка включений
+        if (isset($_POST['inclusions'])) {
+            // Удалить старые включения
+            $stmt = $pdo->prepare("DELETE FROM tour_inclusions WHERE tour_id = ?");
+            $stmt->execute([$tour_id]);
+
+            // Вставить новые
+            $inclusions = $_POST['inclusions'];
+            foreach ($inclusions as $index => $inclusion) {
+                $title = trim($inclusion['title']);
+                $description = trim($inclusion['description']);
+
+                if (!empty($title)) {
+                    $stmt = $pdo->prepare("INSERT INTO tour_inclusions (tour_id, title, description, sort_order) VALUES (?, ?, ?, ?)");
+                    $stmt->execute([$tour_id, $title, $description, $index + 1]);
+                }
             }
         }
 
@@ -195,6 +214,11 @@ if (isset($_GET['edit'])) {
         $stmt = $pdo->prepare("SELECT * FROM tour_program WHERE tour_id = ? ORDER BY day_number");
         $stmt->execute([$tour_id]);
         $edit_tour['program'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Включения
+        $stmt = $pdo->prepare("SELECT * FROM tour_inclusions WHERE tour_id = ? ORDER BY sort_order");
+        $stmt->execute([$tour_id]);
+        $edit_tour['inclusions'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 ?>
@@ -321,6 +345,28 @@ if (isset($_GET['edit'])) {
                         <button type="button" class="add-day" onclick="addDay()">Добавить день</button>
                     </div>
 
+                    <div class="form-group">
+                        <label>Что входит в стоимость</label>
+                        <div id="inclusions">
+                            <?php if (count($edit_tour['inclusions']) > 0): ?>
+                                <?php foreach ($edit_tour['inclusions'] as $index => $inclusion): ?>
+                                    <div class="inclusion-item">
+                                        <input type="text" name="inclusions[<?php echo $index; ?>][title]" value="<?php echo htmlspecialchars($inclusion['title']); ?>" placeholder="Название включения" required>
+                                        <textarea name="inclusions[<?php echo $index; ?>][description]" placeholder="Описание" rows="2"><?php echo htmlspecialchars($inclusion['description'] ?: ''); ?></textarea>
+                                        <button type="button" class="remove-day" onclick="removeInclusion(this)">Удалить</button>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="inclusion-item">
+                                    <input type="text" name="inclusions[0][title]" placeholder="Название включения" required>
+                                    <textarea name="inclusions[0][description]" placeholder="Описание" rows="2"></textarea>
+                                    <button type="button" class="remove-day" onclick="removeInclusion(this)">Удалить</button>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <button type="button" class="add-day" onclick="addInclusion()">Добавить включение</button>
+                    </div>
+
                     <button type="submit" class="submit-btn">Обновить тур</button>
                     <a href="edit-trips.php" class="back-link">Отмена</a>
                 </form>
@@ -362,6 +408,7 @@ if (isset($_GET['edit'])) {
 
     <script>
         let dayCount = <?php echo count($edit_tour['program'] ?? []); ?>;
+        let inclusionCount = <?php echo count($edit_tour['inclusions'] ?? []); ?>;
 
         function addDay() {
             dayCount++;
@@ -389,6 +436,34 @@ if (isset($_GET['edit'])) {
                 day.querySelector('textarea').name = `days[${index}][full_description]`;
             });
             dayCount = days.length;
+        }
+
+function addInclusion() {
+    if (inclusionCount >= 5) {
+        alert('Нельзя добавить более 5 включений');
+        return;
+    }
+    inclusionCount++;
+    const container = document.getElementById('inclusions');
+    const inclusionDiv = document.createElement('div');
+    inclusionDiv.className = 'inclusion-item';
+    inclusionDiv.innerHTML = `
+        <input type="text" name="inclusions[${inclusionCount-1}][title]" placeholder="Название включения" required>
+        <textarea name="inclusions[${inclusionCount-1}][description]" placeholder="Описание" rows="2"></textarea>
+        <button type="button" class="remove-day" onclick="removeInclusion(this)">Удалить</button>
+    `;
+    container.appendChild(inclusionDiv);
+}
+
+        function removeInclusion(button) {
+            button.parentElement.remove();
+            // Пересчитать номера включений
+            const inclusions = document.querySelectorAll('.inclusion-item');
+            inclusions.forEach((inclusion, index) => {
+                inclusion.querySelector('input[type="text"]').name = `inclusions[${index}][title]`;
+                inclusion.querySelector('textarea').name = `inclusions[${index}][description]`;
+            });
+            inclusionCount = inclusions.length;
         }
     </script>
 </body>

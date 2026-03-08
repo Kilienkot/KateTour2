@@ -1,8 +1,8 @@
 <?php
 include "lib/db.php";
 
-// Получение ближайших 4 активных туров с информацией о цене
-$stmt = $pdo->prepare("SELECT id, short_title, full_title, start_date, end_date, price FROM tours WHERE is_active = 1 ORDER BY start_date LIMIT 4");
+// Получение ближайших 4 активных туров с информацией о цене и фото
+$stmt = $pdo->prepare("SELECT t.id, t.short_title, t.full_title, t.start_date, t.end_date, t.price, tp.filepath FROM tours t LEFT JOIN tour_photos tp ON t.id = tp.tour_id AND tp.is_primary = 1 WHERE t.is_active = 1 ORDER BY t.start_date LIMIT 4");
 $stmt->execute();
 $nearest_tours = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -117,7 +117,7 @@ function formatDate($date) {
         <div class="calendar__grid">
           <?php foreach ($nearest_tours as $tour): ?>
             <a href="trip-new.php?id=<?php echo $tour['id']; ?>" class="calendar__card">
-              <img src="sources/img/tour_example.jpg" alt="Тур" class="calendar__card-img">
+              <img src="<?php echo htmlspecialchars($tour['filepath'] ?: 'sources/img/placeholder.jpg'); ?>" alt="Основное фото" class="calendar__card-img">
               <div class="calendar__divider"></div>
               <h3 class="calendar__card-title"><?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?></h3>
               <p class="calendar__card-dates"><?php echo formatDate($tour['start_date']); ?> - <?php echo formatDate($tour['end_date']); ?></p>

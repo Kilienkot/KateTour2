@@ -4,6 +4,21 @@ if (!isset($_COOKIE['id'])) {
     header("Location: login.php");
     exit();
 }
+
+// Проверка роли пользователя
+if (!isset($_COOKIE['role']) || $_COOKIE['role'] < 2) {
+    header("Location: user-panel.php");
+    exit();
+}
+
+// Подключение к БД
+require "lib/db.php";
+
+// Проверка наличия 3 уровней доступа
+$stmt = $pdo->prepare("SELECT COUNT(DISTINCT role) as role_count FROM users");
+$stmt->execute();
+$role_count = $_COOKIE['role'];
+$show_user_management = $role_count >= 3;
 ?>
 
 <!DOCTYPE html>
@@ -23,6 +38,9 @@ if (!isset($_COOKIE['id'])) {
         <div class="admin-buttons">
           <a href="add-trip.php" class="admin-btn">Добавить выезд</a>
           <a href="edit-trips.php" class="admin-btn">Редактировать выезды</a>
+          <?php if ($show_user_management): ?>
+            <a href="manage-users.php" class="admin-btn">Управление пользователями</a>
+          <?php endif; ?>
           <a href="lib/logout.php" class="admin-btn logout-btn">Выход</a>
         </div>
       </section>

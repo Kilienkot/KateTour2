@@ -198,6 +198,7 @@ $font: "Golos Text";
       background: #d20000;
       color: white;
       border: none;
+      width: 100%;
       padding: 5rem 10rem;
       border-radius: 4px;
       cursor: pointer;
@@ -249,6 +250,11 @@ main {
     margin-bottom: 50rem;
     color: $text-color;
   }
+  p {
+    font-size: 30rem;
+    color: $text-color;
+    font-weight: 500;
+  }
   .admin-buttons {
     display: flex;
     justify-content: center;
@@ -289,5 +295,21 @@ main {
         }
       }
     }
+  }
+}
+
+.delete-btn {
+  background: #d20000;
+  color: white;
+  border: none;
+  padding: 15rem 20rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 20rem;
+  font-family: $font;
+  margin-top: 20rem;
+  width: 30%;
+  &:hover {
+    background: darken(#d20000, 10%);
   }
 }

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="ru">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/css/login.css" />
-    <title>Вход</title>
-  </head>
+    <title>Авторизация</title>
+</head>
 
-  <body>
+<body>
 
     <?php if (isset($_GET['error'])): ?>
       <div class="error-message">
@@ -20,7 +20,9 @@
         alert('Вы неправильно ввели пароль 3 раза. Попробуйте снова через минуту');
       </script>
     <?php endif; ?>
-
+    
+    <?php include("blocks/header.php") ?>
+    
     <main>
       <div class="form">
         <form method="post" action="lib/auth.php">
@@ -28,7 +30,7 @@
           <div class="form-input">
             <label for="login">Логин</label>
             <input
-              type="login"
+              type="text"
               id="login"
               name="login"
               placeholder="Ваш логин"
@@ -51,7 +53,9 @@
         </form>
       </div>
     </main>
-    
+
+    <?php include("blocks/footer.php") ?>
+
     <script src="main.js"></script>
     <script>
       // Проверяем наличие плашки
@@ -72,5 +76,5 @@
         }, 2000);
       }
     </script>
-  </body>
+</body>
 </html>

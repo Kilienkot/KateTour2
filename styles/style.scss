@@ -345,7 +345,7 @@ main {
   height: calc(95dvh - 80rem);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 30rem;
   a {
     text-decoration: none;
   }
@@ -371,11 +371,12 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    max-height: 90%;
     align-items: flex-start; // Все элементы по левому краю
 
     .calendar__card-img {
       width: 100%;
-      min-height: 70%;
+      height: 60%;
       object-fit: cover;
       border-radius: 10px;
     }

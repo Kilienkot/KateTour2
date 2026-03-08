@@ -193,6 +193,7 @@
   background: #d20000;
   color: white;
   border: none;
+  width: 100%;
   padding: 5rem 10rem;
   border-radius: 4px;
   cursor: pointer;
@@ -243,6 +244,11 @@ main {
   margin-bottom: 50rem;
   color: #1d1d1d;
 }
+.admin-welcome p {
+  font-size: 30rem;
+  color: #1d1d1d;
+  font-weight: 500;
+}
 .admin-welcome .admin-buttons {
   display: flex;
   justify-content: center;
@@ -283,4 +289,20 @@ main {
 .admin-welcome .admin-buttons .admin-btn.logout-btn:hover {
   background-color: #eff1f4;
   color: #d20000;
+}
+
+.delete-btn {
+  background: #d20000;
+  color: white;
+  border: none;
+  padding: 15rem 20rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 20rem;
+  font-family: "Golos Text";
+  margin-top: 20rem;
+  width: 30%;
+}
+.delete-btn:hover {
+  background: #9f0000;
 }/*# sourceMappingURL=admin-style.css.map */

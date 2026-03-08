@@ -55,9 +55,13 @@ main {
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(2, minmax(200px, auto));
   gap: 12rem;
-  min-height: 500px;
+  height: 500px;
   max-width: 100%;
   margin: 0 auto;
+}
+.photo-gallery img {
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .photo-large {
@@ -73,8 +77,6 @@ main {
 .photo-large img {
   width: 100%;
   height: 100%;
-  -o-object-fit: fill;
-     object-fit: fill;
 }
 .photo-large:hover {
   transform: translateY(-3px);
@@ -97,8 +99,6 @@ main {
 .photo-small img {
   width: 100%;
   height: 100%;
-  -o-object-fit: fill;
-     object-fit: fill;
 }
 .photo-small:hover {
   transform: translateY(-2px);
@@ -158,12 +158,12 @@ main {
 }
 .blocks .block__info .block__info-title h2 {
   font-size: 30rem;
-  height: 600;
+  font-weight: 600;
   color: #1d1d1d;
 }
 .blocks .block__info .block__info-title p {
   font-size: 40rem;
-  height: 600;
+  font-weight: 600;
   color: #1d1d1d;
   opacity: 0.5;
 }
@@ -174,7 +174,7 @@ main {
 }
 .blocks .block__info .block__info-more h5 {
   font-size: 30rem;
-  height: 500;
+  font-weight: 500;
 }
 .blocks .block__info .block__info-more .block__info-complexity {
   width: 50%;
@@ -188,6 +188,10 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12rem;
+}
+.blocks .block__info .block__info-more .block__info-complexity .block__info-complexity-grade .active {
+  background-color: #1d1d1d;
+  color: #eff1f4;
 }
 .blocks .block__info .block__info-more .block__info-complexity .block__info-complexity-grade p {
   font-size: 20rem;
@@ -222,11 +226,11 @@ main {
 }
 .blocks .block__info .block__info-deskription h5 {
   font-size: 30rem;
-  height: 500;
+  font-weight: 500;
 }
 .blocks .block__info .block__info-deskription p {
   font-size: 20rem;
-  height: 400;
+  font-weight: 400;
 }
 .blocks .block__price-more {
   grid-column: span 5;
@@ -285,6 +289,13 @@ main {
   background-color: #fff;
   border-radius: 25rem;
   box-sizing: border-box;
+}
+.blocks .block__more .block__more-included {
+  font-size: 20rem;
+  font-weight: 500;
+}
+.blocks .block__more .block__more-included ul {
+  list-style: none;
 }
 .blocks .block__more .block__more-take {
   display: grid;

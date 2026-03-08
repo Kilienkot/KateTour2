@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $end_date = $_POST['end_date'];
     $instructor_name = trim($_POST['instructor_name']);
     $difficulty = $_POST['difficulty'];
+
     // Вставка в tours
     $stmt = $pdo->prepare("INSERT INTO tours (short_title, full_title, full_description, age, price, start_date, end_date, instructor_name, difficulty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty]);
@@ -112,6 +113,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    // Обработка включений
+    if (isset($_POST['inclusions'])) {
+        $inclusions = $_POST['inclusions'];
+        foreach ($inclusions as $index => $inclusion) {
+            $title = trim($inclusion['title']);
+            $description = trim($inclusion['description']);
+
+            if (!empty($title)) {
+                $stmt = $pdo->prepare("INSERT INTO tour_inclusions (tour_id, title, description, sort_order) VALUES (?, ?, ?, ?)");
+                $stmt->execute([$tour_id, $title, $description, $index + 1]);
+            }
+        }
+    }
+
     $message = "Тур успешно добавлен!";
 }
 ?>
@@ -147,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="form-group">
                     <label for="full_description" title="Подробное описание тура, которое увидят пользователи">Полное описание (подробно о туре)</label>
-                    <textarea id="full_description" name="full_description" rows="5" placeholder="Приглашаем тебя с нами в захватывающее путешествие на край земли - в удивительную Камчатку, землю, расположенную на самом краю России. Мы будем гулять по ледниковым фьордам и альпийским лугам..." required title="Обязательно. Подробное описание тура."></textarea>
+                    <textarea id="full_description" name="full_description" rows="5" placeholder="Приглашаем тебя с нами в захватывающее путешествие..." required title="Обязательно. Подробное описание тура."></textarea>
                 </div>
 
                 <div class="form-group">
@@ -177,7 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="form-group">
                     <label for="difficulty" title="Уровень сложности тура">Сложность (выберите уровень)</label>
-                    <select id="difficulty" name="difficulty" required title="Обязательно. Выберите уровень сложности тура.">
+                    <select id="difficulty" name="difficulty" required>
                         <option value="легкий">Лёгкий</option>
                         <option value="средний">Средний</option>
                         <option value="сложный">Сложный</option>
@@ -190,23 +205,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="photos">
                         <div class="photo-input">
                             <label for="photo_1">Фото 1 (основное)</label>
-                            <input type="file" id="photo_1" name="photo_1" accept="image/*" required title="Обязательно. Загрузите основное фото тура.">
+                            <input type="file" id="photo_1" name="photo_1" accept="image/*" required>
                         </div>
                         <div class="photo-input">
                             <label for="photo_2">Фото 2</label>
-                            <input type="file" id="photo_2" name="photo_2" accept="image/*" required title="Обязательно. Загрузите второе фото тура.">
+                            <input type="file" id="photo_2" name="photo_2" accept="image/*" required>
                         </div>
                         <div class="photo-input">
                             <label for="photo_3">Фото 3</label>
-                            <input type="file" id="photo_3" name="photo_3" accept="image/*" required title="Обязательно. Загрузите третье фото тура.">
+                            <input type="file" id="photo_3" name="photo_3" accept="image/*" required>
                         </div>
                         <div class="photo-input">
                             <label for="photo_4">Фото 4</label>
-                            <input type="file" id="photo_4" name="photo_4" accept="image/*" required title="Обязательно. Загрузите четвёртое фото тура.">
+                            <input type="file" id="photo_4" name="photo_4" accept="image/*" required>
                         </div>
                         <div class="photo-input">
                             <label for="photo_5">Фото 5</label>
-                            <input type="file" id="photo_5" name="photo_5" accept="image/*" required title="Обязательно. Загрузите пятое фото тура.">
+                            <input type="file" id="photo_5" name="photo_5" accept="image/*" required>
                         </div>
                     </div>
                 </div>
@@ -217,12 +232,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="program-day">
                             <label>День 1</label>
                             <input type="hidden" name="days[0][number]" value="1">
-                            <input type="text" name="days[0][short_title]" placeholder="Краткое описание дня" title="Краткое описание дня программы.">
-                            <textarea name="days[0][full_description]" placeholder="Полное описание дня" rows="3" title="Полное описание дня программы."></textarea>
+                            <input type="text" name="days[0][short_title]" placeholder="Краткое описание дня">
+                            <textarea name="days[0][full_description]" placeholder="Полное описание дня" rows="3"></textarea>
                             <button type="button" class="remove-day" onclick="removeDay(this)">Удалить день</button>
                         </div>
                     </div>
                     <button type="button" class="add-day" onclick="addDay()">Добавить день</button>
+                </div>
+
+                <div class="form-group">
+                    <label title="Добавьте включения в стоимость тура (до 5 штук)">Что входит в стоимость</label>
+                    <div id="inclusions">
+                        <div class="inclusion-item">
+                            <input type="text" name="inclusions[0][title]" placeholder="Название включения" required>
+                            <textarea name="inclusions[0][description]" placeholder="Описание" rows="2"></textarea>
+                            <button type="button" class="remove-day" onclick="removeInclusion(this)">Удалить</button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-day" onclick="addInclusion()">Добавить включение</button>
                 </div>
 
                 <button type="submit" class="submit-btn">Добавить тур</button>
@@ -234,6 +261,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script>
         let dayCount = 1;
+        let inclusionCount = 1;
 
         function addDay() {
             dayCount++;
@@ -243,8 +271,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             dayDiv.innerHTML = `
                 <label>День ${dayCount}</label>
                 <input type="hidden" name="days[${dayCount-1}][number]" value="${dayCount}">
-                <input type="text" name="days[${dayCount-1}][short_title]" placeholder="Краткое описание дня" title="Краткое описание дня программы.">
-                <textarea name="days[${dayCount-1}][full_description]" placeholder="Полное описание дня" rows="3" title="Полное описание дня программы."></textarea>
+                <input type="text" name="days[${dayCount-1}][short_title]" placeholder="Краткое описание дня">
+                <textarea name="days[${dayCount-1}][full_description]" placeholder="Полное описание дня" rows="3"></textarea>
                 <button type="button" class="remove-day" onclick="removeDay(this)">Удалить день</button>
             `;
             container.appendChild(dayDiv);
@@ -261,6 +289,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 day.querySelector('textarea').name = `days[${index}][full_description]`;
             });
             dayCount = days.length;
+        }
+
+function addInclusion() {
+    if (inclusionCount >= 5) {
+        alert('Нельзя добавить более 5 включений');
+        return;
+    }
+    inclusionCount++;
+    const container = document.getElementById('inclusions');
+    const inclusionDiv = document.createElement('div');
+    inclusionDiv.className = 'inclusion-item';
+    inclusionDiv.innerHTML = `
+        <input type="text" name="inclusions[${inclusionCount-1}][title]" placeholder="Название включения" required>
+        <textarea name="inclusions[${inclusionCount-1}][description]" placeholder="Описание" rows="2"></textarea>
+        <button type="button" class="remove-day" onclick="removeInclusion(this)">Удалить</button>
+    `;
+    container.appendChild(inclusionDiv);
+}
+
+        function removeInclusion(button) {
+            button.parentElement.remove();
+            // Пересчитать номера включений
+            const inclusions = document.querySelectorAll('.inclusion-item');
+            inclusions.forEach((inclusion, index) => {
+                inclusion.querySelector('input[type="text"]').name = `inclusions[${index}][title]`;
+                inclusion.querySelector('textarea').name = `inclusions[${index}][description]`;
+            });
+            inclusionCount = inclusions.length;
         }
     </script>
 </body>

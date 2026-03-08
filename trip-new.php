@@ -21,6 +21,11 @@ $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $pdo->prepare("SELECT * FROM tour_program WHERE tour_id = ? ORDER BY day_number");
 $stmt->execute([$tour_id]);
 $program = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Получение включений в стоимость
+$stmt = $pdo->prepare("SELECT * FROM tour_inclusions WHERE tour_id = ? AND is_active = 1 ORDER BY sort_order");
+$stmt->execute([$tour_id]);
+$inclusions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +33,6 @@ $program = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="styles/css/trip.css"> -->
     <link rel="stylesheet" href="styles/css/trip-new.css">
     <title><?php echo htmlspecialchars($tour['short_title']); ?></title>
 </head>
@@ -63,20 +67,18 @@ $program = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </section>
         <section class="blocks">
             <div class="block__info">
-                <!-- Ширина 90% от родителя, размер h2 - 50rem, height - 600. Размер p - всё то же самое, но опасити 0.5 -->
                 <div class="block__info-title">
                     <h2 class="name__tour"><?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?></h2>
                     <p class="date__tour">с <?php echo date('d.m.Y', strtotime($tour['start_date'])); ?> по <?php echo date('d.m.Y', strtotime($tour['end_date'])); ?></p>
                 </div>
-                <!-- между блоками more и instructor должна быть вертикальная линия, текст у надписи "сложность" и "инструктор" должен быть по левому краю, размером 30 рем и height 500. p должен быть в виде овальных блоков с текстом внутри. Все овальные блоки должны быть прозрачными с линией обводки. в сложности нужо понять какой в бд уровень сложности и закрасить этот блок. внутри p - 30 рем и  height 500-->
                 <div class="block__info-more">
                     <div class="block__info-complexity">
                         <h5>Сложность</h5>
                         <div class="block__info-complexity-grade">
-                            <p>Лёгкий</p>
-                            <p>Средний</p>
-                            <p>Сложный</p>
-                            <p>Эксперт</p>
+                            <p <?php echo ($tour['difficulty'] == 'легкий') ? 'class="active"' : ''; ?>>Лёгкий</p>
+                            <p <?php echo ($tour['difficulty'] == 'средний') ? 'class="active"' : ''; ?>>Средний</p>
+                            <p <?php echo ($tour['difficulty'] == 'сложный') ? 'class="active"' : ''; ?>>Сложный</p>
+                            <p <?php echo ($tour['difficulty'] == 'эксперт') ? 'class="active"' : ''; ?>>Эксперт</p>
                         </div>
                     </div>
                     <div class="block__info-instructor">
@@ -86,7 +88,6 @@ $program = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                     </div>
                 </div>
-                <!-- размер текста h5 - 30 рем и height 500. p - 30 рем и  height 400 -->
                 <div class="block__info-deskription">
                     <h5>Описание</h5>
                     <p>
@@ -94,19 +95,23 @@ $program = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </p>
                 </div>
             </div>
-            <!-- Блок с ценой должен быть чёрного цвета а текст должен быть цвета фона. Блок "записатся" должен быть в виде прямоугольника цвета фона с закруглянными углами с белым текстом внутри -->
              <div class="block__price-more">
                  <div class="block__price">
                      <p><?php echo number_format($tour['price'], 0, '.', ' '); ?>₽</p>
                      <a href="#entry">Записаться</a>
                  </div>
-                 <!-- h5 - 30 рем и height 500. p в первом блоке - 20 рем и height 500. во втором p должен быть в виде овальных блоков с текстом внутри. Все овальные блоки должны быть прозрачными с линией обводки. внутри p - 30 рем и  height 500. последний блок с комментариями - 15рем, height 500., opacity 0.6-->
                  <div class="block__more">
                      <div class="block__more-included">
                          <h5>Что входит в стоимость</h5>
-                         <p>
-                             .- трансфер на вахтовке- безопасность на маршруте- обед, вода, горячий чай на маршруте- сопровождение гидом - проводником.- проживание в гостевом доме/хостеле.
-                         </p>
+                         <?php if (count($inclusions) > 0): ?>
+                             <ul class="inclusions-list">
+                                 <?php foreach ($inclusions as $item): ?>
+                                     <li><?php echo htmlspecialchars($item['title']); ?></li>
+                                 <?php endforeach; ?>
+                             </ul>
+                         <?php else: ?>
+                             <p>Подробности уточняйте у менеджера</p>
+                         <?php endif; ?>
                      </div>
                      <div class="block__more-take">
                          <h5>Что взять с собой?</h5>

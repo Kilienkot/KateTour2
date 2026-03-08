@@ -94,9 +94,13 @@ $small-col-span: 3; // Маленький блок занимает 3 колон
   gap: $gap-size;
 
   // Высота контейнера (можно адаптировать)
-  min-height: 500px;
+  height: 500px;
   max-width: 100%;
   margin: 0 auto;
+
+  img {
+    object-fit: cover;
+  }
 }
 
 // Большой блок (6 колонок × 2 строки)
@@ -114,8 +118,7 @@ $small-col-span: 3; // Маленький блок занимает 3 колон
 
   img {
     width: 100%;
-    height: 100%;
-    object-fit: fill; // Растягиваем на весь блок
+    height: 100%; // Растягиваем на весь блок
   }
 
   // Эффект при наведении
@@ -144,7 +147,6 @@ $small-col-span: 3; // Маленький блок занимает 3 колон
   img {
     width: 100%;
     height: 100%;
-    object-fit: fill; // Растягиваем на весь блок
   }
 
   // Эффект при наведении
@@ -215,12 +217,12 @@ $small-col-span: 3; // Маленький блок занимает 3 колон
       width: 80%;
       h2 {
         font-size: 30rem;
-        height: 600;
+        font-weight: 600;
         color: $text-color;
       }
       p {
         font-size: 40rem;
-        height: 600;
+        font-weight: 600;
         color: $text-color;
         opacity: 0.5;
       }
@@ -231,7 +233,7 @@ $small-col-span: 3; // Маленький блок занимает 3 колон
       width: 100%;
       h5 {
         font-size: 30rem;
-        height: 500;
+        font-weight: 500;
       }
       .block__info-complexity {
         width: 50%;
@@ -244,6 +246,10 @@ $small-col-span: 3; // Маленький блок занимает 3 колон
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: $gap-size;
+          .active {
+            background-color: $text-color;
+            color: $background-color;
+          }
           p {
             font-size: 20rem;
             font-weight: 500;
@@ -279,11 +285,11 @@ $small-col-span: 3; // Маленький блок занимает 3 колон
       gap: $gap-size;
       h5 {
         font-size: 30rem;
-        height: 500;
+        font-weight: 500;
       }
       p {
         font-size: 20rem;
-        height: 400;
+        font-weight: 400;
       }
     }
   }
@@ -345,6 +351,11 @@ $small-col-span: 3; // Маленький блок занимает 3 колон
     border-radius: 25rem;
     box-sizing: border-box;
     .block__more-included {
+      font-size: 20rem;
+      font-weight: 500;
+      ul {
+        list-style: none;
+      }
     }
     .block__more-take {
       display: grid;
