@@ -52,7 +52,7 @@ main {
 .main_img {
   margin-left: -90rem;
   margin-right: -90rem;
-  background-image: url("/katetour/sources/img/main_big.png");
+  background-image: url("../../sources/img/main_big.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
