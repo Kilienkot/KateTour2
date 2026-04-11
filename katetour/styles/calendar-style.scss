@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Tektur:wght@400..900&display=swap");
+@import url("header.css");
+@import url("footer.css");
+@import url("form-style.css");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: calc(1vw / 19.2);
+  scroll-behavior: smooth;
+}
+
+h2 {
+  text-transform: uppercase;
+}
+
+#calendar,
+#footer,
+#entry {
+  scroll-margin-top: 150rem;
+}
+
+// Переменные
+$accent-color: #f2b705;
+$text-color: #1d1d1d;
+$background-color: #eff1f4;
+$blue: #0066d2;
+$green: #1ca697;
+$font: "Golos Text";
+
+// Стили для body
+body {
+  font-family: $font;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  background-color: $background-color;
+  line-height: 1.6;
+}
+
+hr {
+  width: 100%;
+  height: 6rem;
+  margin: 60rem 0;
+  border: none;
+  border-radius: 5px;
+  background-color: $text-color;
+}
+
+span {
+  color: $accent-color;
+}
+
+main {
+  padding-top: 100rem;
+  margin-left: 90rem;
+  margin-right: 90rem;
+}
+
+.startlife {
+  width: 100%;
+  height: 60dvh;
+  display: flex;
+  flex-direction: column;
+  img {
+    width: 100%;
+    height: 65%;
+    border-radius: 50px;
+    object-fit: cover;
+  }
+  .startlife__text {
+    width: 100%;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h2 {
+      font-size: 70rem;
+      line-height: 1;
+    }
+  }
+}
+
+.calendar {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30rem;
+
+  a {
+    text-decoration: none;
+  }
+  .btns {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15rem;
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 3rem solid $text-color;
+      color: $text-color;
+      padding: 2%;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      h3 {
+        font-size: 40rem;
+        text-transform: uppercase;
+      }
+      &:hover {
+        transform: scale(1.02);
+        background-color: $text-color;
+        color: $background-color;
+      }
+      &:active {
+        transform: scale(0.98);
+      }
+      &.active {
+        box-shadow: 0 0 20rem rgba(0, 0, 0, 0.3);
+        background-color: $text-color;
+        color: $background-color;
+      }
+    }
+  }
+  .calendar__grid {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 500px;
+    gap: 12rem;
+  }
+  .calendar__card {
+    grid-column: span 3; // Каждая карточка занимает половину ширины
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20rem;
+    height: auto;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start; // Все элементы по левому краю
+    transition: 0.3s;
+    &:hover {
+      transform: scale(1.01);
+    }
+
+    .calendar__card-img {
+      width: 100%;
+      height: 60%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .calendar__divider {
+      width: 33%;
+      height: 1rem;
+      background-color: $text-color;
+      margin: 10rem auto; // Центрируем элемент
+    }
+
+    .calendar__card-title {
+      width: 100%;
+      font-weight: 600;
+      font-size: 20rem;
+      color: $text-color;
+      text-align: left;
+    }
+
+    .calendar__card-dates {
+      width: 100%;
+      font-weight: 600;
+      font-size: 20rem;
+      color: rgba($text-color, 0.6); // Опacity 0.6
+      text-align: left;
+    }
+
+    .calendar__card-price {
+      width: 100%;
+      font-weight: 600;
+      font-size: 25rem;
+      color: $text-color;
+      text-align: left;
+    }
+
+    .calendar__card-more {
+      width: 100%;
+      height: auto;
+      font-weight: 400;
+      font-size: 16rem;
+      color: $text-color;
+      text-align: center; // Центрируем текст
+    }
+  }
+}
