@@ -406,6 +406,8 @@ if (isset($_GET['edit'])) {
 
     <?php include "blocks/footer.php" ?>
 
+    <script src="main.js"></script>
+
     <script>
         let dayCount = <?php echo count($edit_tour['program'] ?? []); ?>;
         let inclusionCount = <?php echo count($edit_tour['inclusions'] ?? []); ?>;

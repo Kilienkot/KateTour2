@@ -259,6 +259,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <?php include "blocks/footer.php" ?>
 
+    <script src="main.js"></script>
+
     <script>
         let dayCount = 1;
         let inclusionCount = 1;

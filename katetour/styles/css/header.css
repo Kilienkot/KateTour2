@@ -30,7 +30,7 @@ header ul li {
   transition: all 0.3s ease;
 }
 header ul li:first-child {
-  width: 100%;
+  width: 60%;
   grid-column: span 3;
 }
 header ul li:first-child a {
@@ -61,4 +61,87 @@ header ul li a {
   width: 100%;
   transition: all 0.3s ease;
   text-transform: uppercase;
+}
+@media (max-width: 768px) {
+  header nav {
+    width: 100dvw;
+    height: auto;
+    background-color: #eff1f4;
+    padding: 30rem 90rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+  }
+  header ul {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+  }
+  header ul li {
+    height: auto;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+  header ul li:first-child {
+    display: flex;
+    width: 20%;
+  }
+  header ul li:first-child a {
+    justify-content: flex-start;
+    padding: 5rem 10rem;
+  }
+  header ul li:nth-child(4) {
+    width: 100%;
+    background-color: #f2b705;
+    border-radius: 15rem;
+  }
+  header ul li a {
+    font-size: 40rem;
+  }
+}
+header .burger-button {
+  display: none;
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  header .burger-button {
+    display: block;
+    width: 30px;
+    height: 20px;
+    position: relative;
+    z-index: 10;
+  }
+  header .burger-button span {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: #1d1d1d;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+  header .burger-button span:nth-child(1) {
+    top: 0;
+  }
+  header .burger-button span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  header .burger-button span:nth-child(3) {
+    bottom: 0;
+  }
+  header .burger-button.active span:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  header .burger-button.active span:nth-child(2) {
+    opacity: 0;
+  }
+  header .burger-button.active span:nth-child(3) {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+  }
 }/*# sourceMappingURL=header.css.map */

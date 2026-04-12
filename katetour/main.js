@@ -22,12 +22,21 @@ function updateMainImg(scrollY) {
   const mainImg = document.querySelector(".main_img");
   if (!mainImg) return;
 
+  // Проверяем мобильное устройство
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
   // Определяем максимальное расстояние, на котором будет происходить анимация
   const triggerPoint = 200; // px
   const progress = Math.min(scrollY / triggerPoint, 1); // значение от 0 до 1
 
-  // Вычисляем параметры для анимации
-  const height = Math.max(80, 100 - progress * 35); // от 100dvh до 30dvh
+  // Вычисляем параметры для анимации в зависимости от устройства
+  let height;
+  if (isMobile) {
+    height = Math.max(30, 40 - progress * 35);
+  } else {
+    height = Math.max(80, 100 - progress * 35);
+  }
+
   const scale = 1 - progress * 0.1; // масштаб от 1 до 0.7
   const opacity = progress; // для затемнения
 
@@ -57,4 +66,14 @@ window.addEventListener("scroll", function () {
 // Инициализация при загрузке
 document.addEventListener("DOMContentLoaded", function () {
   updateMainImg(window.scrollY);
+});
+
+//  Бургер
+const burgerButton = document.querySelector(".burger-button");
+const headerLi = document.querySelectorAll("header li");
+
+burgerButton?.addEventListener("click", () => {
+  burgerButton.classList.toggle("active");
+  const isActive = burgerButton.classList.contains("active");
+  headerLi.forEach((li) => (li.style.display = isActive ? "flex" : ""));
 });

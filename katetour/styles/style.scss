@@ -3,6 +3,12 @@
 @import url("footer.css");
 @import url("form-style.css");
 
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -198,6 +204,49 @@ main {
     grid-column: span 3;
     border-radius: 15px;
   }
+  //мобилка----------------------------------------------------------------------------------------
+  @include mobile {
+    margin-top: 30rem;
+    gap: 30rem;
+    grid-template-rows: repeat(4, 25dvh);
+    h3 {
+      font-size: 70rem;
+    }
+    .block-1 {
+      grid-column: span 6;
+    }
+    .block-2 {
+      grid-column: span 6;
+    }
+    .block-3 {
+      display: none;
+    }
+    .block-4 {
+      grid-column: span 12;
+    }
+    .block-5 {
+      grid-column: span 6;
+    }
+    .block6 {
+      grid-column: span 6;
+    }
+    .block-7 {
+      grid-column: span 12;
+      flex-direction: column-reverse;
+      h3 {
+        font-size: 100rem;
+      }
+      img {
+        object-fit: fill;
+      }
+    }
+    .block-8 {
+      display: none;
+    }
+    .block-9 {
+      display: none;
+    }
+  }
 }
 
 .why {
@@ -212,6 +261,16 @@ main {
     font-size: 70rem;
     line-height: 1;
     // padding: 0 0 50rem 0;
+  }
+
+  @include mobile {
+    height: 90dvh;
+    gap: 30rem;
+    h2 {
+      font-size: 110rem;
+      height: auto;
+      text-align: center;
+    }
   }
 }
 
@@ -290,55 +349,39 @@ main {
       margin: 0;
     }
   }
-}
 
-// .calendar {
-//   width: 100%;
-//   height: auto;
-//   h2 {
-//     margin-bottom: 15rem;
-//     font-size: 70rem;
-//     line-height: 1;
-//   }
-//   .calendar__main {
-//     width: 100%;
-//     height: auto;
-//     background-color: $blue;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     border-radius: 25px;
-//     overflow: hidden;
-//   }
-//   .calendar__main-item {
-//     width: 100%;
-//     height: auto;
-//     border-bottom: 6rem solid $background-color;
-//     display: flex;
-//     align-items: center;
-//     cursor: pointer;
-//     text-decoration: none;
-//     .calendar__main-item_date {
-//       width: 45%;
-//       color: $background-color;
-//       font-size: 50rem;
-//       font-weight: 500;
-//       text-align: center;
-//     }
-//     .calendar__main-item_description {
-//       width: 55%;
-//       color: $background-color;
-//       font-size: 40rem;
-//       font-weight: 400;
-//     }
-//   }
-//   .calendar__main-more {
-//     font-size: 70rem;
-//     text-decoration: none;
-//     color: $background-color;
-//     font-weight: 500;
-//   }
-// }
+  @include mobile {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 30rem;
+    .why__item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: auto;
+      gap: 30rem;
+
+      &:nth-child(3) {
+        background-color: #fff;
+        color: $text-color;
+        border: 2px solid $text-color;
+      }
+      &:nth-child(4) {
+        background-color: $text-color;
+        color: $background-color;
+      }
+      h3 {
+        font-size: 2.5dvw;
+        line-height: normal;
+      }
+      p {
+        font-size: 2dvw;
+      }
+    }
+  }
+}
 
 .calendar {
   width: 100%;
@@ -353,6 +396,7 @@ main {
     margin-bottom: 15rem;
     font-size: 70rem;
     line-height: 1;
+    display: flex;
   }
   .calendar__grid {
     width: 100%;
@@ -371,7 +415,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    max-height: 90%;
+    max-height: 80%;
     align-items: flex-start; // Все элементы по левому краю
     transition: all 0.3s ease;
 
@@ -434,5 +478,51 @@ main {
     font-weight: 600;
     font-size: 30rem;
     color: $text-color;
+  }
+
+  @include mobile {
+    height: auto;
+    gap: 30rem;
+    h2 {
+      font-size: 110rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    span {
+      display: flex;
+      align-items: center;
+    }
+
+    .calendar__grid {
+      height: 90%;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30rem;
+    }
+    .calendar__card {
+      max-height: 100%;
+      grid-column: span 1;
+      box-sizing: border-box;
+      padding: 40rem;
+      .calendar__card-title {
+        font-size: 1.5dvh;
+      }
+
+      .calendar__card-dates {
+        font-size: 1.5dvh;
+      }
+
+      .calendar__card-price {
+        font-size: 1.4dvh;
+      }
+
+      .calendar__card-more {
+        font-size: 0.8dvh;
+      }
+    }
+    .calendar__all {
+      font-size: 60rem;
+    }
   }
 }

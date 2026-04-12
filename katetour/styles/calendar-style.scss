@@ -3,6 +3,12 @@
 @import url("footer.css");
 @import url("form-style.css");
 
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -82,6 +88,19 @@ main {
       line-height: 1;
     }
   }
+
+  @include mobile {
+    margin-top: 2dvh;
+    height: 30dvh;
+    img {
+      border-radius: 25px;
+    }
+    .startlife__text {
+      h2 {
+        font-size: 50rem;
+      }
+    }
+  }
 }
 
 .calendar {
@@ -108,6 +127,9 @@ main {
       color: $text-color;
       padding: 2%;
       border-radius: 15px;
+      @include mobile {
+        border-radius: 5px;
+      }
       cursor: pointer;
       transition: all 0.3s ease;
       h3 {
@@ -134,7 +156,7 @@ main {
     height: auto;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: 500px;
+    grid-template-rows: auto;
     gap: 12rem;
   }
   .calendar__card {
@@ -198,6 +220,32 @@ main {
       font-size: 16rem;
       color: $text-color;
       text-align: center; // Центрируем текст
+    }
+  }
+
+  @media (max-width: 768px) {
+    .calendar__grid {
+      gap: 50rem;
+    }
+    .calendar__card {
+      grid-column: span 6;
+      padding: 40rem;
+
+      .calendar__card-title {
+        font-size: 1.5dvh;
+      }
+
+      .calendar__card-dates {
+        font-size: 1.5dvh;
+      }
+
+      .calendar__card-price {
+        font-size: 1.4dvh;
+      }
+
+      .calendar__card-more {
+        font-size: 0.8dvh;
+      }
     }
   }
 }

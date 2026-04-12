@@ -107,5 +107,6 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </main>
 
     <?php include "blocks/footer.php" ?>
+    <script src="main.js"></script>
 </body>
 </html>

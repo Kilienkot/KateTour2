@@ -113,11 +113,11 @@ function formatDate($date) {
       </section>
       <hr />
       <section class="calendar" id="calendar">
-        <h2>ближайшие <span>выезды</span></h2>
+        <h2>ближайшие&nbsp;<span>выезды</span></h2>
         <div class="calendar__grid">
           <?php foreach ($nearest_tours as $tour): ?>
             <a href="trip-new.php?id=<?php echo $tour['id']; ?>" class="calendar__card">
-              <img loading="lazy" src="<?php echo htmlspecialchars($tour['filepath'] ?: 'sources/img/placeholder.jpg'); ?>" alt="Основное фото" class="calendar__card-img">
+              <img loading="lazy" src="<?php echo htmlspecialchars($tour['filepath'] ?: 'sources\img\plsh2.png'); ?>" alt="Основное фото" class="calendar__card-img">
               <div class="calendar__divider"></div>
               <h3 class="calendar__card-title"><?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?></h3>
               <p class="calendar__card-dates"><?php echo formatDate($tour['start_date']); ?> - <?php echo formatDate($tour['end_date']); ?></p>
@@ -127,7 +127,7 @@ function formatDate($date) {
           <?php endforeach; ?>
         </div>
         <a href="calendar.php" class="calendar__all">
-          Смотреть&nbsp;<span> все туры <svg width="104" height="15" viewBox="0 0 104 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+          Смотреть&nbsp;<span> все туры&nbsp;<svg width="104" height="15" viewBox="0 0 104 15" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M103.707 8.07039C104.098 7.67986 104.098 7.0467 103.707 6.65617L97.3431 0.292213C96.9526 -0.0983109 96.3195 -0.0983109 95.9289 0.292213C95.5384 0.682738 95.5384 1.3159 95.9289 1.70643L101.586 7.36328L95.9289 13.0201C95.5384 13.4107 95.5384 14.0438 95.9289 14.4343C96.3195 14.8249 96.9526 14.8249 97.3431 14.4343L103.707 8.07039ZM0 7.36328V8.36328H103V7.36328V6.36328H0V7.36328Z" fill="#F2B705"/>
         </svg>
         </span>

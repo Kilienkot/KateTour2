@@ -6,6 +6,12 @@ $blue: #0066d2;
 $green: #1ca697;
 $font: "Golos Text";
 
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
 header {
   position: fixed;
   z-index: 2;
@@ -36,7 +42,7 @@ header {
       transition: all 0.3s ease;
       // Первая ссылка (логотип) занимает 3 колонки
       &:first-child {
-        width: 100%;
+        width: 60%;
         grid-column: span 3; // Занимает 3 колонки
         a {
           justify-content: flex-start; // Логотип выравниваем по левому краю
@@ -76,6 +82,95 @@ header {
         width: 100%;
         transition: all 0.3s ease;
         text-transform: uppercase;
+      }
+    }
+  }
+  @include mobile {
+    nav {
+      width: 100dvw; // Расширяем навигацию на всю ширину
+      height: auto;
+      background-color: $background-color;
+      padding: 30rem 90rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+    ul {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+      li {
+        height: auto;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        width: 100%;
+        &:first-child {
+          display: flex;
+          width: 20%;
+          a {
+            justify-content: flex-start; // Логотип выравниваем по левому краю
+            padding: 5rem 10rem;
+          }
+        }
+        // Остальные ссылки помещаются в последние 3 колонки
+        &:nth-child(4) {
+          // Запись
+          width: 100%;
+          background-color: $accent-color;
+          border-radius: 15rem;
+        }
+        a {
+          font-size: 40rem;
+        }
+      }
+    }
+  }
+  .burger-button {
+    display: none;
+    cursor: pointer;
+
+    @include mobile {
+      display: block;
+      width: 30px;
+      height: 20px;
+      position: relative;
+      z-index: 10;
+
+      span {
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        background: $text-color;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+
+        &:nth-child(1) {
+          top: 0;
+        }
+        &:nth-child(2) {
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        &:nth-child(3) {
+          bottom: 0;
+        }
+      }
+
+      &.active {
+        span:nth-child(1) {
+          top: 50%;
+          transform: translateY(-50%) rotate(45deg);
+        }
+        span:nth-child(2) {
+          opacity: 0;
+        }
+        span:nth-child(3) {
+          bottom: 50%;
+          transform: translateY(50%) rotate(-45deg);
+        }
       }
     }
   }

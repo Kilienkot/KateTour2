@@ -74,6 +74,18 @@ main {
   font-size: 70rem;
   line-height: 1;
 }
+@media (max-width: 768px) {
+  .startlife {
+    margin-top: 2dvh;
+    height: 30dvh;
+  }
+  .startlife img {
+    border-radius: 25px;
+  }
+  .startlife .startlife__text h2 {
+    font-size: 50rem;
+  }
+}
 
 .calendar {
   width: 100%;
@@ -100,6 +112,13 @@ main {
   color: #1d1d1d;
   padding: 2%;
   border-radius: 15px;
+}
+@media (max-width: 768px) {
+  .calendar .btns div {
+    border-radius: 5px;
+  }
+}
+.calendar .btns div {
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -125,7 +144,7 @@ main {
   height: auto;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 500px;
+  grid-template-rows: auto;
   gap: 12rem;
 }
 .calendar .calendar__card {
@@ -185,4 +204,25 @@ main {
   font-size: 16rem;
   color: #1d1d1d;
   text-align: center;
+}
+@media (max-width: 768px) {
+  .calendar .calendar__grid {
+    gap: 50rem;
+  }
+  .calendar .calendar__card {
+    grid-column: span 6;
+    padding: 40rem;
+  }
+  .calendar .calendar__card .calendar__card-title {
+    font-size: 1.5dvh;
+  }
+  .calendar .calendar__card .calendar__card-dates {
+    font-size: 1.5dvh;
+  }
+  .calendar .calendar__card .calendar__card-price {
+    font-size: 1.4dvh;
+  }
+  .calendar .calendar__card .calendar__card-more {
+    font-size: 0.8dvh;
+  }
 }/*# sourceMappingURL=calendar-style.css.map */
