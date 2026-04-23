@@ -3,7 +3,7 @@
 
     // Проверяем блокировку
     if (isset($_SESSION['block_until'][$ip]) && time() < $_SESSION['block_until'][$ip]) {
-        header('Location: /login.php?blocked=1');
+        header('Location: ../login.php?blocked=1');
         exit();
     }
 
@@ -47,9 +47,9 @@ header('Location: /admin.php');
     if ($_SESSION['attempts'][$ip] >= 3) {
         // Блокируем на 1 минуту
         $_SESSION['block_until'][$ip] = time() + 1;
-        header('Location: /login.php?blocked=1');
+        header('Location: ../login.php?blocked=1');
     } else {
-        header('Location: /login.php?error=1');
+        header('Location: ../login.php?error=1');
     }
     exit();
 }
@@ -62,9 +62,9 @@ header('Location: /admin.php');
         if ($_SESSION['attempts'][$ip] >= 3) {
             // Блокируем на 1 минуту
             $_SESSION['block_until'][$ip] = time() + 1;
-            header('Location: /login.php?blocked=1');
+            header('Location: ../login.php?blocked=1');
         } else {
-            header('Location: /login.php?error=1');
+            header('Location: ../login.php?error=1');
         }
         exit();
     } else {
@@ -93,9 +93,9 @@ setcookie('id', $id, time() + 3600 * 24 * 7, "/");
 
 // Проверяем роль пользователя
 if ($user['role'] == 1) {
-    header('Location: /user-panel.php');
+    header('Location: ../user-panel.php');
 } else {
-    header('Location: /admin.php');
+    header('Location: ../admin.php');
 }
         exit(); // Обязательно завершаем выполнение скрипта
     }
@@ -104,7 +104,7 @@ if ($user['role'] == 1) {
         // Проверяем наличие куки user_id
         if (!isset($_COOKIE['id']) || empty($_COOKIE['id'])) {
         // Перенаправляем на страницу авторизации
-            header('Location: /login.php');
+            header('Location: ../login.php');
             exit(); // Обязательно завершаем выполнение скрипта
         }
         

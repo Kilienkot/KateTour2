@@ -468,81 +468,46 @@ main {
   .calendar__grid {
     width: 100%;
     height: auto;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto;
-    gap: 15rem;
-  }
-  .calendar__card {
-    grid-column: span 3; // Каждая карточка занимает половину ширины
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 20rem;
-    height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start; // Все элементы по левому краю
-    transition: all 0.3s ease;
-
-    &:hover {
-      box-shadow: 0 10rem 20rem rgba(0, 0, 0, 0.2); // Добавляем тень
-    }
-
-    .calendar__card-img {
-      width: 100%;
-      height: 60%;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-
-    .calendar__divider {
-      width: 33%;
-      height: 1rem;
-      background-color: $text-color;
-      margin: 10rem auto; // Центрируем элемент
-    }
-
-    .calendar__card-title {
-      width: 100%;
-      font-weight: 600;
-      font-size: 20rem;
-      color: $text-color;
-      text-align: left;
-    }
-
-    .calendar__card-dates {
-      width: 100%;
-      font-weight: 600;
-      font-size: 20rem;
-      color: rgba($text-color, 0.6); // Опacity 0.6
-      text-align: left;
-    }
-
-    .calendar__card-price {
-      width: 100%;
-      font-weight: 600;
-      font-size: 25rem;
-      color: $text-color;
-      text-align: left;
-    }
-
-    .calendar__card-more {
-      width: 100%;
-      height: auto;
-      font-weight: 400;
-      font-size: 16rem;
-      color: $text-color;
-      text-align: center; // Центрируем текст
-    }
+    gap: 30rem;
   }
-  .calendar__all {
+  .calendar__card {
+    width: 100%;
+    height: auto;
+    min-height: 150rem;
     display: flex;
     align-items: center;
-    width: auto;
-    font-weight: 600;
-    font-size: 30rem;
+    border-bottom: 2px solid $text-color;
     color: $text-color;
+    p {
+      align-items: center;
+      font-size: 40rem;
+      height: 80%;
+      width: 40%;
+      border-right: 1px solid $text-color;
+      font-weight: 500;
+      text-align: center;
+    }
+    h3 {
+      align-items: center;
+      font-size: 40rem;
+      height: 80%;
+      width: 45%;
+      font-weight: 500;
+      text-align: center;
+    }
+    svg {
+      width: 15%;
+      height: 40rem;
+    }
+  }
+  .calendar__more {
+    width: 100%;
+    height: auto;
+    font-size: 40rem;
+    color: $text-color;
+    text-align: center;
   }
 
   @include mobile {
@@ -555,19 +520,12 @@ main {
       justify-content: center;
     }
 
-    span {
-      display: flex;
-      align-items: center;
-    }
-
     .calendar__grid {
       height: 90%;
-      grid-template-columns: repeat(2, 1fr);
       gap: 30rem;
     }
     .calendar__card {
       max-height: 100%;
-      grid-column: span 1;
       box-sizing: border-box;
       padding: 40rem;
       gap: 20rem;
@@ -582,19 +540,13 @@ main {
         font-size: 2.6dvw;
       }
 
-      .calendar__card-price {
-        font-size: 2.6dvw;
-      }
-
-      .calendar__card-more {
-        font-size: 2dvw;
-      }
-      .calendar__divider {
-        margin: 30rem auto;
+      svg {
+        width: 15%;
+        height: 90rem;
       }
     }
-    .calendar__all {
-      font-size: 60rem;
+    .calendar__more {
+      font-size: 3dvw;
     }
   }
 }
