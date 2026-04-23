@@ -84,30 +84,34 @@ function formatDate($date) {
           <div class="why__item">
             <div>
               <h3>УНИКАЛЬНЫЕ МАРШРУТЫ<br>И ЗАКРЫТЫЕ МЕСТА</h3>
-              <p>С нами вы увидите то, о чем другие<br>не могут и мечтать</p>
+              <p>С нами вы увидите то,<br>о чем другие не могут и мечтать</p>
             </div>
-            <img src="sources/img/why1.png" loading="lazy" alt="Поле 1" />
+            <a href="https://vk.com/albums-49750096" target="_blank" rel="noopener noreferrer">Смотреть фото</a>
           </div>
+
+
           <div class="why__item">
             <div>
               <h3>ПУТЕШЕСТВИЕ БЕЗ ЗАБОТ <br>И ЛИШНЕЙ СУЕТЫ</h3>
               <p>Забудьте о стрессовых планировщиках<br>и сложных маршрутах</p>
             </div>
-            <img src="sources/img/why2.png" loading="lazy" alt="Водопады 2" />
+            <a href="#calendar" rel="noopener noreferrer">Ближайшие туры</a>
           </div>
+
           <div class="why__item">
             <div>
               <h3>Вдохните атмосферу<br>и почувствуйте ритм</h3>
               <p>Наши туры — это возможность прожить,<br>а не посетить</p>
             </div>
-            <img src="sources/img/why3.png" loading="lazy" alt="Люди 3" />
+            <a href="javascript:void(0);" onclick="alert('Эта функция в разработке :-(');" rel="noopener noreferrer">Отзывы</a>
           </div>
+
           <div class="why__item">
             <div>
               <h3>НЕЗАБЫВАЕМЫЕ эмоции<br>и КОМФОРТ ДЛЯ ВСЕЙ СЕМЬИ</h3>
-              <p>Логистика, безопасность и активности —<br>всё берём на себя</p>
+              <p>Логистика, безопасность<br>и активности — всё берём на себя</p>
             </div>
-            <img src="sources/img/why4.png" loading="lazy" alt="Семья 4" />
+            <a href="javascript:void(0);" onclick="alert('Эта функция в разработке :-(');" rel="noopener noreferrer">О нас</a>
           </div>
         </div>
       </section>
