@@ -255,7 +255,7 @@ main {
 
 .why {
   width: 100%;
-  height: calc(95dvh - 80rem);
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -264,7 +264,7 @@ main {
     height: 10%;
     font-size: 70rem;
     line-height: 1;
-    // padding: 0 0 50rem 0;
+    margin: 0 0 50rem 0;
   }
 
   @include mobile {
@@ -280,114 +280,118 @@ main {
 
 .why__item_grid {
   width: auto;
-  height: 90%;
+  height: auto;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(2, calc(50% - 12rem));
+  grid-template-rows: repeat(2, 1fr);
   gap: 12rem;
 
   .why__item {
-    cursor: pointer;
     display: flex;
     flex-direction: column;
-    padding: 30rem;
+    justify-content: space-between;
+    min-height: 350rem;
+
+    padding: 50rem;
     border-radius: 15px;
     background-color: $text-color;
     color: $background-color;
     overflow: hidden;
+    grid-column: span 6;
     transition: all 0.3s ease; // Добавляем плавный переход для всех изменений
     div {
-      height: 40%;
+      height: 45%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    a {
+      width: 50%;
+      font-size: 35rem;
+      text-decoration: none;
+      color: $background-color;
+      border: 2px solid $background-color;
+      text-align: center;
+      box-sizing: border-box;
+      padding: 10rem;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      &:hover {
+        background-color: $background-color;
+        color: $text-color;
+      }
+      &:active {
+        transform: scale(0.95);
+      }
     }
     &:hover {
-      transform: scale(1.03); // Небольшое увеличение при наведении
+      transform: scale(1.01); // Небольшое увеличение при наведении
       box-shadow: 0 10rem 20rem rgba(0, 0, 0, 0.2); // Добавляем тень
       background-color: lighten(
         $text-color,
         5%
       ); // Немного осветляем фон при наведении
-      z-index: 3; // Поднимаем элемент при наведении, чтобы тень была видна поверх других элементов
     }
 
+    background-size: cover;
     &:nth-child(1) {
-      grid-column: span 6;
-      background-color: #fff;
-      color: $text-color;
-      border: 2px solid $text-color;
+      background-image: url(../../sources/img/why1_new.png);
     }
 
     &:nth-child(2) {
-      grid-column: span 6;
+      background-image: url(../../sources/img/why2_new.png);
     }
 
     &:nth-child(3) {
-      grid-column: span 6;
+      background-image: url(../../sources/img/why3_new.png);
     }
 
     &:nth-child(4) {
-      grid-column: span 6;
-      background-color: #fff;
-      color: $text-color;
-      border: 2px solid $text-color;
+      background-image: url(../../sources/img/why4_new.png);
     }
 
     h3 {
       font-weight: 700;
-      font-size: 35rem;
+      font-size: 40rem;
       line-height: 1;
       text-transform: uppercase;
     }
 
     p {
       font-weight: 400;
-      font-size: 20rem;
-      margin: 0 0 20rem 0;
+      font-size: 26rem;
       line-height: 1;
-    }
-
-    img {
-      width: auto;
-      height: 60%;
-      margin-top: auto;
-      object-fit: cover;
-      border-radius: 15px;
-      margin: 0;
     }
   }
 
   @include mobile {
-    height: 90%;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 30rem;
+    box-sizing: border-box;
     .why__item {
       display: flex;
       flex-direction: column;
-      justify-content: start;
-      height: auto;
+      justify-content: space-between;
+      min-height: 700rem;
       gap: 30rem;
-      padding: 60rem;
-      border: 2px solid $text-color;
-
-      &:nth-child(3) {
-        background-color: #fff;
-        color: $text-color;
-      }
-      &:nth-child(4) {
-        background-color: $text-color;
-        color: $background-color;
-      }
+      padding: 100rem;
       div {
-        height: auto;
+        gap: 50rem;
+      }
+      a {
+        font-size: 3.3dvw;
+        border-radius: 5px;
       }
       h3 {
-        font-size: 3.3dvw;
+        font-size: 4dvw;
         line-height: normal;
         width: 90%;
       }
       p {
-        font-size: 3dvw;
+        font-size: 3.5dvw;
       }
     }
   }
@@ -430,7 +434,6 @@ main {
 
     &:hover {
       box-shadow: 0 10rem 20rem rgba(0, 0, 0, 0.2); // Добавляем тень
-      z-index: 3; // Поднимаем элемент при наведении, тень была видна поверх других элементов
     }
 
     .calendar__card-img {

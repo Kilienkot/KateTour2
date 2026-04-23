@@ -32,7 +32,7 @@ function updateMainImg(scrollY) {
   // Вычисляем параметры для анимации в зависимости от устройства
   let height;
   if (isMobile) {
-    height = Math.max(50, 70 - progress * 25);
+    height = Math.max(60, 100 - progress * 25);
   } else {
     height = Math.max(80, 100 - progress * 35);
   }

@@ -245,7 +245,7 @@ main {
 
 .why {
   width: 100%;
-  height: calc(95dvh - 80rem);
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -255,6 +255,7 @@ main {
   height: 10%;
   font-size: 70rem;
   line-height: 1;
+  margin: 0 0 50rem 0;
 }
 @media (max-width: 768px) {
   .why {
@@ -270,106 +271,112 @@ main {
 
 .why__item_grid {
   width: auto;
-  height: 90%;
+  height: auto;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(2, calc(50% - 12rem));
+  grid-template-rows: repeat(2, 1fr);
   gap: 12rem;
 }
 .why__item_grid .why__item {
-  cursor: pointer;
   display: flex;
   flex-direction: column;
-  padding: 30rem;
+  justify-content: space-between;
+  min-height: 350rem;
+  padding: 50rem;
   border-radius: 15px;
   background-color: #1d1d1d;
   color: #eff1f4;
   overflow: hidden;
+  grid-column: span 6;
   transition: all 0.3s ease;
 }
 .why__item_grid .why__item div {
-  height: 40%;
+  height: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.why__item_grid .why__item a {
+  width: 50%;
+  font-size: 35rem;
+  text-decoration: none;
+  color: #eff1f4;
+  border: 2px solid #eff1f4;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 10rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+.why__item_grid .why__item a:hover {
+  background-color: #eff1f4;
+  color: #1d1d1d;
+}
+.why__item_grid .why__item a:active {
+  transform: scale(0.95);
 }
 .why__item_grid .why__item:hover {
-  transform: scale(1.03);
+  transform: scale(1.01);
   box-shadow: 0 10rem 20rem rgba(0, 0, 0, 0.2);
   background-color: rgb(41.75, 41.75, 41.75);
-  z-index: 3;
+}
+.why__item_grid .why__item {
+  background-size: cover;
 }
 .why__item_grid .why__item:nth-child(1) {
-  grid-column: span 6;
-  background-color: #fff;
-  color: #1d1d1d;
-  border: 2px solid #1d1d1d;
+  background-image: url(../../sources/img/why1_new.png);
 }
 .why__item_grid .why__item:nth-child(2) {
-  grid-column: span 6;
+  background-image: url(../../sources/img/why2_new.png);
 }
 .why__item_grid .why__item:nth-child(3) {
-  grid-column: span 6;
+  background-image: url(../../sources/img/why3_new.png);
 }
 .why__item_grid .why__item:nth-child(4) {
-  grid-column: span 6;
-  background-color: #fff;
-  color: #1d1d1d;
-  border: 2px solid #1d1d1d;
+  background-image: url(../../sources/img/why4_new.png);
 }
 .why__item_grid .why__item h3 {
   font-weight: 700;
-  font-size: 35rem;
+  font-size: 40rem;
   line-height: 1;
   text-transform: uppercase;
 }
 .why__item_grid .why__item p {
   font-weight: 400;
-  font-size: 20rem;
-  margin: 0 0 20rem 0;
+  font-size: 26rem;
   line-height: 1;
-}
-.why__item_grid .why__item img {
-  width: auto;
-  height: 60%;
-  margin-top: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
-  border-radius: 15px;
-  margin: 0;
 }
 @media (max-width: 768px) {
   .why__item_grid {
-    height: 90%;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 30rem;
+    box-sizing: border-box;
   }
   .why__item_grid .why__item {
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    height: auto;
+    justify-content: space-between;
+    min-height: 700rem;
     gap: 30rem;
-    padding: 60rem;
-    border: 2px solid #1d1d1d;
-  }
-  .why__item_grid .why__item:nth-child(3) {
-    background-color: #fff;
-    color: #1d1d1d;
-  }
-  .why__item_grid .why__item:nth-child(4) {
-    background-color: #1d1d1d;
-    color: #eff1f4;
+    padding: 100rem;
   }
   .why__item_grid .why__item div {
-    height: auto;
+    gap: 50rem;
+  }
+  .why__item_grid .why__item a {
+    font-size: 3.3dvw;
+    border-radius: 5px;
   }
   .why__item_grid .why__item h3 {
-    font-size: 3.3dvw;
+    font-size: 4dvw;
     line-height: normal;
     width: 90%;
   }
   .why__item_grid .why__item p {
-    font-size: 3dvw;
+    font-size: 3.5dvw;
   }
 }
 
@@ -411,7 +418,6 @@ main {
 }
 .calendar .calendar__card:hover {
   box-shadow: 0 10rem 20rem rgba(0, 0, 0, 0.2);
-  z-index: 3;
 }
 .calendar .calendar__card .calendar__card-img {
   width: 100%;
