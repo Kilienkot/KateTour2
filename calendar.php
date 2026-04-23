@@ -48,10 +48,10 @@ function getTripClass($start_date, $end_date) {
         <section class="calendar">
             <div class="btns">
                 <div id="savelong">
-                    <h3>Оставить <span>длинные выезды</span></h3>
+                    <h3>длинные <span>выезды</span></h3>
                 </div>
                 <div id="savesmall">
-                    <h3>Оставить <span>короткие поездки</span></h3>
+                    <h3>короткие <span>поездки</span></h3>
                 </div>
             </div>
             <div class="calendar__grid">
