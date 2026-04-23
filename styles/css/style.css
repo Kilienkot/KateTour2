@@ -39,7 +39,7 @@ hr {
   border-radius: 5px;
   background-color: #1d1d1d;
 }
-@media (max-width: 768px) {
+@media (max-width: 500px) {
   hr {
     margin: 200rem 0 300rem 0;
   }
@@ -93,6 +93,61 @@ main {
   color: #eff1f4;
   margin: 0;
   text-indent: -13.5px;
+}
+.main_img .button-block {
+  display: none;
+}
+@media (max-width: 500px) {
+  .main_img {
+    background-image: url("../../sources/img/main_big-mobile.png");
+    padding: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .main_img .text-block {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    width: 100%;
+    height: 40%;
+    gap: 15px;
+    text-align: center;
+  }
+  .main_img .text-block h1 {
+    font-size: 250rem;
+    white-space: nowrap;
+    text-indent: 0;
+    width: 100%;
+  }
+  .main_img .text-block h2 {
+    font-size: 100rem;
+  }
+  .main_img .button-block {
+    width: 100%;
+    height: 20%;
+    display: grid;
+    grid-template-rows: 2, 1fr;
+    gap: 15px;
+  }
+  .main_img .button-block a {
+    width: 100%;
+    height: auto;
+    background-color: #eff1f4;
+    color: #1d1d1d;
+    border-radius: 10px;
+    font-size: 100rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  .main_img .button-block a:hover {
+    transform: scale(0.98);
+  }
 }
 
 .collage {
@@ -196,7 +251,7 @@ main {
   grid-column: span 3;
   border-radius: 15px;
 }
-@media (max-width: 768px) {
+@media (max-width: 500px) {
   .collage {
     margin-top: 30rem;
     gap: 60rem;
@@ -257,7 +312,7 @@ main {
   line-height: 1;
   margin: 0 0 50rem 0;
 }
-@media (max-width: 768px) {
+@media (max-width: 500px) {
   .why {
     height: auto;
     gap: 100rem;
@@ -346,7 +401,7 @@ main {
   font-size: 26rem;
   line-height: 1;
 }
-@media (max-width: 768px) {
+@media (max-width: 500px) {
   .why__item_grid {
     height: auto;
     display: flex;
@@ -469,7 +524,7 @@ main {
   font-size: 30rem;
   color: #1d1d1d;
 }
-@media (max-width: 768px) {
+@media (max-width: 500px) {
   .calendar {
     height: auto;
     gap: 60rem;

@@ -38,6 +38,10 @@ function formatDate($date) {
             <h2>Семейные приключения по всей планете</h2>
             <h1>Катюша<span>ТУР</span></h1>
           </div>
+          <div class="button-block">
+            <a href="calendar.php">Календарь Туров</a>
+            <a href="#form">Записаться на Тур</a>
+          </div>
         </div>
         <div class="collage">
           <img src="sources/img/collage1.png" alt="collage" class="block-1" />
