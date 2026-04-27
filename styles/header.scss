@@ -51,14 +51,17 @@ header {
       }
       // Остальные ссылки помещаются в последние 3 колонки
       &:nth-child(2) {
+        display: none;
+      }
+      &:nth-child(3) {
         // Календарь
         grid-column: 10 / 11; // 10-я колонка
       }
-      &:nth-child(3) {
+      &:nth-child(4) {
         // Контакты
         grid-column: 11 / 12; // 11-я колонка
       }
-      &:nth-child(4) {
+      &:nth-child(5) {
         // Запись
         grid-column: 12 / 13; // 12-я колонка
         width: 100%;
@@ -95,7 +98,7 @@ header {
       justify-content: space-between;
       align-items: start;
     }
-    ul {
+    оды ul {
       display: flex;
       flex-direction: column;
       align-items: start;
@@ -116,7 +119,7 @@ header {
           }
         }
         // Остальные ссылки помещаются в последние 3 колонки
-        &:nth-child(4) {
+        &:nth-child(5) {
           // Запись
           width: 100%;
           background-color: $accent-color;

@@ -134,7 +134,58 @@ function formatDate($date) {
         </div>
       </section>  
       <hr />
-
+      <section class="tags">
+        <h2>выбери свой <span>тур</span></h2>
+        <div class="tags__buttons">
+          <a href="calendar.php?tag=mountain-hikes" class="category-btn">
+            Походы  в горы
+          </a>
+          <a href="calendar.php?tag=kayaking" class="category-btn">
+            Сплавы на байдарках
+          </a>
+          <a href="calendar.php?tag=weekend-hikes" class="category-btn">
+            Походы выходного дня
+          </a>
+          <a href="calendar.php?tag=climbing" class="category-btn">
+            Восхождения
+          </a>
+          <a href="calendar.php?tag=ski-tours" class="category-btn">
+            Лыжные сборы
+          </a>
+          <a href="calendar.php?tag=historical-hikes" class="category-btn">
+            Исторические походы
+          </a>
+          <a href="calendar.php?tag=bike-tours" class="category-btn">
+            Велопоходы
+          </a>
+          <a href="calendar.php?tag=wellness" class="category-btn">
+            ЛЕЧЕБНО-ОЗДОРОВИТЕЛЬНЫЕ
+          </a>
+          <a href="calendar.php?tag=checkup" class="category-btn">
+            Чек ап
+          </a>
+          <a href="calendar.php?tag=family-tours" class="category-btn">
+            Семейные сборы
+          </a>
+          <a href="calendar.php?tag=weight-loss" class="category-btn">
+            Похудение
+          </a>
+          <a href="calendar.php?tag=scientific-tours" class="category-btn">
+            Научные походы
+          </a>
+          <a href="calendar.php?tag=no-tents" class="category-btn">
+            Походы без палаток
+          </a>
+          <a href="calendar.php?tag=author-tours" class="category-btn">
+            Походы авторские
+          </a>
+          <a href="calendar.php?tag=senior-hikes" class="category-btn">
+            Походы 60+
+          </a>
+        </div>
+      </section>
+      <hr />
+    
       <?php include("blocks/form.php") ?>
 
     </main>

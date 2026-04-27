@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Tektur:wght@400..900&display=swap");
 @import url("header.css");
 @import url("footer.css");
@@ -530,6 +531,107 @@ main {
     height: 90rem;
   }
   .calendar .calendar__more {
+    font-size: 3dvw;
+  }
+}
+
+.tags {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30rem;
+}
+.tags h2 {
+  margin-bottom: 15rem;
+  font-size: 70rem;
+  line-height: 1;
+  display: flex;
+}
+@media (max-width: 500px) {
+  .tags h2 {
+    font-size: 130rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+.tags .tags__buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(140px, auto); /* все строки одинаковой высоты */
+  gap: 15px;
+}
+.tags .tags__buttons a {
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  background-size: cover;
+  color: #eff1f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-size: 40rem;
+  text-transform: uppercase;
+}
+.tags .tags__buttons a:nth-child(1) {
+  background-image: url(../../sources/img/mountain-hikes.png);
+}
+.tags .tags__buttons a:nth-child(2) {
+  background-image: url(../../sources/img/kayaking.png);
+}
+.tags .tags__buttons a:nth-child(3) {
+  background-image: url(../../sources/img/weekend-hikes.png);
+}
+.tags .tags__buttons a:nth-child(4) {
+  background-image: url(../../sources/img/climbing.png);
+}
+.tags .tags__buttons a:nth-child(5) {
+  background-image: url(../../sources/img/ski-tours.png);
+}
+.tags .tags__buttons a:nth-child(6) {
+  background-image: url(../../sources/img/historical-hikes.png);
+}
+.tags .tags__buttons a:nth-child(7) {
+  background-image: url(../../sources/img/bike-tours.png);
+}
+.tags .tags__buttons a:nth-child(8) {
+  background-image: url(../../sources/img/wellness.png);
+}
+.tags .tags__buttons a:nth-child(9) {
+  background-image: url(../../sources/img/checkup.png);
+}
+.tags .tags__buttons a:nth-child(10) {
+  background-image: url(../../sources/img/family-tours.png);
+}
+.tags .tags__buttons a:nth-child(11) {
+  background-image: url(../../sources/img/weight-loss.png);
+}
+.tags .tags__buttons a:nth-child(12) {
+  background-image: url(../../sources/img/scientific-tours.png);
+}
+.tags .tags__buttons a:nth-child(13) {
+  background-image: url(../../sources/img/no-tents.png);
+}
+.tags .tags__buttons a:nth-child(14) {
+  background-image: url(../../sources/img/author-tours.png);
+}
+.tags .tags__buttons a:nth-child(15) {
+  background-image: url(../../sources/img/senior-hikes.png);
+}
+.tags .tags__buttons a:hover {
+  transform: scale(1.02);
+}
+@media (max-width: 500px) {
+  .tags .tags__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 50rem;
+  }
+  .tags .tags__buttons a {
+    min-height: 70px;
     font-size: 3dvw;
   }
 }/*# sourceMappingURL=style.css.map */
