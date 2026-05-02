@@ -3,12 +3,123 @@
 @import url("footer.css");
 @import url("form-style.css");
 
+@mixin mobile {
+  @media (max-width: 500px) {
+    @content;
+  }
+}
+
 $accent-color: #f2b705;
 $text-color: #1d1d1d;
 $background-color: #eff1f4;
 $blue: #0066d2;
 $green: #1ca697;
 $font: "Golos Text";
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: $font;
+}
+
+html {
+  font-size: calc(1vw / 19.2);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  background-color: $background-color;
+  line-height: 1.6;
+}
+
+main {
+  margin-left: 20rem;
+  margin-right: 20rem;
+  padding-top: 120rem; // Для fixed хэдера
+  @include mobile {
+    margin: 0;
+    padding-top: 300rem;
+    min-height: 100dvh;
+  }
+}
+
+.admin-welcome {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  h1 {
+    font-size: 70rem;
+    margin-bottom: 50rem;
+    color: $text-color;
+  }
+  p {
+    font-size: 30rem;
+    color: $text-color;
+    font-weight: 500;
+  }
+  .admin-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30rem;
+    .admin-btn {
+      display: inline-block;
+      padding: 20rem 40rem;
+      background-color: $blue;
+      color: $background-color;
+      text-decoration: none;
+      font-size: 25rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      border-radius: 25px;
+      border: 5rem solid $blue;
+      transition: 0.5s;
+      &:hover {
+        background-color: $background-color;
+        color: $blue;
+      }
+      &:active {
+        transform: scale(0.97);
+      }
+      &:first-child {
+        background-color: $green;
+        border-color: $green;
+        &:hover {
+          background-color: $background-color;
+          color: $green;
+        }
+      }
+      &.logout-btn {
+        background-color: #d20000;
+        border-color: #d20000;
+        &:hover {
+          background-color: $background-color;
+          color: #d20000;
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    h1 {
+      font-size: 150rem;
+    }
+    .admin-buttons {
+      flex-direction: column;
+      width: 70%;
+      .admin-btn {
+        font-size: 90rem;
+      }
+    }
+  }
+}
 
 .form-container {
   max-width: 800rem;
@@ -23,13 +134,21 @@ $font: "Golos Text";
     font-size: 35rem;
   }
   h2 {
+    font-size: 20rem;
+    margin-bottom: 20rem;
     color: $text-color;
-    margin-bottom: 15rem;
-    font-size: 28rem;
   }
-  p {
-    color: $text-color;
-    font-size: 18rem;
+
+  @include mobile {
+    max-width: 90dvw;
+    padding: 50rem;
+    h1 {
+      font-size: 100rem;
+      text-align: center;
+    }
+    h2 {
+      font-size: 80rem;
+    }
   }
 }
 
@@ -42,6 +161,11 @@ $font: "Golos Text";
   font-weight: bold;
   &:hover {
     text-decoration: underline;
+  }
+  @include mobile {
+    font-size: 50rem;
+    margin-bottom: 50rem;
+    margin-left: 50rem;
   }
 }
 
@@ -57,26 +181,96 @@ $font: "Golos Text";
   input,
   textarea,
   select {
-    width: 100%;
+    width: 90%;
     padding: 8rem;
     border: 1rem solid #ddd;
     border-radius: 4px;
     font-family: $font;
   }
+  @include mobile {
+    label {
+      margin-bottom: 15rem;
+      font-size: 60rem;
+    }
+    input,
+    textarea,
+    select {
+      padding: 15rem;
+      font-size: 50rem;
+    }
+  }
 }
 
 .photos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260rem, 1fr));
+  gap: 25rem;
+  margin-top: 15rem;
+
   .photo-input {
-    flex: 1;
-    min-width: 150rem;
-    label {
-      font-size: 14rem;
+    background: #f8f9fb;
+    border: 2rem solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20rem 25rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: $accent-color;
+      background: #fff;
+      box-shadow: 0 8rem 20rem rgba(242, 183, 5, 0.1);
     }
-    input {
-      font-size: 12rem;
+
+    label {
+      display: block;
+      margin-bottom: 12rem;
+      font-weight: 600;
+      color: $text-color;
+      font-size: 24rem;
+    }
+
+    input[type="file"] {
+      width: 90%;
+      padding: 12rem 15rem;
+      border: 2rem dashed #ccc;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-size: 22rem;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: $accent-color;
+        background: #fffaf0;
+      }
+    }
+
+    /* Выделяем первое фото */
+    &:first-child {
+      border-color: $accent-color;
+      background: #fffaf0;
+
+      label {
+        color: $accent-color;
+      }
+    }
+  }
+
+  /* Мобильная версия */
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 30rem;
+
+    .photo-input {
+      padding: 25rem 30rem;
+
+      label {
+        font-size: 50rem;
+      }
+
+      input[type="file"] {
+        padding: 18rem 20rem;
+        font-size: 50rem;
+      }
     }
   }
 }
@@ -109,12 +303,22 @@ $font: "Golos Text";
   &:hover {
     background: darken($blue, 10%);
   }
+
+  @include mobile {
+    padding: 20rem 40rem;
+    font-size: 50rem;
+    width: 100%;
+  }
 }
 
 .remove-day {
   background: #d20000;
   &:hover {
     background: darken(#d20000, 10%);
+  }
+
+  @include mobile {
+    width: auto;
   }
 }
 
@@ -131,6 +335,11 @@ $font: "Golos Text";
   width: 100%;
   &:hover {
     background: darken($green, 10%);
+  }
+
+  @include mobile {
+    padding: 40rem 20rem;
+    font-size: 80rem;
   }
 }
 
@@ -210,90 +419,25 @@ $font: "Golos Text";
       }
     }
   }
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  font-family: $font;
-}
-
-html {
-  font-size: calc(1vw / 19.2);
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: $font;
-  margin: 0;
-  padding: 0;
-  color: $text-color;
-  background-color: $background-color;
-  line-height: 1.6;
-}
-
-main {
-  margin-left: 20rem;
-  margin-right: 20rem;
-  padding-top: 120rem; // Для fixed хэдера
-}
-
-.admin-welcome {
-  width: 100%;
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  h1 {
-    font-size: 70rem;
-    margin-bottom: 50rem;
-    color: $text-color;
-  }
-  p {
-    font-size: 30rem;
-    color: $text-color;
-    font-weight: 500;
-  }
-  .admin-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 30rem;
-    .admin-btn {
-      display: inline-block;
-      padding: 20rem 40rem;
-      background-color: $blue;
-      color: $background-color;
-      text-decoration: none;
-      font-size: 25rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      border-radius: 25px;
-      border: 5rem solid $blue;
-      transition: 0.5s;
-      &:hover {
-        background-color: $background-color;
-        color: $blue;
+  @include mobile {
+    padding: 30rem;
+    h3 {
+      font-size: 80rem;
+    }
+    p {
+      font-size: 70rem;
+    }
+    .tour-actions {
+      .edit-btn {
+        font-size: 40rem;
+        padding: 15rem 30rem;
+        width: 40%;
+        text-align: center;
       }
-      &:active {
-        transform: scale(0.97);
-      }
-      &:first-child {
-        background-color: $green;
-        border-color: $green;
-        &:hover {
-          background-color: $background-color;
-          color: $green;
-        }
-      }
-      &.logout-btn {
-        background-color: #d20000;
-        border-color: #d20000;
-        &:hover {
-          background-color: $background-color;
-          color: #d20000;
-        }
+      .delete-btn {
+        font-size: 40rem;
+        padding: 15rem 30rem;
+        text-align: center;
       }
     }
   }
