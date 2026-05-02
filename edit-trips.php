@@ -398,7 +398,6 @@ if (isset($_GET['edit'])) {
                                         <input type="hidden" name="action" value="toggle">
                                         <input type="hidden" name="tour_id" value="<?php echo $tour['id']; ?>">
                                         <input type="checkbox" name="is_active" <?php if ($tour['is_active']) echo 'checked'; ?> onchange="this.form.submit()">
-                                        <label>Активный</label>
                                     </form>
                                     <a href="?edit=<?php echo $tour['id']; ?>" class="edit-btn">Редактировать</a>
                                     <form action="" method="POST" style="display: inline; margin-left: auto;" onsubmit="return confirm('Удалить тур?')">

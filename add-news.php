@@ -73,8 +73,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="text" id="title" name="title" placeholder="Например: Открытие нового маршрута в Архызе" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="image">Главное изображение (рекомендуется 1200×800)</label>
+                <div class="form-group image-upload" id="imageUploadGroup">
+                    <label for="image">Главное изображение новости
+                        <div class="upload-area">
+                            <div class="upload-content">
+                                <div class="upload-icon">📸</div>
+                                <p>Нажмите для выбора фото<br>или перетащите файл сюда</p>
+                                <span class="recommended">Рекомендуемый размер: 1200 × 800 px</span>
+                            </div>
+                        </div>
+                    </label>
+                    
                     <input type="file" id="image" name="image" accept="image/*">
                 </div>
 
