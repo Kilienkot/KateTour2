@@ -648,3 +648,214 @@ main {
     }
   }
 }
+
+.news {
+  h2 {
+    margin-bottom: 50rem;
+    font-size: 70rem;
+    line-height: 1;
+
+    @include mobile {
+      font-size: 130rem;
+      text-align: center;
+      margin-bottom: 60rem;
+    }
+  }
+
+  .news__slider {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+
+  .news__track {
+    display: flex;
+    gap: 30rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 30rem; /* место под скроллбар */
+
+    /* Скрываем скроллбар */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .news__card {
+    flex: 0 0 calc(33.333% - 20rem); /* 3 карточки в ряд с отступами */
+    scroll-snap-align: start;
+    background-color: $background-color;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5rem 15rem rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: $text-color;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+      transform: translateY(-8rem);
+      box-shadow: 0 15rem 30rem rgba(0, 0, 0, 0.15);
+    }
+
+    .news__image {
+      width: 100%;
+      height: 50%;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+    }
+
+    .news__content {
+      padding: 40rem 35rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news__date {
+      font-size: 24rem;
+      color: #666;
+      margin-bottom: 15rem;
+      font-weight: 400;
+    }
+
+    .news__title {
+      font-size: 32rem;
+      line-height: 1.2;
+      font-weight: 600;
+      margin-bottom: 20rem;
+      flex: 1;
+    }
+
+    .news__excerpt {
+      font-size: 26rem;
+      line-height: 1.4;
+      color: #444;
+      margin: 0;
+    }
+  }
+
+  .news__more {
+    text-align: center;
+    margin-top: 60rem;
+  }
+
+  .news__more-link {
+    font-size: 40rem;
+    color: $accent-color;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .news__slider {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+
+  .news__track {
+    display: flex;
+    gap: 30rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 20rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    scrollbar-width: none;
+  }
+
+  .news__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 55rem;
+    height: 55rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 2px solid $accent-color;
+    border-radius: 50%;
+    font-size: 28rem;
+    color: $accent-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    box-shadow: 0 5rem 15rem rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background-color: $accent-color;
+      color: white;
+      transform: translateY(-50%);
+    }
+
+    &:active {
+      transform: translateY(-50%);
+    }
+
+    &--prev {
+      left: 0rem;
+    }
+    &--next {
+      right: 0rem;
+    }
+  }
+
+  /* ====================== МОБИЛЬНАЯ ВЕРСИЯ ====================== */
+  @include mobile {
+    .news__track {
+      gap: 40rem;
+      padding-bottom: 40rem;
+      height: 70dvh;
+    }
+
+    .news__card {
+      flex: 0 0 85%; /* чуть меньше 100%, чтобы было видно края соседних карточек */
+      scroll-snap-align: center; /* на мобильке центрируем */
+
+      .news__image {
+        height: 55%;
+      }
+
+      .news__content {
+        padding: 50rem 40rem;
+      }
+
+      .news__title {
+        font-size: 4.5dvw;
+      }
+
+      .news__excerpt {
+        font-size: 3.6dvw;
+      }
+    }
+    .news__arrow {
+      display: none;
+    }
+
+    .news__track {
+      gap: 40rem;
+    }
+
+    .news__card {
+      flex: 0 0 85%;
+      scroll-snap-align: center;
+    }
+
+    .news__more-link {
+      font-size: 4dvw;
+    }
+  }
+}

@@ -1,4 +1,3 @@
-@charset "UTF-8";
 header {
   position: fixed;
   z-index: 2;
@@ -76,13 +75,13 @@ header ul li a {
     justify-content: space-between;
     align-items: start;
   }
-  header оды ul {
+  header ul {
     display: flex;
     flex-direction: column;
     align-items: start;
     gap: 50rem;
   }
-  header оды ul li {
+  header ul li {
     height: auto;
     display: none;
     align-items: center;
@@ -90,20 +89,20 @@ header ul li a {
     transition: all 0.3s ease;
     width: 100%;
   }
-  header оды ul li:first-child {
+  header ul li:first-child {
     display: flex;
     width: 30%;
   }
-  header оды ul li:first-child a {
+  header ul li:first-child a {
     justify-content: flex-start;
     padding: 5rem 10rem;
   }
-  header оды ul li:nth-child(5) {
+  header ul li:nth-child(5) {
     width: 100%;
     background-color: #f2b705;
     border-radius: 15rem;
   }
-  header оды ul li a {
+  header ul li a {
     font-size: 90rem;
   }
 }

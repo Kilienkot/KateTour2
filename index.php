@@ -184,6 +184,58 @@ function formatDate($date) {
           </a>
         </div>
       </section>
+
+      <hr />
+      
+      <section class="news" id="news">
+        <h2>Новости</h2>
+        
+        <?php
+        $stmt_news = $pdo->prepare("
+            SELECT id, title, content, image_path, created_at 
+            FROM news 
+            ORDER BY created_at DESC 
+            LIMIT 6
+        ");
+        $stmt_news->execute();
+        $news_items = $stmt_news->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <div class="news__slider">
+          <button class="news__arrow news__arrow--prev" aria-label="Предыдущая новость" id="newsPrev">←</button>
+          
+          <div class="news__track" id="newsTrack">
+            <?php foreach ($news_items as $news): ?>
+              <a href="news-detail.php?id=<?php echo $news['id']; ?>" class="news__card">
+                <?php if (!empty($news['image_path'])): ?>
+                  <img src="<?php echo htmlspecialchars($news['image_path']); ?>" 
+                      alt="<?php echo htmlspecialchars($news['title']); ?>" 
+                      class="news__image">
+                <?php endif; ?>
+                
+                <div class="news__content">
+                  <div class="news__date">
+                    <?php echo date('d.m.Y', strtotime($news['created_at'])); ?>
+                  </div>
+                  <h3 class="news__title"><?php echo htmlspecialchars($news['title']); ?></h3>
+                  <p class="news__excerpt">
+                    <?php 
+                      $excerpt = strip_tags($news['content']);
+                      echo htmlspecialchars(mb_substr($excerpt, 0, 130)) . (mb_strlen($excerpt) > 130 ? '...' : ''); 
+                    ?>
+                  </p>
+                </div>
+              </a>
+            <?php endforeach; ?>
+          </div>
+
+          <button class="news__arrow news__arrow--next" aria-label="Следующая новость" id="newsNext">→</button>
+        </div>
+
+        <div class="news__more">
+          <a href="news.php" class="news__more-link">Все новости →</a>
+        </div>
+      </section>
       <hr />
     
       <?php include("blocks/form.php") ?>
@@ -192,6 +244,6 @@ function formatDate($date) {
 
     <?php include("blocks/footer.php")?>
 
-    <script src="main.js"></script>
+    <script src="main.js"> </script>
   </body>
 </html>

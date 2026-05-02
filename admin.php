@@ -38,6 +38,7 @@ $show_user_management = $role_count >= 3;
         <div class="admin-buttons">
           <a href="add-trip.php" class="admin-btn">Добавить выезд</a>
           <a href="edit-trips.php" class="admin-btn">Редактировать выезды</a>
+          <a href="add-news.php" class="admin-btn">Добавить новость</a>
           <?php if ($show_user_management): ?>
             <a href="manage-users.php" class="admin-btn">Управление пользователями</a>
           <?php endif; ?>
