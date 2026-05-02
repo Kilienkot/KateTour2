@@ -459,6 +459,50 @@ main {
   }
 }
 
+/* Стили для чекбоксов тегов */
+.tags-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.tag-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #f8f9fa;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-checkbox:hover {
+  background: #e9ecef;
+}
+
+.tag-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.tag-checkbox input[type="checkbox"]:checked + .tag-name {
+  color: #667eea;
+  font-weight: 500;
+}
+
+.tag-checkbox:has(input:checked) {
+  background: #667eea20;
+  border: 1px solid #667eea;
+}
+
+.tag-name {
+  font-size: 14px;
+  color: #495057;
+}
+
 /* ====================== ФОРМА ДОБАВЛЕНИЯ НОВОСТИ ====================== */
 
 .form-container textarea {
@@ -554,5 +598,8 @@ main {
   margin-bottom: 25rem;
   text-align: center;
   font-weight: 500;
-  font-size: 90rem;
+  font-size: 20rem;
+  @include mobile {
+    font-size: 90rem;
+  }
 }

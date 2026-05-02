@@ -8,6 +8,9 @@ if (!isset($_COOKIE['id'])) {
 // Подключение к БД
 include "lib/db.php";
 
+$stmt = $pdo->query("SELECT id, name, slug FROM tags ORDER BY name");
+$all_tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 $message = "";
 
 // Обработка формы редактирования
@@ -180,6 +183,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
                 $message .= " Фото $i не установлено.";
             }
         }
+
+        // ========== СОХРАНЯЕМ ТЕГИ ==========
+        // Удаляем старые теги
+        $stmt = $pdo->prepare("DELETE FROM tour_tags WHERE tour_id = ?");
+        $stmt->execute([$tour_id]);
+        
+        // Добавляем новые
+        if (isset($_POST['tags']) && is_array($_POST['tags'])) {
+            $stmt = $pdo->prepare("INSERT INTO tour_tags (tour_id, tag_id) VALUES (?, ?)");
+            foreach ($_POST['tags'] as $tag_id) {
+                $stmt->execute([$tour_id, intval($tag_id)]);
+            }
+            $message .= " Теги обновлены!";
+        }
     } elseif ($action == 'toggle') {
         $tour_id = intval($_POST['tour_id']);
         $is_active = isset($_POST['is_active']) ? 1 : 0;
@@ -202,6 +219,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         $stmt->execute([$tour_id]);
         $message = "Тур удален!";
     }
+
+    
 }
 
 // Получение списка туров
@@ -232,6 +251,11 @@ if (isset($_GET['edit'])) {
         $stmt = $pdo->prepare("SELECT * FROM tour_inclusions WHERE tour_id = ? ORDER BY sort_order");
         $stmt->execute([$tour_id]);
         $edit_tour['inclusions'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Получаем теги этого тура
+        $stmt = $pdo->prepare("SELECT tag_id FROM tour_tags WHERE tour_id = ?");
+        $stmt->execute([$tour_id]);
+        $edit_tour['tag_ids'] = $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 }
 ?>
@@ -310,6 +334,19 @@ if (isset($_GET['edit'])) {
                             <option value="сложный" <?php if ($edit_tour['difficulty'] == 'сложный') echo 'selected'; ?>>Сложный</option>
                             <option value="эксперт" <?php if ($edit_tour['difficulty'] == 'эксперт') echo 'selected'; ?>>Эксперт</option>
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Теги выезда (можно выбрать несколько)</label>
+                        <div class="tags-checkboxes">
+                            <?php foreach ($all_tags as $tag): ?>
+                                <label class="tag-checkbox">
+                                    <input type="checkbox" name="tags[]" value="<?php echo $tag['id']; ?>"
+                                        <?php if (in_array($tag['id'], $edit_tour['tag_ids'] ?? [])) echo 'checked'; ?>>
+                                    <span class="tag-name"><?php echo htmlspecialchars($tag['name']); ?></span>
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
 
                     <div class="form-group">

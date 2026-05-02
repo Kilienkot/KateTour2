@@ -10,6 +10,10 @@ include "lib/db.php";
 
 $message = "";
 
+// Получаем все теги для чекбоксов
+$stmt = $pdo->query("SELECT id, name, slug FROM tags ORDER BY name");
+$all_tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 // Обработка формы
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Получение данных
@@ -28,8 +32,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty]);
     $tour_id = $pdo->lastInsertId();
 
+    // ========== ДОБАВЛЯЕМ ТЕГИ ==========
+    if (isset($_POST['tags']) && is_array($_POST['tags'])) {
+        $stmt = $pdo->prepare("INSERT INTO tour_tags (tour_id, tag_id) VALUES (?, ?)");
+        foreach ($_POST['tags'] as $tag_id) {
+            $stmt->execute([$tour_id, intval($tag_id)]);
+        }
+        $message .= " Теги добавлены!";
+    }
+
     // Функция для сжатия изображения
     function resizeImage($source, $destination, $maxWidth = 800, $maxHeight = 600, $quality = 80) {
+        // ... (оставьте вашу существующую функцию без изменений)
         $imageInfo = getimagesize($source);
         if (!$imageInfo) return false;
 
@@ -37,13 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $height = $imageInfo[1];
         $mime = $imageInfo['mime'];
 
-        // Рассчитать новые размеры
         $ratio = min($maxWidth / $width, $maxHeight / $height);
-        if ($ratio > 1) $ratio = 1; // Не увеличивать
+        if ($ratio > 1) $ratio = 1;
         $newWidth = $width * $ratio;
         $newHeight = $height * $ratio;
 
-        // Создать изображение
         switch ($mime) {
             case 'image/jpeg':
                 $src = imagecreatefromjpeg($source);
@@ -61,13 +73,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dst = imagecreatetruecolor($newWidth, $newHeight);
         imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
 
-        // Сохранить
         switch ($mime) {
             case 'image/jpeg':
                 imagejpeg($dst, $destination, $quality);
                 break;
             case 'image/png':
-                imagepng($dst, $destination, 9); // Максимальное сжатие для PNG
+                imagepng($dst, $destination, 9);
                 break;
             case 'image/gif':
                 imagegif($dst, $destination);
@@ -91,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $filename = uniqid() . '_' . basename($file['name']);
             $filepath = $upload_dir . $filename;
 
-            // Сжать и сохранить
             if (resizeImage($file['tmp_name'], $filepath)) {
                 $new_size = filesize($filepath);
                 $stmt = $pdo->prepare("INSERT INTO tour_photos (tour_id, filename, original_filename, filepath, file_size, mime_type, is_primary, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -105,11 +115,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $days = $_POST['days'];
         foreach ($days as $day) {
             $day_number = intval($day['number']);
-            $short_title = trim($day['short_title']);
-            $full_description = trim($day['full_description']);
+            $short_title_day = trim($day['short_title']);
+            $full_description_day = trim($day['full_description']);
 
             $stmt = $pdo->prepare("INSERT INTO tour_program (tour_id, day_number, short_title, full_description, sort_order) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$tour_id, $day_number, $short_title, $full_description, $day_number]);
+            $stmt->execute([$tour_id, $day_number, $short_title_day, $full_description_day, $day_number]);
         }
     }
 
@@ -127,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    $message = "Тур успешно добавлен!";
+    $message = "Тур успешно добавлен!" . $message;
 }
 ?>
 
@@ -150,48 +160,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <p class="message"><?php echo $message; ?></p>
             <?php endif; ?>
             <form action="" method="POST" enctype="multipart/form-data">
+                <!-- ... все существующие поля ... -->
                 <div class="form-group">
-                    <label for="short_title" title="Короткое название тура, которое будет отображаться в списках">Короткое название одним словом</label>
-                    <input type="text" id="short_title" name="short_title" placeholder='например, "Камчатка"' required title="Обязательно. Короткое название тура.">
+                    <label for="short_title">Короткое название одним словом</label>
+                    <input type="text" id="short_title" name="short_title" placeholder='например, "Камчатка"' required>
                 </div>
 
                 <div class="form-group">
-                    <label for="full_title" title="Полное название тура, если отличается от короткого">Полное название (красивое длинное название)</label>
-                    <input type="text" id="full_title" name="full_title" placeholder='Например: "Незабываемое путишествие по просторам Камчатки"' required title="Опционально. Полное название тура.">
+                    <label for="full_title">Полное название (красивое длинное название)</label>
+                    <input type="text" id="full_title" name="full_title" placeholder='Например: "Незабываемое путешествие по просторам Камчатки"'>
                 </div>
 
                 <div class="form-group">
-                    <label for="full_description" title="Подробное описание тура, которое увидят пользователи">Полное описание (подробно о туре)</label>
-                    <textarea id="full_description" name="full_description" rows="5" placeholder="Приглашаем тебя с нами в захватывающее путешествие..." required title="Обязательно. Подробное описание тура."></textarea>
+                    <label for="full_description">Полное описание (подробно о туре)</label>
+                    <textarea id="full_description" name="full_description" rows="5" placeholder="Приглашаем тебя с нами в захватывающее путешествие..." required></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="age" title="Возрастная категория участников, например 'от 10 до 99'">Возраст (в формате от и до)</label>
-                    <input type="text" id="age" name="age" placeholder="от 10 до 99" required title="Обязательно. Возрастная категория, например 'от 10 до 99'.">
+                    <label for="age">Возраст (в формате от и до)</label>
+                    <input type="text" id="age" name="age" placeholder="от 10 до 99" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="price" title="Стоимость тура в рублях">Стоимость (в рублях)</label>
-                    <input type="number" id="price" name="price" step="0.01" placeholder="80000" required title="Обязательно. Стоимость тура в рублях.">
+                    <label for="price">Стоимость (в рублях)</label>
+                    <input type="number" id="price" name="price" step="0.01" placeholder="80000" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="start_date" title="Дата начала тура">Дата начала</label>
-                    <input type="date" id="start_date" name="start_date" required title="Обязательно. Дата начала тура.">
+                    <label for="start_date">Дата начала</label>
+                    <input type="date" id="start_date" name="start_date" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="end_date" title="Дата окончания тура">Дата окончания</label>
-                    <input type="date" id="end_date" name="end_date" required title="Обязательно. Дата окончания тура.">
+                    <label for="end_date">Дата окончания</label>
+                    <input type="date" id="end_date" name="end_date" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="instructor_name" title="Имя инструктора, который будет вести тур">Имя инструктора (кто основной ведущий)</label>
-                    <input type="text" id="instructor_name" name="instructor_name" placeholder='Например:"Екатерина"' title="Имя инструктора.">
+                    <label for="instructor_name">Имя инструктора (кто основной ведущий)</label>
+                    <input type="text" id="instructor_name" name="instructor_name" placeholder='Например:"Екатерина"'>
                 </div>
 
                 <div class="form-group">
-                    <label for="difficulty" title="Уровень сложности тура">Сложность (выберите уровень)</label>
+                    <label for="difficulty">Сложность (выберите уровень)</label>
                     <select id="difficulty" name="difficulty" required>
                         <option value="легкий">Лёгкий</option>
                         <option value="средний">Средний</option>
@@ -200,8 +211,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </select>
                 </div>
 
+                <!-- ========== НОВЫЙ БЛОК С ТЕГАМИ ========== -->
                 <div class="form-group">
-                    <label title="Загрузите 5 фотографий тура. Первая будет основной.">Фотографии (5 фото для карточки)</label>
+                    <label>Теги выезда (можно выбрать несколько)</label>
+                    <div class="tags-checkboxes">
+                        <?php foreach ($all_tags as $tag): ?>
+                            <label class="tag-checkbox">
+                                <input type="checkbox" name="tags[]" value="<?php echo $tag['id']; ?>">
+                                <span class="tag-name"><?php echo htmlspecialchars($tag['name']); ?></span>
+                            </label>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Фотографии (5 фото для карточки)</label>
                     <div class="photos">
                         <div class="photo-input">
                             <label for="photo_1">Фото 1 (основное)</label>
@@ -227,7 +251,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label title="Добавьте дни программы тура">Программа тура</label>
+                    <label>Программа тура</label>
                     <div id="program-days">
                         <div class="program-day">
                             <label>День 1</label>
@@ -241,7 +265,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label title="Добавьте включения в стоимость тура (до 5 штук)">Что входит в стоимость</label>
+                    <label>Что входит в стоимость</label>
                     <div id="inclusions">
                         <div class="inclusion-item">
                             <input type="text" name="inclusions[0][title]" placeholder="Название включения" required>
