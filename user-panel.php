@@ -6,7 +6,7 @@ if (!isset($_COOKIE['id'])) {
 }
 
 // Подключение к БД
-require "lib/db.php";
+require_once "lib/db.php";
 
 // Получение роли пользователя
 $sql = 'SELECT role FROM users WHERE id = ?';

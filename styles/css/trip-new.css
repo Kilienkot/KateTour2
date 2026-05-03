@@ -564,4 +564,11 @@ main {
     font-size: 50rem;
     padding: 50rem;
   }
+}
+
+.card {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  border-radius: 10px;
 }/*# sourceMappingURL=trip-new.css.map */

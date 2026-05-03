@@ -37,9 +37,18 @@ span {
   z-index: 10000;
   opacity: 0;
   transition: all 0.5s ease;
+  display: none;
+}
+@media (max-width: 500px) {
+  .error-message {
+    width: 70%;
+    top: 30px;
+    font-size: 15px;
+  }
 }
 
 .error-message.show {
+  display: flex;
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
@@ -77,13 +86,19 @@ main {
   width: 100%;
   text-align: center;
 }
+@media (max-width: 500px) {
+  .form form h1 {
+    font-size: 120rem;
+  }
+}
 .form form button {
   cursor: pointer;
-  width: 50%;
+  width: auto;
+  min-width: 50%;
   height: 60rem;
   background-color: #1d1d1d;
   color: #fff;
-  border-radius: 12rem;
+  border-radius: 10px;
   border: 1px solid #1d1d1d;
   font-weight: 500;
   font-size: 24rem;
@@ -93,6 +108,13 @@ main {
   background-color: transparent;
   color: #1d1d1d;
 }
+@media (max-width: 500px) {
+  .form form button {
+    font-size: 50rem;
+    width: 100%;
+    height: auto;
+  }
+}
 .form form p {
   width: 100%;
   text-align: start;
@@ -100,11 +122,26 @@ main {
   font-weight: 500;
   font-size: 24rem;
 }
+@media (max-width: 500px) {
+  .form form p {
+    font-size: 50rem;
+  }
+}
 .form form a {
   color: #1d1d1d;
   text-decoration: none;
   font-weight: 500;
   font-size: 24rem;
+}
+@media (max-width: 500px) {
+  .form form a {
+    font-size: 50rem;
+  }
+}
+@media (max-width: 500px) {
+  .form {
+    width: 80%;
+  }
 }
 
 .links {
@@ -124,7 +161,6 @@ main {
   width: 100%;
   height: auto;
   gap: 15rem;
-  border-bottom: 1px solid #1d1d1d;
   background: none;
 }
 .form-input label {

@@ -1,5 +1,5 @@
 <?php
-include "lib/db.php";
+require_once "lib/db.php";
 
 $tour_id = isset($_GET['id']) ? intval($_GET['id']) : 1; // По умолчанию первый тур
 
@@ -141,6 +141,13 @@ $inclusions = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             <?php endforeach; ?>
         </section>
+
+        <hr <?php echo empty($tour['card_link']) ? 'style="display: none;"' : ''; ?>>
+        
+        <section class="card" <?php echo empty($tour['card_link']) ? 'style="display: none;"' : ''; ?>>
+            <?php echo $tour['card_link']; ?>
+        </section>
+        
         <hr>
         <?php include("blocks/form.php") ?>
     </main>

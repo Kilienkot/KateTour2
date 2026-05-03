@@ -12,7 +12,7 @@ if (!isset($_COOKIE['role']) || $_COOKIE['role'] < 2) {
 }
 
 // Подключение к БД
-require "lib/db.php";
+require_once "lib/db.php";
 
 // Проверка наличия 3 уровней доступа
 $stmt = $pdo->prepare("SELECT COUNT(DISTINCT role) as role_count FROM users");
@@ -40,6 +40,7 @@ $show_user_management = $role_count >= 3;
           <a href="edit-trips.php" class="admin-btn">Редактировать выезды</a>
           <?php if ($show_user_management): ?>
             <a href="manage-users.php" class="admin-btn">Управление пользователями</a>
+            <a href="audit_logs.php" class="admin-btn">Логи</a>
           <?php endif; ?>
           <a href="lib/logout.php" class="admin-btn logout-btn">Выход</a>
         </div>

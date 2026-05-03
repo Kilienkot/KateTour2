@@ -6,7 +6,8 @@ if (!isset($_COOKIE['id'])) {
 }
 
 // Подключение к БД
-include "lib/db.php";
+require_once "lib/db.php";
+$pdo = getDBConnection();
 
 $message = "";
 
@@ -26,11 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         $end_date = $_POST['end_date'];
         $instructor_name = trim($_POST['instructor_name']);
         $difficulty = $_POST['difficulty'];
+        $card_link = $_POST['card_link'];
         $is_active = isset($_POST['is_active']) ? 1 : 0;
 
         // Обновление тура
-        $stmt = $pdo->prepare("UPDATE tours SET short_title = ?, full_title = ?, full_description = ?, age = ?, price = ?, start_date = ?, end_date = ?, instructor_name = ?, difficulty = ?, is_active = ? WHERE id = ?");
-        $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty, $is_active, $tour_id]);
+        $stmt = $pdo->prepare("UPDATE tours SET short_title = ?, full_title = ?, full_description = ?, age = ?, price = ?, start_date = ?, end_date = ?, instructor_name = ?, difficulty = ?, card_link = ?, is_active = ? WHERE id = ?");
+        $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty, $card_link, $is_active, $tour_id]);
 
         // Функция для сжатия изображения
         function resizeImage($source, $destination, $maxWidth = 800, $maxHeight = 600, $quality = 80) {
@@ -163,21 +165,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
             }
         }
 
-        $message = "Тур обновлен!";
+        $message = "Тур обновлен! <br>";
 
         // Отладка загрузки фото
         for ($i = 1; $i <= 5; $i++) {
             if (isset($_FILES["photo_$i"])) {
                 $error = $_FILES["photo_$i"]['error'];
                 if ($error == 0) {
-                    $message .= " Фото $i загружено.";
+                    $message .= " Фото $i - загружено.";
                 } elseif ($error == 4) {
-                    $message .= " Фото $i не выбрано.";
+                    $message .= " Фото $i - не выбрано.";
                 } else {
                     $message .= " Ошибка загрузки фото $i: $error.";
                 }
             } else {
-                $message .= " Фото $i не установлено.";
+                $message .= " Фото $i - не установлено.";
             }
         }
     } elseif ($action == 'toggle') {
@@ -300,6 +302,11 @@ if (isset($_GET['edit'])) {
                     <div class="form-group">
                         <label for="instructor_name">Имя инструктора (опционально)</label>
                         <input type="text" id="instructor_name" name="instructor_name" value="<?php echo htmlspecialchars($edit_tour['instructor_name'] ?: ''); ?>" placeholder="Екатерина">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="icard_link" title="Ссылка на карту из конструктора">Ссылка на карту (<a href="https://yandex.ru/map-constructor/" target="_blank">yandex.ru/map-constructor/</a>)</label>
+                        <input type="text" id="card_link" name="card_link" value="<?php echo htmlspecialchars($edit_tour['card_link'] ?: ''); ?>" placeholder='<script type=...' title="ссылка на карту">
                     </div>
 
                     <div class="form-group">

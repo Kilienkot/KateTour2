@@ -6,7 +6,9 @@ if (!isset($_COOKIE['id'])) {
 }
 
 // Подключение к БД
-include "lib/db.php";
+require_once "lib/db.php";
+
+$pdo = getDBConnection();   
 
 $message = "";
 
@@ -22,10 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $end_date = $_POST['end_date'];
     $instructor_name = trim($_POST['instructor_name']);
     $difficulty = $_POST['difficulty'];
+    $card_link = $_POST['card_link'];
 
     // Вставка в tours
-    $stmt = $pdo->prepare("INSERT INTO tours (short_title, full_title, full_description, age, price, start_date, end_date, instructor_name, difficulty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty]);
+    $stmt = $pdo->prepare("INSERT INTO tours (short_title, full_title, full_description, age, price, start_date, end_date, instructor_name, difficulty, card_link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty, $card_link]);
     $tour_id = $pdo->lastInsertId();
 
     // Функция для сжатия изображения
@@ -188,6 +191,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label for="instructor_name" title="Имя инструктора, который будет вести тур">Имя инструктора (кто основной ведущий)</label>
                     <input type="text" id="instructor_name" name="instructor_name" placeholder='Например:"Екатерина"' title="Имя инструктора.">
+                </div>
+                
+                <div class="form-group">
+                    <label for="icard_link" title="Ссылка на карту из конструктора">Ссылка на карту (<a href="https://yandex.ru/map-constructor/" target="_blank">yandex.ru/map-constructor/</a>)</label>
+                    <input type="text" id="card_link" name="card_link" placeholder='<script type=...' title="ссылка на карту">
                 </div>
 
                 <div class="form-group">

@@ -595,3 +595,10 @@ $small-col-span: 3; // Маленький блок занимает 3 колон
     }
   }
 }
+
+.card {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  border-radius: 10px;
+}

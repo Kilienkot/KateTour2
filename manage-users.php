@@ -6,7 +6,7 @@ if (!isset($_COOKIE['id'])) {
 }
 
 // Подключение к БД
-require "lib/db.php";
+require_once "lib/db.php";
 
 // Проверка наличия 3 уровней доступа (для отображения кнопки)
 $role_count = $_COOKIE['role'];

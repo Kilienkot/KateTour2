@@ -1,5 +1,5 @@
 <?php
-include "lib/db.php";
+require_once "lib/db.php";
 
 // Получение ближайших 4 активных туров с информацией о цене и фото
 $stmt = $pdo->prepare("SELECT t.id, t.short_title, t.full_title, t.start_date, t.end_date, t.price, tp.filepath FROM tours t LEFT JOIN tour_photos tp ON t.id = tp.tour_id AND tp.is_primary = 1 WHERE t.is_active = 1 ORDER BY start_date");

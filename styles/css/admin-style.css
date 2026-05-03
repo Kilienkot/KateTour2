@@ -57,8 +57,10 @@ main {
 }
 .admin-welcome .admin-buttons {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 30rem;
+  max-width: 80%;
 }
 .admin-welcome .admin-buttons .admin-btn {
   display: inline-block;
@@ -338,6 +340,12 @@ main {
   color: #1ca697;
   font-weight: bold;
   margin-bottom: 20rem;
+  font-size: 30rem;
+}
+@media (max-width: 500px) {
+  .message {
+    font-size: 80rem;
+  }
 }
 
 .tours-list {
@@ -448,4 +456,41 @@ main {
 }
 .delete-btn:hover {
   background: #9f0000;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.logs__title {
+  font-size: 40rem;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+  font-size: 30rem;
+}
+
+th {
+  background: #f4f4f4;
+}
+
+.filter-form {
+  margin: 20px 0;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.old-values,
+.new-values {
+  font-size: 30rem;
+  background: #f8f8f8;
+  padding: 8px;
+  border-radius: 4px;
 }/*# sourceMappingURL=admin-style.css.map */
