@@ -2,7 +2,7 @@
     session_start();
 
     // Проверяем блокировку
-    if (isset($_SESSION['block_until'][$ip]) && time() < $_SESSION['block_until'][$ip]) {
+    if (isset($_SESSION['block_until'][$id]) && time() < $_SESSION['block_until'][$id]) {
         header('Location: ../login.php?blocked=1');
         exit();
     }
@@ -25,8 +25,8 @@ $user = $query->fetch(PDO::FETCH_ASSOC);
 
 if ($user && password_verify($password, $user['password_hash'])) {
     // Сброс счетчика при успешном логине
-    unset($_SESSION['attempts'][$ip]);
-    unset($_SESSION['block_until'][$ip]);
+    unset($_SESSION['attempts'][$id]);
+    unset($_SESSION['block_until'][$id]);
 
     // Получаем данные пользователя
     $name = $user['username'] ?? '';
@@ -38,15 +38,15 @@ setcookie('name', $name, time() + 3600 * 24 * 7, "/");
 setcookie('id', $id, time() + 3600 * 24 * 7, "/");
 setcookie('role', $user['role'], time() + 3600 * 24 * 7, "/");
 
-header('Location: /admin.php');
+header('Location: ../admin.php');
     exit(); // Обязательно завершаем выполнение скрипта
 } else {
     // Увеличиваем счетчик попыток
-    $_SESSION['attempts'][$ip] = ($_SESSION['attempts'][$ip] ?? 0) + 1;
+    $_SESSION['attempts'][$id] = ($_SESSION['attempts'][$id] ?? 0) + 1;
 
-    if ($_SESSION['attempts'][$ip] >= 3) {
+    if ($_SESSION['attempts'][$id] >= 3) {
         // Блокируем на 1 минуту
-        $_SESSION['block_until'][$ip] = time() + 1;
+        $_SESSION['block_until'][$id] = time() + 1;
         header('Location: ../login.php?blocked=1');
     } else {
         header('Location: ../login.php?error=1');

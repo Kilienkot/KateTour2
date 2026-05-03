@@ -3,6 +3,12 @@
 @import url("footer.css");
 @import url("form-style.css");
 
+@mixin mobile {
+  @media (max-width: 500px) {
+    @content;
+  }
+}
+
 // Переменные
 $accent-color: #f2b705;
 $text-color: #1d1d1d;
@@ -46,9 +52,16 @@ span {
   z-index: 10000;
   opacity: 0;
   transition: all 0.5s ease;
+  display: none;
+  @include mobile {
+    width: 70%;
+    top: 30px;
+    font-size: 15px;
+  }
 }
 
 .error-message.show {
+  display: flex;
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
@@ -83,6 +96,9 @@ main {
       color: $text-color;
       width: 100%;
       text-align: center;
+      @include mobile {
+        font-size: 120rem;
+      }
     }
     button {
       cursor: pointer;
@@ -90,7 +106,7 @@ main {
       height: 60rem;
       background-color: $text-color;
       color: #fff;
-      border-radius: 12rem;
+      border-radius: 10px;
       border: 1px solid $text-color;
       font-weight: 500;
       font-size: 24rem;
@@ -98,6 +114,11 @@ main {
       &:hover {
         background-color: transparent;
         color: $text-color;
+      }
+      @include mobile {
+        font-size: 50rem;
+        width: 100%;
+        height: auto;
       }
     }
     p {
@@ -113,6 +134,9 @@ main {
       font-weight: 500;
       font-size: 24rem;
     }
+  }
+  @include mobile {
+    width: 80%;
   }
 }
 
@@ -133,7 +157,6 @@ main {
   width: 100%;
   height: auto;
   gap: 15rem;
-  border-bottom: 1px solid $text-color;
   background: none;
   label {
     color: $text-color;

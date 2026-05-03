@@ -6,6 +6,6 @@
     setcookie('id', $id, time() - 3600 * 24 * 7, "/");
 
     // Перенаправляем на главную страницу
-    header('Location: /');
+    header('Location: ../index.php');
     exit();
 ?>
