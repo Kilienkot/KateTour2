@@ -15,7 +15,7 @@
         <h5>О нас</h5>
         <a href="javascript:void(0);" onclick="alert('Эта функция в разработке :-(');">О команде организаторов</a>
         <a href="https://o-len.ru" target="_blank">О МСК Олень</a>
-        <a href="admin.php">Админка</a>
+        <a href="admin.php">Кабинет</a>
     </div>
 
     <h1>Катюша<span>ТУР</span></h1>

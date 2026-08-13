@@ -213,23 +213,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="photos">
                         <div class="photo-input">
                             <label for="photo_1">Фото 1 (основное)</label>
-                            <input type="file" id="photo_1" name="photo_1" accept="image/*" required>
+                            <input type="file" id="photo_1" name="photo_1" accept="image/*">
                         </div>
                         <div class="photo-input">
                             <label for="photo_2">Фото 2</label>
-                            <input type="file" id="photo_2" name="photo_2" accept="image/*" required>
+                            <input type="file" id="photo_2" name="photo_2" accept="image/*">
                         </div>
                         <div class="photo-input">
                             <label for="photo_3">Фото 3</label>
-                            <input type="file" id="photo_3" name="photo_3" accept="image/*" required>
+                            <input type="file" id="photo_3" name="photo_3" accept="image/*">
                         </div>
                         <div class="photo-input">
                             <label for="photo_4">Фото 4</label>
-                            <input type="file" id="photo_4" name="photo_4" accept="image/*" required>
+                            <input type="file" id="photo_4" name="photo_4" accept="image/*">
                         </div>
                         <div class="photo-input">
                             <label for="photo_5">Фото 5</label>
-                            <input type="file" id="photo_5" name="photo_5" accept="image/*" required>
+                            <input type="file" id="photo_5" name="photo_5" accept="image/*">
                         </div>
                     </div>
                 </div>

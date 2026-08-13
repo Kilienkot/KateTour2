@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+
+$ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+
 // Проверяем блокировку
 if (isset($_SESSION['block_until'][$ip]) && time() < $_SESSION['block_until'][$ip]) {
     header('Location: /register.php?blocked=1');
@@ -49,13 +52,6 @@ $result = $query->execute([$username, $login, $password_hash]);
 $stmt = $pdo->prepare("SELECT COUNT(DISTINCT role) as role_count FROM users");
 $stmt->execute();
 $role_count = $stmt->fetch(PDO::FETCH_ASSOC)['role_count'];
-
-if ($role_count >= 3) {
-    // Если уже есть 3 уровня, создаем пользователя с ролью 2 (админ)
-    $sql = 'UPDATE users SET role = 2 WHERE login = ?';
-    $query = $pdo->prepare($sql);
-    $query->execute([$login]);
-}
 
 if ($result) {
     header('Location: /register.php?success=1');

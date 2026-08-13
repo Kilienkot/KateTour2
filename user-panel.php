@@ -41,9 +41,57 @@ if ($user['role'] == 2) {
     <main>
       <section class="admin-welcome">
         <h1>Добро пожаловать, <?php echo htmlspecialchars($_COOKIE['name']); ?>!</h1>
-        <p>Это ваш личный кабинет.<br>Скоро, здесь вы сможете просматривать информацию о турах и управлять своим профилем.</p>
+        <?php
+            // Получаем заявки пользователя
+            $stmt = $pdo->prepare("
+                SELECT a.*, t.short_title 
+                FROM applications a 
+                JOIN tours t ON a.id_tour = t.id 
+                WHERE a.id_user = ? 
+                ORDER BY a.application_date DESC
+            ");
+            $stmt->execute([$_COOKIE['id']]);
+            $applications = $stmt->fetchAll();
+            ?>
+
+            <section class="my-applications">
+                <h2>Мои заявки</h2>
+                
+                <?php if (empty($applications)): ?>
+                    <p>У вас пока нет заявок.</p>
+                <?php else: ?>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Тур</th>
+                                <th>Дата подачи</th>
+                                <th>Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($applications as $app): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($app['short_title']) ?></td>
+                                <td><?= date('d.m.Y H:i', strtotime($app['application_date'])) ?></td>
+                                <td>
+                                    <span class="status <?= $app['status'] ?>">
+                                        <?= match($app['status']) {
+                                            'new' => 'Новая',
+                                            'processed' => 'В обработке',
+                                            'confirmed' => 'Подтверждена',
+                                            'canceled' => 'Отменена',
+                                            default => $app['status']
+                                        } ?>
+                                    </span>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+            </section>
         <div class="admin-buttons">
-          <a href="lib/logout.php" class="admin-btn logout-btn">Выход</a>
+          <a href="lib/logout.php" class="admin-btn logout-btn">Выйти из аккаунта</a>
         </div>
       </section>
     </main>

@@ -36,6 +36,10 @@ main {
   }
 }
 
+h2 {
+  font-size: 80rem;
+}
+
 .admin-welcome {
   width: 100%;
   height: 100dvh;

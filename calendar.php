@@ -6,6 +6,15 @@ $stmt = $pdo->prepare("SELECT t.id, t.short_title, t.full_title, t.start_date, t
 $stmt->execute();
 $nearest_tours = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
+// Функция для определения класса
+function getTripClass($start_date, $end_date) {
+    $start = strtotime($start_date);
+    $end = strtotime($end_date);
+    $days = ($end - $start) / (60 * 60 * 24) + 1; // +1 потому что включая последний день
+    return $days > 7 ? 'long-trip' : 'small-trip';
+}
+
 // Функция для форматирования даты
 function formatDate($date) {
     $months = [
@@ -16,14 +25,6 @@ function formatDate($date) {
     $day = date('j', $timestamp);
     $month = $months[(int)date('n', $timestamp)];
     return $day . ' ' . $month;
-}
-
-// Функция для определения класса
-function getTripClass($start_date, $end_date) {
-    $start = strtotime($start_date);
-    $end = strtotime($end_date);
-    $days = ($end - $start) / (60 * 60 * 24) + 1; // +1 потому что включая последний день
-    return $days > 7 ? 'long-trip' : 'small-trip';
 }
 ?>
 
@@ -56,13 +57,13 @@ function getTripClass($start_date, $end_date) {
             </div>
             <div class="calendar__grid">
                 <?php foreach ($nearest_tours as $tour): ?>
-                    <a href="trip-new.php?id=<?php echo $tour['id']; ?>" class="calendar__card <?php echo htmlspecialchars(getTripClass(formatDate($tour['start_date']), formatDate($tour['end_date']))); ?>">
-<img src="<?php echo htmlspecialchars($tour['filepath'] ?: 'sources\img\plsh2.png'); ?>" alt="Тур" class="calendar__card-img">
-                    <div class="calendar__divider"></div>
-                    <h3 class="calendar__card-title"><?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?></h3>
-                    <p class="calendar__card-dates"><?php echo formatDate($tour['start_date']); ?> - <?php echo formatDate($tour['end_date']); ?></p>
-                    <p class="calendar__card-price"><?php echo number_format($tour['price'], 0, '', ' '); ?> ₽</p>
-                    <p class="calendar__card-more">Нажми, чтоб узнать больше</p>
+                    <a href="trip-new.php?id=<?php echo $tour['id']; ?>" class="calendar__card <?php echo htmlspecialchars(getTripClass($tour['start_date'], $tour['end_date'])); ?>">
+                        <img src="<?php echo htmlspecialchars($tour['filepath'] ?: 'sources\img\plsh2.png'); ?>" alt="Тур" class="calendar__card-img">
+                        <div class="calendar__divider"></div>
+                        <h3 class="calendar__card-title"><?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?></h3>
+                        <p class="calendar__card-dates"><?php echo formatDate($tour['start_date']); ?> - <?php echo formatDate($tour['end_date']); ?></p>
+                        <p class="calendar__card-price"><?php echo number_format($tour['price'], 0, '', ' '); ?> ₽</p>
+                        <p class="calendar__card-more">Нажми, чтоб узнать больше</p>
                     </a>
                 <?php endforeach; ?>
             </div>

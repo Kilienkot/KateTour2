@@ -15,8 +15,8 @@ $active_tours = $stmt->fetchAll(PDO::FETCH_ASSOC);
         все расскажем
         </p>
     </div>
-    <form action="" method="POST">
-        <div class="">
+    <form action="process_application.php" method="POST">
+        <div class="form-group">
             <label for="user-name">Как к вам обращаться?</label> 
             <input
             type="text"
@@ -28,23 +28,21 @@ $active_tours = $stmt->fetchAll(PDO::FETCH_ASSOC);
             required
             />
         </div>
-        <div class="">
+        <div class="form-group">
             <label for="birth-date">Ваша дата рождения</label>
             <input type="date" id="birth-date" name="birthdate" required />
         </div>
-        <div class="">
-            <label for="phone">номер для связи</label>
-            <input
-            type="tel"
-            id="phone"
-            name="phone"
-            placeholder="+7 (999) 123-45-67"
-            pattern="[0-9+\-\s\(\)]+"
-            title="Допускаются только цифры и символы: + - ( ) и пробелы"
-            required
-            />
+        <div class="form-group">
+            <label for="phone">Телефон</label>
+            <input 
+                type="tel" 
+                id="phone" 
+                name="phone" 
+                placeholder="Контактный телефон" 
+                maxlength="18" 
+                required>
         </div>
-        <div class="">
+        <div class="form-group">
             <label for="tour-select">Какой тур понравился?</label>
             <select id="tour-select" name="tour" required>
                 <?php foreach ($active_tours as $tour): ?>

@@ -50,6 +50,9 @@
           <div class="links">
             <button type="submit">Войти</button>
           </div>
+          <div class="form-footer">
+            <p>Ещё не знакомы? <a href="register.php">Создать аккаунт</a></p>
+          </div>
         </form>
       </div>
     </main>
