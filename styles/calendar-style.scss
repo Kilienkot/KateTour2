@@ -160,103 +160,134 @@ main {
   .calendar__grid {
     width: 100%;
     height: auto;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto;
-    gap: 15rem;
-  }
-  .calendar__card {
-    grid-column: span 3; // Каждая карточка занимает половину ширины
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 20rem;
-    height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start; // Все элементы по левому краю
-    transition: 0.3s;
-    box-sizing: border-box;
-    &:hover {
-      transform: scale(1.01);
+    gap: 30rem;
+  }
+  .calendar__card {
+    width: 100%;
+    height: auto;
+    min-height: 150rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid $text-color;
+    color: $text-color;
+    p {
+      align-items: center;
+      font-size: 40rem;
+      height: 80%;
+      width: 40%;
+      border-right: 1px solid $text-color;
+      font-weight: 500;
+      text-align: center;
+    }
+    h3 {
+      align-items: center;
+      font-size: 40rem;
+      height: 80%;
+      width: 45%;
+      font-weight: 500;
+      text-align: center;
+    }
+    svg {
+      width: 15%;
+      height: 40rem;
     }
 
-    .calendar__card-img {
-      width: 100%;
-      height: 60%;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-
-    .calendar__divider {
-      width: 33%;
-      height: 1rem;
-      background-color: $text-color;
-      margin: 10rem auto; // Центрируем элемент
-    }
-
-    .calendar__card-title {
-      width: 100%;
-      font-weight: 600;
-      font-size: 20rem;
-      color: $text-color;
-      text-align: left;
-    }
-
-    .calendar__card-dates {
-      width: 100%;
-      font-weight: 600;
-      font-size: 20rem;
-      color: rgba($text-color, 0.6); // Опacity 0.6
-      text-align: left;
-    }
-
-    .calendar__card-price {
-      width: 100%;
-      font-weight: 600;
-      font-size: 25rem;
-      color: $text-color;
-      text-align: left;
-    }
-
-    .calendar__card-more {
-      width: 100%;
-      height: auto;
-      font-weight: 400;
-      font-size: 16rem;
-      color: $text-color;
-      text-align: center; // Центрируем текст
+    &:last-child {
+      border-bottom: none;
     }
   }
 
-  @media (max-width: 768px) {
-    gap: 50rem;
+  @include mobile {
+    height: auto;
+    gap: 60rem;
+    h2 {
+      font-size: 130rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
 
     .calendar__grid {
-      gap: 50rem;
+      height: 90%;
+      gap: 30rem;
     }
     .calendar__card {
-      grid-column: span 6;
+      max-height: 100%;
+      box-sizing: border-box;
       padding: 40rem;
-
+      gap: 20rem;
       .calendar__card-title {
         font-size: 2.6dvw;
+        height: 20%;
+        display: flex;
+        align-items: center;
       }
 
       .calendar__card-dates {
-        font-size: 2.6dvw;
+        font-size: 3dvw;
       }
 
-      .calendar__card-price {
-        font-size: 2.6dvw;
-      }
-
-      .calendar__card-more {
-        font-size: 2dvw;
-      }
-      .calendar__divider {
-        margin: 30rem auto;
+      svg {
+        width: 15%;
+        height: 90rem;
       }
     }
   }
+}
+
+.active-filter {
+  background-color: $text-color;
+  padding: 12px 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 60rem;
+}
+
+.clear-filter {
+  color: #e74c3c;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: white;
+}
+
+.clear-filter:hover {
+  opacity: 0.8;
+  background: #e74c3c;
+  color: white;
+}
+
+.no-tours-message {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f9f9f9;
+  border-radius: 24px;
+  margin: 40px 0;
+}
+
+.no-tours-message p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.reset-all {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 18px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: transform 0.2s;
+}
+
+.reset-all:hover {
+  transform: translateY(-2px);
 }

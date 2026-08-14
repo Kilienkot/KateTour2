@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&family=Tektur:wght@400..900&display=swap");
 @import url("header.css");
 @import url("footer.css");
@@ -454,75 +455,46 @@ main {
 .calendar .calendar__grid {
   width: 100%;
   height: auto;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto;
-  gap: 15rem;
-}
-.calendar .calendar__card {
-  grid-column: span 3;
-  background-color: #fff;
-  border-radius: 15px;
-  padding: 20rem;
-  height: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  transition: all 0.3s ease;
+  gap: 30rem;
 }
-.calendar .calendar__card:hover {
-  box-shadow: 0 10rem 20rem rgba(0, 0, 0, 0.2);
-}
-.calendar .calendar__card .calendar__card-img {
-  width: 100%;
-  height: 60%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  border-radius: 10px;
-}
-.calendar .calendar__card .calendar__divider {
-  width: 33%;
-  height: 1rem;
-  background-color: #1d1d1d;
-  margin: 10rem auto;
-}
-.calendar .calendar__card .calendar__card-title {
-  width: 100%;
-  font-weight: 600;
-  font-size: 20rem;
-  color: #1d1d1d;
-  text-align: left;
-}
-.calendar .calendar__card .calendar__card-dates {
-  width: 100%;
-  font-weight: 600;
-  font-size: 20rem;
-  color: rgba(29, 29, 29, 0.6);
-  text-align: left;
-}
-.calendar .calendar__card .calendar__card-price {
-  width: 100%;
-  font-weight: 600;
-  font-size: 25rem;
-  color: #1d1d1d;
-  text-align: left;
-}
-.calendar .calendar__card .calendar__card-more {
+.calendar .calendar__card {
   width: 100%;
   height: auto;
-  font-weight: 400;
-  font-size: 16rem;
-  color: #1d1d1d;
-  text-align: center;
-}
-.calendar .calendar__all {
+  min-height: 150rem;
   display: flex;
   align-items: center;
-  width: auto;
-  font-weight: 600;
-  font-size: 30rem;
+  border-bottom: 2px solid #1d1d1d;
   color: #1d1d1d;
+}
+.calendar .calendar__card p {
+  align-items: center;
+  font-size: 40rem;
+  height: 80%;
+  width: 40%;
+  border-right: 1px solid #1d1d1d;
+  font-weight: 500;
+  text-align: center;
+}
+.calendar .calendar__card h3 {
+  align-items: center;
+  font-size: 40rem;
+  height: 80%;
+  width: 45%;
+  font-weight: 500;
+  text-align: center;
+}
+.calendar .calendar__card svg {
+  width: 15%;
+  height: 40rem;
+}
+.calendar .calendar__more {
+  width: 100%;
+  height: auto;
+  font-size: 40rem;
+  color: #1d1d1d;
+  text-align: center;
 }
 @media (max-width: 500px) {
   .calendar {
@@ -535,18 +507,12 @@ main {
     display: flex;
     justify-content: center;
   }
-  .calendar span {
-    display: flex;
-    align-items: center;
-  }
   .calendar .calendar__grid {
     height: 90%;
-    grid-template-columns: repeat(2, 1fr);
     gap: 30rem;
   }
   .calendar .calendar__card {
     max-height: 100%;
-    grid-column: span 1;
     box-sizing: border-box;
     padding: 40rem;
     gap: 20rem;
@@ -560,16 +526,300 @@ main {
   .calendar .calendar__card .calendar__card-dates {
     font-size: 2.6dvw;
   }
-  .calendar .calendar__card .calendar__card-price {
-    font-size: 2.6dvw;
+  .calendar .calendar__card svg {
+    width: 15%;
+    height: 90rem;
   }
-  .calendar .calendar__card .calendar__card-more {
-    font-size: 2dvw;
+  .calendar .calendar__more {
+    font-size: 3dvw;
   }
-  .calendar .calendar__card .calendar__divider {
-    margin: 30rem auto;
+}
+
+.tags {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30rem;
+}
+.tags h2 {
+  margin-bottom: 15rem;
+  font-size: 70rem;
+  line-height: 1;
+  display: flex;
+}
+@media (max-width: 500px) {
+  .tags h2 {
+    font-size: 130rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
-  .calendar .calendar__all {
-    font-size: 60rem;
+}
+.tags .tags__buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(140px, auto); /* все строки одинаковой высоты */
+  gap: 15px;
+}
+.tags .tags__buttons a {
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  background-size: cover;
+  color: #eff1f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-size: 40rem;
+  text-transform: uppercase;
+}
+.tags .tags__buttons a:nth-child(1) {
+  background-image: url(../../sources/img/mountain-hikes.png);
+}
+.tags .tags__buttons a:nth-child(2) {
+  background-image: url(../../sources/img/kayaking.png);
+}
+.tags .tags__buttons a:nth-child(3) {
+  background-image: url(../../sources/img/weekend-hikes.png);
+}
+.tags .tags__buttons a:nth-child(4) {
+  background-image: url(../../sources/img/climbing.png);
+}
+.tags .tags__buttons a:nth-child(5) {
+  background-image: url(../../sources/img/ski-tours.png);
+}
+.tags .tags__buttons a:nth-child(6) {
+  background-image: url(../../sources/img/historical-hikes.png);
+}
+.tags .tags__buttons a:nth-child(7) {
+  background-image: url(../../sources/img/bike-tours.png);
+}
+.tags .tags__buttons a:nth-child(8) {
+  background-image: url(../../sources/img/wellness.png);
+}
+.tags .tags__buttons a:nth-child(9) {
+  background-image: url(../../sources/img/checkup.png);
+}
+.tags .tags__buttons a:nth-child(10) {
+  background-image: url(../../sources/img/family-tours.png);
+}
+.tags .tags__buttons a:nth-child(11) {
+  background-image: url(../../sources/img/weight-loss.png);
+}
+.tags .tags__buttons a:nth-child(12) {
+  background-image: url(../../sources/img/scientific-tours.png);
+}
+.tags .tags__buttons a:nth-child(13) {
+  background-image: url(../../sources/img/no-tents.png);
+}
+.tags .tags__buttons a:nth-child(14) {
+  background-image: url(../../sources/img/author-tours.png);
+}
+.tags .tags__buttons a:nth-child(15) {
+  background-image: url(../../sources/img/senior-hikes.png);
+}
+.tags .tags__buttons a:hover {
+  transform: scale(1.02);
+}
+@media (max-width: 500px) {
+  .tags .tags__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 50rem;
+  }
+  .tags .tags__buttons a {
+    min-height: 70px;
+    font-size: 3dvw;
+  }
+}
+
+.news h2 {
+  margin-bottom: 50rem;
+  font-size: 70rem;
+  line-height: 1;
+}
+@media (max-width: 500px) {
+  .news h2 {
+    font-size: 130rem;
+    text-align: center;
+    margin-bottom: 60rem;
+  }
+}
+.news .news__slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+}
+.news .news__track {
+  display: flex;
+  gap: 30rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 30rem; /* место под скроллбар */
+  /* Скрываем скроллбар */
+}
+.news .news__track::-webkit-scrollbar {
+  display: none;
+}
+.news .news__track {
+  scrollbar-width: none; /* Firefox */
+}
+.news .news__card {
+  flex: 0 0 calc(33.333% - 20rem); /* 3 карточки в ряд с отступами */
+  scroll-snap-align: start;
+  background-color: #eff1f4;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5rem 15rem rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: #1d1d1d;
+  display: flex;
+  flex-direction: column;
+}
+.news .news__card:hover {
+  transform: translateY(-8rem);
+  box-shadow: 0 15rem 30rem rgba(0, 0, 0, 0.15);
+}
+.news .news__card .news__image {
+  width: 100%;
+  height: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+.news .news__card .news__content {
+  padding: 40rem 35rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.news .news__card .news__date {
+  font-size: 24rem;
+  color: #666;
+  margin-bottom: 15rem;
+  font-weight: 400;
+}
+.news .news__card .news__title {
+  font-size: 32rem;
+  line-height: 1.2;
+  font-weight: 600;
+  margin-bottom: 20rem;
+  flex: 1;
+}
+.news .news__card .news__excerpt {
+  font-size: 26rem;
+  line-height: 1.4;
+  color: #444;
+  margin: 0;
+}
+.news .news__more {
+  text-align: center;
+  margin-top: 60rem;
+}
+.news .news__more-link {
+  font-size: 40rem;
+  color: #f2b705;
+  text-decoration: none;
+  font-weight: 500;
+}
+.news .news__more-link:hover {
+  text-decoration: underline;
+}
+.news .news__slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+}
+.news .news__track {
+  display: flex;
+  gap: 30rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 20rem;
+}
+.news .news__track::-webkit-scrollbar {
+  display: none;
+}
+.news .news__track {
+  scrollbar-width: none;
+}
+.news .news__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 55rem;
+  height: 55rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid #f2b705;
+  border-radius: 50%;
+  font-size: 28rem;
+  color: #f2b705;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 5rem 15rem rgba(0, 0, 0, 0.1);
+}
+.news .news__arrow:hover {
+  background-color: #f2b705;
+  color: white;
+  transform: translateY(-50%);
+}
+.news .news__arrow:active {
+  transform: translateY(-50%);
+}
+.news .news__arrow--prev {
+  left: 0rem;
+}
+.news .news__arrow--next {
+  right: 0rem;
+}
+.news {
+  /* ====================== МОБИЛЬНАЯ ВЕРСИЯ ====================== */
+}
+@media (max-width: 500px) {
+  .news .news__track {
+    gap: 40rem;
+    padding-bottom: 40rem;
+    height: 70dvh;
+  }
+  .news .news__card {
+    flex: 0 0 85%; /* чуть меньше 100%, чтобы было видно края соседних карточек */
+    scroll-snap-align: center; /* на мобильке центрируем */
+  }
+  .news .news__card .news__image {
+    height: 55%;
+  }
+  .news .news__card .news__content {
+    padding: 50rem 40rem;
+  }
+  .news .news__card .news__title {
+    font-size: 4.5dvw;
+  }
+  .news .news__card .news__excerpt {
+    font-size: 3.6dvw;
+  }
+  .news .news__arrow {
+    display: none;
+  }
+  .news .news__track {
+    gap: 40rem;
+  }
+  .news .news__card {
+    flex: 0 0 85%;
+    scroll-snap-align: center;
+  }
+  .news .news__more-link {
+    font-size: 4dvw;
   }
 }/*# sourceMappingURL=style.css.map */

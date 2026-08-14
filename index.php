@@ -125,30 +125,125 @@ function formatDate($date) {
         <div class="calendar__grid">
           <?php foreach ($nearest_tours as $tour): ?>
             <a href="trip-new.php?id=<?php echo $tour['id']; ?>" class="calendar__card">
-              <img loading="lazy" src="<?php echo htmlspecialchars($tour['filepath'] ?: 'sources\img\plsh2.png'); ?>" alt="Основное фото" class="calendar__card-img">
-              <div class="calendar__divider"></div>
-              <h3 class="calendar__card-title"><?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?></h3>
               <p class="calendar__card-dates"><?php echo formatDate($tour['start_date']); ?> - <?php echo formatDate($tour['end_date']); ?></p>
-              <p class="calendar__card-price"><?php echo number_format($tour['price'], 0, '', ' '); ?> ₽</p>
-              <p class="calendar__card-more">Нажми, чтоб узнать больше</p>
+              <h3 class="calendar__card-title"><?php echo htmlspecialchars($tour['full_title'] ?: $tour['short_title']); ?></h3>
+              <?php echo file_get_contents('sources/img/arrow.svg');?>
             </a>
           <?php endforeach; ?>
+          <a href="calendar.php" class="calendar__more">Посмотреть <span>все</span> выезды</a>
         </div>
-        <a href="calendar.php" class="calendar__all">
-          Смотреть&nbsp;<span> все туры&nbsp;<svg width="104" height="15" viewBox="0 0 104 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M103.707 8.07039C104.098 7.67986 104.098 7.0467 103.707 6.65617L97.3431 0.292213C96.9526 -0.0983109 96.3195 -0.0983109 95.9289 0.292213C95.5384 0.682738 95.5384 1.3159 95.9289 1.70643L101.586 7.36328L95.9289 13.0201C95.5384 13.4107 95.5384 14.0438 95.9289 14.4343C96.3195 14.8249 96.9526 14.8249 97.3431 14.4343L103.707 8.07039ZM0 7.36328V8.36328H103V7.36328V6.36328H0V7.36328Z" fill="#F2B705"/>
-        </svg>
-        </span>
-        </a>
       </section>  
       <hr />
+      <section class="tags">
+        <h2>выбери свой <span>тур</span></h2>
+        <div class="tags__buttons">
+          <a href="calendar.php?tag=mountain-hikes" class="category-btn">
+            Походы  в горы
+          </a>
+          <a href="calendar.php?tag=kayaking" class="category-btn">
+            Сплавы на байдарках
+          </a>
+          <a href="calendar.php?tag=weekend-hikes" class="category-btn">
+            Походы выходного дня
+          </a>
+          <a href="calendar.php?tag=climbing" class="category-btn">
+            Восхождения
+          </a>
+          <a href="calendar.php?tag=ski-tours" class="category-btn">
+            Лыжные сборы
+          </a>
+          <a href="calendar.php?tag=historical-hikes" class="category-btn">
+            Исторические походы
+          </a>
+          <a href="calendar.php?tag=bike-tours" class="category-btn">
+            Велопоходы
+          </a>
+          <a href="calendar.php?tag=wellness" class="category-btn">
+            ЛЕЧЕБНО-ОЗДОРОВИТЕЛЬНЫЕ
+          </a>
+          <a href="calendar.php?tag=checkup" class="category-btn">
+            Чек ап
+          </a>
+          <a href="calendar.php?tag=family-tours" class="category-btn">
+            Семейные сборы
+          </a>
+          <a href="calendar.php?tag=weight-loss" class="category-btn">
+            Похудение
+          </a>
+          <a href="calendar.php?tag=scientific-tours" class="category-btn">
+            Научные походы
+          </a>
+          <a href="calendar.php?tag=no-tents" class="category-btn">
+            Походы без палаток
+          </a>
+          <a href="calendar.php?tag=author-tours" class="category-btn">
+            Походы авторские
+          </a>
+          <a href="calendar.php?tag=senior-hikes" class="category-btn">
+            Походы 60+
+          </a>
+        </div>
+      </section>
 
+      <hr />
+      
+      <section class="news" id="news">
+        <h2>Новости</h2>
+        
+        <?php
+        $stmt_news = $pdo->prepare("
+            SELECT id, title, content, image_path, created_at 
+            FROM news 
+            ORDER BY created_at DESC 
+            LIMIT 6
+        ");
+        $stmt_news->execute();
+        $news_items = $stmt_news->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <div class="news__slider">
+          <button class="news__arrow news__arrow--prev" aria-label="Предыдущая новость" id="newsPrev">←</button>
+          
+          <div class="news__track" id="newsTrack">
+            <?php foreach ($news_items as $news): ?>
+              <a href="news-detail.php?id=<?php echo $news['id']; ?>" class="news__card">
+                <?php if (!empty($news['image_path'])): ?>
+                  <img src="<?php echo htmlspecialchars($news['image_path']); ?>" 
+                      alt="<?php echo htmlspecialchars($news['title']); ?>" 
+                      class="news__image">
+                <?php endif; ?>
+                
+                <div class="news__content">
+                  <div class="news__date">
+                    <?php echo date('d.m.Y', strtotime($news['created_at'])); ?>
+                  </div>
+                  <h3 class="news__title"><?php echo htmlspecialchars($news['title']); ?></h3>
+                  <p class="news__excerpt">
+                    <?php 
+                      $excerpt = strip_tags($news['content']);
+                      echo htmlspecialchars(mb_substr($excerpt, 0, 130)) . (mb_strlen($excerpt) > 130 ? '...' : ''); 
+                    ?>
+                  </p>
+                </div>
+              </a>
+            <?php endforeach; ?>
+          </div>
+
+          <button class="news__arrow news__arrow--next" aria-label="Следующая новость" id="newsNext">→</button>
+        </div>
+
+        <div class="news__more">
+          <a href="news.php" class="news__more-link">Все новости →</a>
+        </div>
+      </section>
+      <hr />
+    
       <?php include("blocks/form.php") ?>
 
     </main>
 
     <?php include("blocks/footer.php")?>
 
-    <script src="main.js"></script>
+    <script src="main.js"> </script>
   </body>
 </html>

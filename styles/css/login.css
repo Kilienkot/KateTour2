@@ -93,8 +93,7 @@ main {
 }
 .form form button {
   cursor: pointer;
-  width: auto;
-  min-width: 50%;
+  width: 50%;
   height: 60rem;
   background-color: #1d1d1d;
   color: #fff;
@@ -122,21 +121,11 @@ main {
   font-weight: 500;
   font-size: 24rem;
 }
-@media (max-width: 500px) {
-  .form form p {
-    font-size: 50rem;
-  }
-}
 .form form a {
   color: #1d1d1d;
   text-decoration: none;
   font-weight: 500;
   font-size: 24rem;
-}
-@media (max-width: 500px) {
-  .form form a {
-    font-size: 50rem;
-  }
 }
 @media (max-width: 500px) {
   .form {

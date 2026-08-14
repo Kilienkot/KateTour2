@@ -14,7 +14,7 @@ for (i = 0; i < acc.length; i++) {
     }
   });
 }
-
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Функция для обработки скролла и изменения размеров main_img
 let ticking = false;
 
@@ -118,6 +118,59 @@ if (successMsg) {
   }, 3000);
 }
 
+// ==================== СЛАЙДЕР НОВОСТЕЙ ====================
+document.addEventListener("DOMContentLoaded", () => {
+  const track = document.getElementById("newsTrack");
+  const prevBtn = document.getElementById("newsPrev");
+  const nextBtn = document.getElementById("newsNext");
+
+  // Если на текущей странице нет слайдера новостей — выходим
+  if (!track || !prevBtn || !nextBtn) {
+    return; // ← Важно! Просто тихо выходим
+  }
+
+  console.log("✅ Слайдер новостей успешно инициализирован");
+
+  function getScrollAmount() {
+    const card = track.querySelector(".news__card");
+    if (!card) return 520; // запасное значение
+    return card.offsetWidth + 30 * 16; // карточка + gap 30rem
+  }
+
+  // Клик по стрелке "Влево"
+  prevBtn.addEventListener("click", () => {
+    track.scrollBy({
+      left: -getScrollAmount(),
+      behavior: "smooth",
+    });
+  });
+
+  // Клик по стрелке "Вправо"
+  nextBtn.addEventListener("click", () => {
+    track.scrollBy({
+      left: getScrollAmount(),
+      behavior: "smooth",
+    });
+  });
+
+  // Подсветка/отключение стрелок при прокрутке
+  function updateArrows() {
+    if (!track || !prevBtn || !nextBtn) return;
+
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    const currentScroll = track.scrollLeft;
+
+    prevBtn.style.opacity = currentScroll < 100 ? "0.45" : "1";
+    nextBtn.style.opacity = currentScroll > maxScroll - 100 ? "0.45" : "1";
+  }
+
+  track.addEventListener("scroll", updateArrows);
+  window.addEventListener("resize", updateArrows);
+
+  // Первоначальная проверка
+  setTimeout(updateArrows, 600);
+});
+
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //фильтры в календаре
 let activeFilter = null;
@@ -173,7 +226,6 @@ document.getElementById("savesmall").addEventListener("click", function () {
     }
   });
 });
-
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //скрытие текста в карточке
 
