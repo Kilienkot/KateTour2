@@ -1,7 +1,7 @@
 <?php
 include "lib/db.php";
 
-// Получение ближайших 4 активных туров с информацией о цене и фото
+// Получение ближайших 4 активных выездов с информацией о цене и фото
 $stmt = $pdo->prepare("SELECT t.id, t.short_title, t.full_title, t.start_date, t.end_date, t.price, tp.filepath FROM tours t LEFT JOIN tour_photos tp ON t.id = tp.tour_id AND tp.is_primary = 1 WHERE t.is_active = 1 ORDER BY t.start_date LIMIT 4");
 $stmt->execute();
 $nearest_tours = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -36,11 +36,11 @@ function formatDate($date) {
         <div class="main_img">
           <div class="text-block">
             <h2>Семейные приключения по всей планете</h2>
-            <h1>Катюша<span>ТУР</span></h1>
+            <h1>Человек<span> и </span>Жизнь</h1>
           </div>
           <div class="button-block">
-            <a href="calendar.php">Календарь Туров</a>
-            <a href="#form">Записаться на Тур</a>
+            <a href="calendar.php">Календарь Выездов</a>
+            <a href="#entry">Подобрать выезд</a>
           </div>
         </div>
         <div class="collage">
@@ -63,7 +63,7 @@ function formatDate($date) {
           <div class="block-5">
             <img src="sources/img/collage5.png" alt="collage" />
             <div class="block_text">
-              <h3>Все фото — <span>эмоции</span> наших туристов</h3>
+              <h3>Все фото — <span>эмоции</span> наших гостей</h3>
             </div>
           </div>
 
@@ -83,7 +83,7 @@ function formatDate($date) {
       </section>
       <hr />
       <section class="why">
-        <h2>зачем ехать в тур именно <span>с нами</span>?</h2>
+        <h2>зачем ехать в поездку <span>с нами</span>?</h2>
         <div class="why__item_grid">
           <div class="why__item">
             <div>
@@ -99,13 +99,13 @@ function formatDate($date) {
               <h3>ПУТЕШЕСТВИЕ БЕЗ ЗАБОТ <br>И ЛИШНЕЙ СУЕТЫ</h3>
               <p>Забудьте о стрессовых планировщиках<br>и сложных маршрутах</p>
             </div>
-            <a href="#calendar" rel="noopener noreferrer">Ближайшие туры</a>
+            <a href="#calendar" rel="noopener noreferrer">Ближайшие выезды</a>
           </div>
 
           <div class="why__item">
             <div>
               <h3>Вдохните атмосферу<br>и почувствуйте ритм</h3>
-              <p>Наши туры — это возможность прожить,<br>а не посетить</p>
+              <p>Наши выезды — это возможность прожить,<br>а не посетить</p>
             </div>
             <a href="javascript:void(0);" onclick="alert('Эта функция в разработке :-(');" rel="noopener noreferrer">Отзывы</a>
           </div>
@@ -135,7 +135,7 @@ function formatDate($date) {
       </section>  
       <hr />
       <section class="tags">
-        <h2>выбери свой <span>тур</span></h2>
+        <h2>выбери свой&nbsp;<span>выезд</span></h2>
         <div class="tags__buttons">
           <a href="calendar.php?tag=mountain-hikes" class="category-btn">
             Походы  в горы

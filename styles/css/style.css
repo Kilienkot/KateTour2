@@ -80,7 +80,7 @@ main {
 }
 .main_img .text-block h2 {
   line-height: 1;
-  font-size: 35rem;
+  font-size: 40rem;
   font-weight: 100;
   color: #eff1f4;
   margin: 0;
@@ -89,7 +89,7 @@ main {
   line-height: 0.74;
   width: -moz-fit-content;
   width: fit-content;
-  font-size: 250rem;
+  font-size: 160rem;
   font-weight: 500;
   color: #eff1f4;
   margin: 0;
@@ -117,7 +117,7 @@ main {
     text-align: center;
   }
   .main_img .text-block h1 {
-    font-size: 250rem;
+    font-size: 180rem;
     white-space: nowrap;
     text-indent: 0;
     width: 100%;
@@ -353,10 +353,12 @@ main {
   justify-content: space-between;
 }
 .why__item_grid .why__item a {
+  text-transform: uppercase;
   width: 50%;
-  font-size: 35rem;
+  font-size: 30rem;
   text-decoration: none;
-  color: #eff1f4;
+  background-color: #eff1f4;
+  color: #1d1d1d;
   border: 2px solid #eff1f4;
   text-align: center;
   box-sizing: border-box;
@@ -365,8 +367,8 @@ main {
   transition: all 0.3s ease;
 }
 .why__item_grid .why__item a:hover {
-  background-color: #eff1f4;
-  color: #1d1d1d;
+  background-color: transparent;
+  color: #eff1f4;
 }
 .why__item_grid .why__item a:active {
   transform: scale(0.95);
@@ -495,6 +497,7 @@ main {
   font-size: 40rem;
   color: #1d1d1d;
   text-align: center;
+  text-transform: uppercase;
 }
 @media (max-width: 500px) {
   .calendar {

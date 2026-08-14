@@ -18,5 +18,5 @@
         <a href="admin.php">Админка</a>
     </div>
 
-    <h1>Катюша<span>ТУР</span></h1>
+    <h3>Человек<span> и </span>Жизнь</h3>
 </footer>

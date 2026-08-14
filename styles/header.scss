@@ -46,7 +46,7 @@ header {
         grid-column: span 3; // Занимает 3 колонки
         a {
           justify-content: flex-start; // Логотип выравниваем по левому краю
-          padding: 5rem 10rem;
+          font-size: 50rem;
         }
       }
       // Остальные ссылки помещаются в последние 3 колонки
@@ -96,7 +96,7 @@ header {
       padding: 30rem 90rem;
       display: flex;
       justify-content: space-between;
-      align-items: start;
+      align-items: center;
     }
     ul {
       display: flex;
@@ -115,7 +115,7 @@ header {
           width: 30%;
           a {
             justify-content: flex-start; // Логотип выравниваем по левому краю
-            padding: 5rem 10rem;
+            font-size: 120rem;
           }
         }
         // Остальные ссылки помещаются в последние 3 колонки

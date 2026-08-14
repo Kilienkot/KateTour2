@@ -69,23 +69,23 @@ footer .footer__block:nth-child(3) {
     grid-column: 10/12;
   }
 }
-footer h1 {
+footer h3 {
   grid-column: 2/12;
   line-height: 0.74;
   width: -moz-fit-content;
   width: fit-content;
-  font-size: 250rem;
+  font-size: 160rem;
   font-weight: 500;
   color: #eff1f4;
   margin: 0;
   text-indent: -13.5px;
   transform: translateY(24px);
 }
-footer h1 span {
+footer h3 span {
   line-height: 1;
 }
 @media (max-width: 768px) {
-  footer h1 {
+  footer h3 {
     transform: translateY(6px);
   }
 }/*# sourceMappingURL=footer.css.map */

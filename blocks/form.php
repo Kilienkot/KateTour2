@@ -47,6 +47,7 @@ $active_tours = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="">
             <label for="tour-select">Какой тур понравился?</label>
             <select id="tour-select" name="tour" required>
+                <option value="help me">помогите мне выбрать</option>
                 <?php foreach ($active_tours as $tour): ?>
                     <option value="<?php echo htmlspecialchars($tour['short_title']); ?>"><?php echo htmlspecialchars($tour['short_title']); ?></option>
                 <?php endforeach; ?>

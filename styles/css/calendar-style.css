@@ -158,12 +158,12 @@ main {
   height: auto;
   display: flex;
   flex-direction: column;
-  gap: 30rem;
+  gap: 0;
 }
 .calendar .calendar__card {
   width: 100%;
   height: auto;
-  min-height: 150rem;
+  min-height: 120rem;
   display: flex;
   align-items: center;
   border-bottom: 2px solid #1d1d1d;
@@ -192,6 +192,11 @@ main {
 }
 .calendar .calendar__card:last-child {
   border-bottom: none;
+}
+.calendar .calendar__season-title {
+  width: 100%;
+  text-align: center;
+  margin: 30rem 0;
 }
 @media (max-width: 768px) {
   .calendar {

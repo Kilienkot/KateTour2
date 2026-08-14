@@ -93,7 +93,7 @@ main {
     gap: 1rem;
     h2 {
       line-height: 1;
-      font-size: 35rem;
+      font-size: 40rem;
       font-weight: 100;
       color: $background-color;
       margin: 0;
@@ -101,7 +101,7 @@ main {
     h1 {
       line-height: 0.74;
       width: fit-content;
-      font-size: 250rem;
+      font-size: 160rem;
       font-weight: 500;
       color: $background-color;
       margin: 0;
@@ -127,7 +127,7 @@ main {
       gap: 15px;
       text-align: center;
       h1 {
-        font-size: 250rem;
+        font-size: 180rem;
         white-space: nowrap;
         text-indent: 0;
         width: 100%;
@@ -359,10 +359,12 @@ main {
       justify-content: space-between;
     }
     a {
+      text-transform: uppercase;
       width: 50%;
-      font-size: 35rem;
+      font-size: 30rem;
       text-decoration: none;
-      color: $background-color;
+      background-color: $background-color;
+      color: $text-color;
       border: 2px solid $background-color;
       text-align: center;
       box-sizing: border-box;
@@ -370,8 +372,8 @@ main {
       border-radius: 10px;
       transition: all 0.3s ease;
       &:hover {
-        background-color: $background-color;
-        color: $text-color;
+        background-color: transparent;
+        color: $background-color;
       }
       &:active {
         transform: scale(0.95);
@@ -508,6 +510,7 @@ main {
     font-size: 40rem;
     color: $text-color;
     text-align: center;
+    text-transform: uppercase;
   }
 
   @include mobile {

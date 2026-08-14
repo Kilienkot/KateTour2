@@ -35,7 +35,7 @@ header ul li:first-child {
 }
 header ul li:first-child a {
   justify-content: flex-start;
-  padding: 5rem 10rem;
+  font-size: 50rem;
 }
 header ul li:nth-child(2) {
   display: none;
@@ -73,7 +73,7 @@ header ul li a {
     padding: 30rem 90rem;
     display: flex;
     justify-content: space-between;
-    align-items: start;
+    align-items: center;
   }
   header ul {
     display: flex;
@@ -95,7 +95,7 @@ header ul li a {
   }
   header ul li:first-child a {
     justify-content: flex-start;
-    padding: 5rem 10rem;
+    font-size: 120rem;
   }
   header ul li:nth-child(5) {
     width: 100%;
