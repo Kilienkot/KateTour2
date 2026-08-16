@@ -28,6 +28,7 @@ $show_user_management = $role_count >= 3;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Админ панель</title>
     <link rel="stylesheet" href="styles/css/admin-style.css" />
+    <link rel="icon" type="image/png" href="sources/img/icon.png">
   </head>
   <body>
     <?php include "blocks/header.php" ?>
@@ -38,7 +39,10 @@ $show_user_management = $role_count >= 3;
         <div class="admin-buttons">
           <a href="add-trip.php" class="admin-btn">Добавить выезд</a>
           <a href="edit-trips.php" class="admin-btn">Редактировать выезды</a>
+          <br>
           <a href="add-news.php" class="admin-btn">Добавить новость</a>
+          <a href="edit-news.php" class="admin-btn">Редактировать новости</a>
+          <br>
           <?php if ($show_user_management): ?>
             <a href="manage-users.php" class="admin-btn">Управление пользователями</a>
           <?php endif; ?>

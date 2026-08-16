@@ -54,7 +54,7 @@ function formatDate($date) {
     $timestamp = strtotime($date);
     $day = date('j', $timestamp);
     $month = $months[(int)date('n', $timestamp)];
-    return $day . ' ' . $month;
+    return $day . '&nbsp;' . $month;
 }
 
 // Функция для определения класса
@@ -72,6 +72,7 @@ function getTripClass($start_date, $end_date) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/css/calendar-style.css" />
+    <link rel="icon" type="image/png" href="sources/img/icon.png">
     <title>Календарь <?php echo $tag_name ? '- ' . htmlspecialchars($tag_name) : ''; ?></title>
 </head>
 <body>

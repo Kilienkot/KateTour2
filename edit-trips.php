@@ -220,7 +220,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         $message = "Тур удален!";
     }
 
-    
+    // Проверка длмны описания
+    $full_description = trim($_POST['full_description']);
+    $max_chars = 1500;
+
+    if (mb_strlen($full_description, 'UTF-8') > $max_chars) {
+        $full_description = mb_substr($full_description, 0, $max_chars, 'UTF-8');
+        $message = "Текст был обрезан до $max_chars символов";
+    }
 }
 
 // Получение списка туров
@@ -267,6 +274,7 @@ if (isset($_GET['edit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Редактировать выезды</title>
     <link rel="stylesheet" href="styles/css/admin-style.css">
+    <link rel="icon" type="image/png" href="sources/img/icon.png">
 </head>
 <body>
     <?php include "blocks/header.php" ?>
@@ -298,7 +306,8 @@ if (isset($_GET['edit'])) {
 
                     <div class="form-group">
                         <label for="full_description">Полное описание (подробно о туре) *</label>
-                        <textarea id="full_description" name="full_description" rows="5" placeholder="Приглашаем тебя с нами в захватывающее путешествие..." required><?php echo htmlspecialchars($edit_tour['full_description']); ?></textarea>
+                        <span id="charCounter">0 / 1500</span>
+                        <textarea id="full_description" name="full_description" rows="5" maxlength="1500" placeholder="Приглашаем тебя с нами в захватывающее путешествие..." required><?php echo htmlspecialchars($edit_tour['full_description']); ?></textarea>
                     </div>
 
                     <div class="form-group">
@@ -458,6 +467,26 @@ if (isset($_GET['edit'])) {
     <script src="main.js"></script>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.getElementById('full_description');
+            const counter = document.getElementById('charCounter');
+            
+            textarea.addEventListener('input', function() {
+                const current = this.value.length;
+                const max = this.getAttribute('maxlength');
+                counter.textContent = `${current} / ${max}`;
+                
+                // Меняем цвет при приближении к лимиту
+                if (current > max * 0.9) {
+                    counter.style.color = 'orange';
+                } else if (current > max * 0.95) {
+                    counter.style.color = 'red';
+                } else {
+                    counter.style.color = 'green';
+                }
+            });
+        });
+
         let dayCount = <?php echo count($edit_tour['program'] ?? []); ?>;
         let inclusionCount = <?php echo count($edit_tour['inclusions'] ?? []); ?>;
 

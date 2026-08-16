@@ -199,6 +199,11 @@ main {
   margin: 30rem 0;
 }
 @media (max-width: 768px) {
+  .calendar .calendar__season-title svg {
+    width: 40%;
+  }
+}
+@media (max-width: 768px) {
   .calendar {
     height: auto;
     gap: 60rem;
@@ -220,13 +225,15 @@ main {
     gap: 20rem;
   }
   .calendar .calendar__card .calendar__card-title {
-    font-size: 2.6dvw;
+    font-size: 4dvw;
     height: 20%;
     display: flex;
     align-items: center;
+    width: 65%;
   }
   .calendar .calendar__card .calendar__card-dates {
-    font-size: 3dvw;
+    font-size: 4dvw;
+    width: 20%;
   }
   .calendar .calendar__card svg {
     width: 15%;

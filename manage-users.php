@@ -27,17 +27,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         $username = trim($_POST['username']);
         $login = trim($_POST['login']);
         $role = intval($_POST['role']);
+        $new_password = trim($_POST['new_password'] ?? '');
+        $confirm_password = trim($_POST['confirm_password'] ?? '');
 
-        // Обновление пользователя
-        $stmt = $pdo->prepare("UPDATE users SET username = ?, login = ?, role = ? WHERE id = ?");
-        $stmt->execute([$username, $login, $role, $user_id]);
-        $message = "Пользователь обновлен!";
+        // Проверка, что такой логин не занят другим пользователем
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE login = ? AND id != ?");
+        $stmt->execute([$login, $user_id]);
+        if ($stmt->rowCount() > 0) {
+            $message = "Ошибка: Логин уже занят другим пользователем!";
+        } else {
+            // Базовое обновление (без пароля)
+            $stmt = $pdo->prepare("UPDATE users SET username = ?, login = ?, role = ? WHERE id = ?");
+            $stmt->execute([$username, $login, $role, $user_id]);
+            
+            // Если пароль указан - обновляем его
+            if (!empty($new_password)) {
+                // Проверяем, что пароль не короче 6 символов
+                if (mb_strlen($new_password) < 6) {
+                    $message = "Пароль должен содержать минимум 6 символов!";
+                } elseif ($new_password !== $confirm_password) {
+                    $message = "Пароли не совпадают!";
+                } else {
+                    // Хешируем и обновляем пароль
+                    $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                    $stmt = $pdo->prepare("UPDATE users SET password_hash = ? WHERE id = ?");
+                    $stmt->execute([$password_hash, $user_id]);
+                    $message = "Пользователь обновлен! Пароль изменен.";
+                }
+            } else {
+                $message = "Пользователь обновлен!";
+            }
+        }
     } elseif ($action == 'delete') {
         $user_id = intval($_POST['user_id']);
-        // Удалить пользователя
-        $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
-        $stmt->execute([$user_id]);
-        $message = "Пользователь удален!";
+        
+        // Проверяем, не пытается ли админ удалить самого себя
+        if ($user_id == $_COOKIE['id']) {
+            $message = "Нельзя удалить самого себя!";
+        } else {
+            // Удалить пользователя
+            $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+            $stmt->execute([$user_id]);
+            $message = "Пользователь удален!";
+        }
     }
 }
 
@@ -54,6 +86,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Управление пользователями</title>
     <link rel="stylesheet" href="styles/css/admin-style.css">
+    <link rel="icon" type="image/png" href="sources/img/icon.png">
 </head>
 <body>
     <?php include "blocks/header.php" ?>
@@ -63,13 +96,13 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="form-container">
             <h1>Управление пользователями</h1>
             <?php if ($message): ?>
-                <p class="message"><?php echo $message; ?></p>
+                <p class="message"><?php echo htmlspecialchars($message); ?></p>
             <?php endif; ?>
 
             <div class="users-list">
                 <?php foreach ($users as $user): ?>
                     <div class="user-item">
-                        <form action="" method="POST">
+                        <form action="" method="POST" onsubmit="return validatePassword(this)">
                             <input type="hidden" name="action" value="update">
                             <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
 
@@ -81,6 +114,26 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div class="form-group">
                                 <label>Логин</label>
                                 <input type="text" name="login" value="<?php echo htmlspecialchars($user['login']); ?>" required>
+                            </div>
+
+                            <!-- ========== НОВЫЙ БЛОК С ПАРОЛЕМ ========== -->
+                            <div class="form-group password-section">
+                                <label>Пароль</label>
+                                <div class="password-fields">
+                                    <div class="password-field">
+                                        <input type="password" id="new_password_<?php echo $user['id']; ?>" name="new_password" placeholder="Новый пароль (оставьте пустым, если не менять)" autocomplete="new-password">
+                                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('new_password_<?php echo $user['id']; ?>', this)">
+                                            👁️
+                                        </button>
+                                    </div>
+                                    <div class="password-field">
+                                        <input type="password" id="confirm_password_<?php echo $user['id']; ?>" name="confirm_password" placeholder="Подтвердите новый пароль" autocomplete="new-password">
+                                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('confirm_password_<?php echo $user['id']; ?>', this)">
+                                            👁️
+                                        </button>
+                                    </div>
+                                    <div id="password_error_<?php echo $user['id']; ?>" class="password-error" style="color: red; display: none; margin-top: 5px;"></div>
+                                </div>
                             </div>
 
                             <div class="form-group">
@@ -108,5 +161,67 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <?php include "blocks/footer.php" ?>
     <script src="main.js"></script>
+
+    <script>
+        // Функция для переключения видимости пароля
+        function togglePasswordVisibility(inputId, button) {
+            const input = document.getElementById(inputId);
+            if (input) {
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    button.textContent = '🙈';
+                } else {
+                    input.type = 'password';
+                    button.textContent = '👁️';
+                }
+            }
+        }
+
+        // Функция валидации перед отправкой формы
+        function validatePassword(form) {
+            const newPassword = form.querySelector('input[name="new_password"]');
+            const confirmPassword = form.querySelector('input[name="confirm_password"]');
+            const errorDiv = form.querySelector('.password-error');
+            
+            // Если оба поля пустые - пропускаем (пароль не меняем)
+            if (!newPassword.value && !confirmPassword.value) {
+                return true;
+            }
+
+            // Проверяем, что оба поля заполнены
+            if (!newPassword.value || !confirmPassword.value) {
+                errorDiv.textContent = 'Заполните оба поля для смены пароля!';
+                errorDiv.style.display = 'block';
+                return false;
+            }
+
+            // Проверяем длину пароля
+            if (newPassword.value.length < 6) {
+                errorDiv.textContent = 'Пароль должен содержать минимум 6 символов!';
+                errorDiv.style.display = 'block';
+                return false;
+            }
+
+            // Проверяем совпадение паролей
+            if (newPassword.value !== confirmPassword.value) {
+                errorDiv.textContent = 'Пароли не совпадают!';
+                errorDiv.style.display = 'block';
+                return false;
+            }
+
+            // Всё хорошо
+            errorDiv.style.display = 'none';
+            return true;
+        }
+
+        // Скрываем ошибку при изменении полей
+        document.querySelectorAll('input[name="new_password"], input[name="confirm_password"]').forEach(input => {
+            input.addEventListener('input', function() {
+                const form = this.closest('form');
+                const errorDiv = form.querySelector('.password-error');
+                errorDiv.style.display = 'none';
+            });
+        });
+    </script>
 </body>
 </html>

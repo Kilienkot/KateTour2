@@ -34,6 +34,7 @@ $inclusions = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/css/trip-new.css">
+    <link rel="icon" type="image/png" href="sources/img/icon.png">
     <title><?php echo htmlspecialchars($tour['short_title']); ?></title>
 </head>
 <body>

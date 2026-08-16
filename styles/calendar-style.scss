@@ -203,6 +203,11 @@ main {
     width: 100%;
     text-align: center;
     margin: 30rem 0;
+    svg {
+      @include mobile {
+        width: 40%;
+      }
+    }
   }
 
   @include mobile {
@@ -225,14 +230,16 @@ main {
       padding: 40rem;
       gap: 20rem;
       .calendar__card-title {
-        font-size: 2.6dvw;
+        font-size: 4dvw;
         height: 20%;
         display: flex;
         align-items: center;
+        width: 65%;
       }
 
       .calendar__card-dates {
-        font-size: 3dvw;
+        font-size: 4dvw;
+        width: 20%;
       }
 
       svg {

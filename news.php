@@ -18,6 +18,7 @@ $all_news = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Новости | KateTour</title>
     <link rel="stylesheet" href="styles/css/news-style.css" />
+    <link rel="icon" type="image/png" href="sources/img/icon.png">
 </head>
 <body>
     <?php include("blocks/header.php") ?>
