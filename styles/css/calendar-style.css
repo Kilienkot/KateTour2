@@ -174,7 +174,6 @@ main {
   font-size: 40rem;
   height: 80%;
   width: 40%;
-  border-right: 1px solid #1d1d1d;
   font-weight: 500;
   text-align: center;
 }
@@ -185,6 +184,7 @@ main {
   width: 45%;
   font-weight: 500;
   text-align: center;
+  border-left: 1px solid #1d1d1d;
 }
 .calendar .calendar__card svg {
   width: 15%;
@@ -202,6 +202,32 @@ main {
   .calendar .calendar__season-title svg {
     width: 40%;
   }
+}
+.calendar .calendar__year {
+  margin-bottom: 60px;
+}
+.calendar .calendar__year-title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 0 0 40px;
+  font-size: 42px;
+  font-weight: 700;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .calendar .calendar__year-title {
+    font-size: 30px;
+    gap: 10px;
+  }
+}
+.calendar .calendar__year-title::before,
+.calendar .calendar__year-title::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: #222;
 }
 @media (max-width: 768px) {
   .calendar {
@@ -229,6 +255,7 @@ main {
     height: 20%;
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 65%;
   }
   .calendar .calendar__card .calendar__card-dates {

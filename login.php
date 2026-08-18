@@ -47,6 +47,7 @@
               id="password"
               placeholder="Введите пароль"
               required
+              style='text-transform: none;'
             />
           </div>
           <div class="links">

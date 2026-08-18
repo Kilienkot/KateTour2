@@ -167,9 +167,16 @@ main {
 
 .form-group {
   margin-bottom: 15rem;
+  display: flex;
+  flex-direction: column;
 }
 .form-group #charCounter {
   font-size: 18rem;
+}
+@media (max-width: 500px) {
+  .form-group #charCounter {
+    font-size: 50rem;
+  }
 }
 .form-group label {
   display: block;

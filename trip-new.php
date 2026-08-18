@@ -98,7 +98,7 @@ $inclusions = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
              <div class="block__price-more">
                  <div class="block__price">
-                     <p><?php echo number_format($tour['price'], 0, '.', ' '); ?>₽</p>
+                     <p>от <?php echo number_format($tour['price'], 0, '.', ' '); ?>₽</p>
                      <a href="#entry">Записаться</a>
                  </div>
                  <div class="block__more">

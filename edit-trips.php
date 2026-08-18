@@ -316,7 +316,7 @@ if (isset($_GET['edit'])) {
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Стоимость (в рублях) *</label>
+                        <label for="price">Минимальная стоимость (в рублях) *</label>
                         <input type="number" id="price" name="price" value="<?php echo $edit_tour['price']; ?>" step="0.01" placeholder="80000" required>
                     </div>
 

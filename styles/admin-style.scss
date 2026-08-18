@@ -176,8 +176,13 @@ main {
 
 .form-group {
   margin-bottom: 15rem;
+  display: flex;
+  flex-direction: column;
   #charCounter {
     font-size: 18rem;
+    @include mobile {
+      font-size: 50rem;
+    }
   }
   label {
     display: block;
