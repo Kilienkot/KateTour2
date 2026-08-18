@@ -26,10 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $end_date = $_POST['end_date'];
     $instructor_name = trim($_POST['instructor_name']);
     $difficulty = $_POST['difficulty'];
+    $card_link = trim($_POST['card_link']);
 
     // Вставка в tours
-    $stmt = $pdo->prepare("INSERT INTO tours (short_title, full_title, full_description, age, price, start_date, end_date, instructor_name, difficulty) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty]);
+    $stmt = $pdo->prepare("INSERT INTO tours (short_title, full_title, full_description, age, price, start_date, end_date, instructor_name, difficulty, card_link) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty, $card_link]);
     $tour_id = $pdo->lastInsertId();
 
     // ========== ДОБАВЛЯЕМ ТЕГИ ==========
@@ -221,6 +222,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="эксперт">Эксперт</option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="card_link" title="Ссылка на карту из конструктора">Ссылка на карту (<a href="https://yandex.ru/map-constructor/" target="_blank">yandex.ru/map-constructor/</a>)</label>
+                    <input type="text" id="card_link" name="card_link" placeholder='<script type=...' title="ссылка на карту">
+                </div>	
 
                 <!-- ========== НОВЫЙ БЛОК С ТЕГАМИ ========== -->
                 <div class="form-group">

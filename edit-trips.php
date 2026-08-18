@@ -30,10 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action'])) {
         $instructor_name = trim($_POST['instructor_name']);
         $difficulty = $_POST['difficulty'];
         $is_active = isset($_POST['is_active']) ? 1 : 0;
+        $card_link = trim($_POST['card_link']);
 
         // Обновление тура
-        $stmt = $pdo->prepare("UPDATE tours SET short_title = ?, full_title = ?, full_description = ?, age = ?, price = ?, start_date = ?, end_date = ?, instructor_name = ?, difficulty = ?, is_active = ? WHERE id = ?");
-        $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty, $is_active, $tour_id]);
+        $stmt = $pdo->prepare("UPDATE tours SET short_title = ?, full_title = ?, full_description = ?, age = ?, price = ?, start_date = ?, end_date = ?, instructor_name = ?, difficulty = ?, is_active = ?, card_link = ? WHERE id = ?");
+        $stmt->execute([$short_title, $full_title, $full_description, $age, $price, $start_date, $end_date, $instructor_name, $difficulty, $is_active, $card_link, $tour_id]);
 
         // Функция для сжатия изображения
         function resizeImage($source, $destination, $maxWidth = 800, $maxHeight = 600, $quality = 80) {
@@ -343,6 +344,12 @@ if (isset($_GET['edit'])) {
                             <option value="сложный" <?php if ($edit_tour['difficulty'] == 'сложный') echo 'selected'; ?>>Сложный</option>
                             <option value="эксперт" <?php if ($edit_tour['difficulty'] == 'эксперт') echo 'selected'; ?>>Эксперт</option>
                         </select>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="card_link" title="Ссылка на карту из конструктора">Ссылка на карту (<a href="https://yandex.ru/map-constructor/" target="_blank">yandex.ru/map-constructor/</a>)</label>
+                        <input type="text" id="card_link" name="card_link" placeholder='<script type=...' title="ссылка на карту">
                     </div>
 
                     <div class="form-group">

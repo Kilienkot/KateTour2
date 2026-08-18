@@ -142,6 +142,13 @@ $inclusions = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             <?php endforeach; ?>
         </section>
+
+        <hr <?php echo empty($tour['card_link']) ? 'style="display: none;"' : ''; ?>>
+        
+        <section class="card" <?php echo empty($tour['card_link']) ? 'style="display: none;"' : ''; ?>>
+            <?php echo $tour['card_link']; ?>
+        </section>
+
         <hr>
         <?php include("blocks/form.php") ?>
     </main>
